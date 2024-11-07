@@ -5,7 +5,7 @@ import com.example.codemindprojbackend.api.response.ApiResponse;
 import com.example.codemindprojbackend.api.response.MemoResponse;
 import com.example.codemindprojbackend.api.response.ResponseCode;
 import com.example.codemindprojbackend.domain.model.LogType;
-import com.example.codemindprojbackend.domain.model.Memo;
+import com.example.codemindprojbackend.domain.model.Post;
 import com.example.codemindprojbackend.service.LogService;
 import com.example.codemindprojbackend.service.MemoService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -51,7 +51,7 @@ public class MemoController {
 
     @GetMapping
     public List<MemoResponse.Detail> findAllMemo() {
-        List<Memo> memos = memoService.findAllReversedMemos();
-        return MemoResponse.Detail.of(memos);
+        List<Post> posts = memoService.findAllReversedMemos();
+        return MemoResponse.Detail.of(posts);
     }
 }

@@ -18,10 +18,11 @@ public class Log {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="log_seq")
+    private Long seq;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_seq")
     private Member member;
 
     @CreatedDate

@@ -1,6 +1,5 @@
 package com.example.codemindprojbackend.api.request;
 
-import com.example.codemindprojbackend.domain.model.MemoType;
 import lombok.*;
 
 public class MemoRequest {

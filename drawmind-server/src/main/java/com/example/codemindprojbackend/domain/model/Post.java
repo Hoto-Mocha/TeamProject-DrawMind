@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -15,15 +14,16 @@ import java.time.LocalDateTime;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 @RequiredArgsConstructor
-public class Memo {
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="post_seq")
+    private Long seq;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @OneToOne
+    @JoinColumn(name = "writer_seq")
+    private Member writer;
 
     @LastModifiedDate
     @Column(name = "write_dt")
@@ -34,14 +34,13 @@ public class Memo {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "memo_type")
-    private MemoType memoType;
+    @Column(columnDefinition = "TEXT", name = "img_url")
+    private String imgURL;
 
-    public Memo(MemoType memoType, Member member, String title, String content) {
-        this.memoType = memoType;
-        this.member = member;
+    public Post(Member writer, String title, String content, String imgURL) {
+        this.writer = writer;
         this.title = title;
         this.content = content;
+        this.imgURL = imgURL;
     }
 }

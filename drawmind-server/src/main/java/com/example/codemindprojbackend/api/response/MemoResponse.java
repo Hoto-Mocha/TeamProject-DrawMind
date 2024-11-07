@@ -1,7 +1,6 @@
 package com.example.codemindprojbackend.api.response;
 
-import com.example.codemindprojbackend.domain.model.Memo;
-import com.example.codemindprojbackend.domain.model.MemoType;
+import com.example.codemindprojbackend.domain.model.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,17 +18,17 @@ public class MemoResponse {
         private String content;
         private MemoType memoType;
 
-        public static MemoResponse.Detail of(Memo memo) {
+        public static MemoResponse.Detail of(Post post) {
             return Detail.builder()
-                    .id(memo.getId())
-                    .title(memo.getTitle())
-                    .content(memo.getContent())
-                    .memoType(memo.getMemoType())
+                    .id(post.getId())
+                    .title(post.getTitle())
+                    .content(post.getContent())
+                    .memoType(post.getMemoType())
                     .build();
         }
 
-        public static List<Detail> of(List<Memo> memos) {
-            return memos.stream()
+        public static List<Detail> of(List<Post> posts) {
+            return posts.stream()
                     .map(MemoResponse.Detail::of)
                     .collect(Collectors.toList());
         }
