@@ -1,0 +1,14 @@
+spring:
+    main:
+        allow-bean-definition-overriding: true
+    application:
+        name: CodeMindProjBackend
+    datasource:
+        url: jdbc:postgresql://localhost:5432/memoDB
+        username: postgres
+        password: bz2149
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
