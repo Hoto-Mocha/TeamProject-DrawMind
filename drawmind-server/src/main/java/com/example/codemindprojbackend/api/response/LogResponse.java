@@ -18,15 +18,13 @@ public class LogResponse {
         private Member member;
         private LogType logType;
         private LocalDateTime createDt;
-        private String memberIp;
 
         public static Detail of(Log log) {
             return Detail.builder()
-                    .id(log.getId())
+                    .id(log.getSeq())
                     .member(log.getMember())
                     .logType(log.getLogType())
                     .createDt(log.getCreateDt())
-                    .memberIp(log.getMemberIp())
                     .build();
         }
     }

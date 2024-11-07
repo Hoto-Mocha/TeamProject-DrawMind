@@ -4,6 +4,7 @@ import com.example.codemindprojbackend.api.request.MemberRequest;
 import com.example.codemindprojbackend.api.response.ErrorCode;
 import com.example.codemindprojbackend.api.response.MemberResponse;
 import com.example.codemindprojbackend.domain.model.Member;
+import com.example.codemindprojbackend.domain.model.MemberType;
 import com.example.codemindprojbackend.domain.repository.MemberRepository;
 import com.example.codemindprojbackend.exception.BusinessLogicException;
 import jakarta.transaction.Transactional;
@@ -21,17 +22,12 @@ public class MemberService {
                 .orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND, "Could not find member"));
     }
 
-    public Member findMemberByEmail(String email) {
-        return memberRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND, "Could not find member"));
-    }
-
     public void deleteById(Long id) {
         memberRepository.deleteById(id);
     }
 
     public MemberResponse.Detail registerMember(MemberRequest.Create request) {
-        Member member = new Member(request.getEmail(), request.getPassword());
+        Member member = new Member(request.getMemberId(), request.getPassword(), MemberType.USER);
         memberRepository.save(member);
         return MemberResponse.Detail.of(member);
     }

@@ -19,15 +19,8 @@ public class LogService {
     @Autowired
     private MemberService memberService;
 
-    public void saveLog(LogType logType, Long id) {
-        Member member = memberService.findMemberById(id);
-        Log log = new Log(logType, member);
-        System.out.println(log);
-        logRepository.save(log);
-    }
-
-    public void saveLog(LogType logType, String email) {
-        Member member = memberService.findMemberByEmail(email);
+    public void saveLog(LogType logType, Long memberSeq) {
+        Member member = memberService.findMemberById(memberSeq);
         Log log = new Log(logType, member);
         System.out.println(log);
         logRepository.save(log);
