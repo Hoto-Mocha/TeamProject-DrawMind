@@ -22,8 +22,8 @@ public class Member {
     private MemberType memberType;
 
     public Member(String memberId, String password, MemberType memberType) {
-        this.memberType = memberType;
         this.memberId = memberId;
         this.password = password;
+        this.memberType = memberType;
     }
 }

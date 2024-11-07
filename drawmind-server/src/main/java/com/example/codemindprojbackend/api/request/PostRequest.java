@@ -2,16 +2,16 @@ package com.example.codemindprojbackend.api.request;
 
 import lombok.*;
 
-public class MemoRequest {
+public class PostRequest {
     @Getter
     @Setter
     @ToString
     @RequiredArgsConstructor
     public static class Create {
-        private String userEmail;
+        private Long memberSeq;
         private String title;
         private String content;
-        private MemoType memoType;
+        private String imageURL;
     }
 
     @Getter
@@ -19,10 +19,9 @@ public class MemoRequest {
     @ToString
     @RequiredArgsConstructor
     public static class Update {
-        private String userEmail;
+        private Long postSeq;
         private String title;
         private String content;
-        private MemoType memoType;
     }
 
     @Getter
@@ -30,6 +29,22 @@ public class MemoRequest {
     @ToString
     @RequiredArgsConstructor
     public static class Delete {
-        private String userEmail;
+        private Long postSeq;
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    @RequiredArgsConstructor
+    public static class List {
+        private Long currentPage;
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    @RequiredArgsConstructor
+    public static class Info {
+        private Long postSeq;
     }
 }
