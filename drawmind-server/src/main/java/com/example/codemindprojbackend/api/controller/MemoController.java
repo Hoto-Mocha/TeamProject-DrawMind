@@ -7,7 +7,7 @@ import com.example.codemindprojbackend.api.response.ResponseCode;
 import com.example.codemindprojbackend.domain.model.LogType;
 import com.example.codemindprojbackend.domain.model.Post;
 import com.example.codemindprojbackend.service.LogService;
-import com.example.codemindprojbackend.service.MemoService;
+import com.example.codemindprojbackend.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +18,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/memos")
 public class MemoController {
-    private final MemoService memoService;
+    private final PostService postService;
     private final LogService logService;
 
     @PostMapping
     @ResponseBody
     public ApiResponse<MemoResponse.Detail> createMemo(@RequestBody MemoRequest.Create request) {
-        return ApiResponse.success(ResponseCode.OK, memoService.createMemo(request));
+        return ApiResponse.success(ResponseCode.OK, postService.createMemo(request));
     }
 
     @PutMapping("/{id}")
@@ -32,26 +32,26 @@ public class MemoController {
     public ApiResponse<MemoResponse.Detail> updateMemo(@PathVariable Long id, @RequestBody MemoRequest.Update request, HttpServletRequest http_Request) {
         System.out.println(request);
         logService.saveLog(LogType.MEMO_MODIFY, http_Request, request.getUserEmail());
-        return ApiResponse.success(ResponseCode.OK, memoService.updateMemo(id, request));
+        return ApiResponse.success(ResponseCode.OK, postService.updateMemo(id, request));
     }
 
     @DeleteMapping("/{id}")
     @ResponseBody
     public ApiResponse<Integer> deleteMemo(@PathVariable Long id, @RequestBody MemoRequest.Delete request, HttpServletRequest http_request) {
         logService.saveLog(LogType.MEMO_DELETE, http_request, request.getUserEmail());
-        memoService.deleteById(id);
+        postService.deleteById(id);
         return ApiResponse.success(ResponseCode.OK);
     }
 
     @GetMapping("/{id}")
     @ResponseBody
     public MemoResponse.Detail findMemoById(@PathVariable Long id) {
-        return MemoResponse.Detail.of(memoService.findMemoById(id));
+        return MemoResponse.Detail.of(postService.findMemoById(id));
     }
 
     @GetMapping
     public List<MemoResponse.Detail> findAllMemo() {
-        List<Post> posts = memoService.findAllReversedMemos();
+        List<Post> posts = postService.findAllReversedMemos();
         return MemoResponse.Detail.of(posts);
     }
 }

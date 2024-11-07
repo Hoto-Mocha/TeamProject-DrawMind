@@ -11,14 +11,14 @@ public class MemberResponse {
     @Setter
     @Builder
     public static class Detail {
-        private Long memberId;
-        private String email;
+        private Long memberSeq;
+        private String memberId;
         private String password;
 
         public static MemberResponse.Detail of(Member member) {
             return Detail.builder()
+                    .memberSeq(member.getSeq())
                     .memberId(member.getMemberId())
-                    .email(member.getEmail())
                     .password(member.getPassword())
                     .build();
         }

@@ -6,6 +6,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ResponseCode {
-    OK(200);
+    OK(0);
     private final int code;
 }

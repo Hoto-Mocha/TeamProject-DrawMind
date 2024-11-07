@@ -19,37 +19,18 @@ public class LogService {
     @Autowired
     private MemberService memberService;
 
-    private final String[] headerTypes = {"X-Forwarded-For", "Proxy-Client-IP",
-            "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR"};
-    private String ipAddress;
-
-    public void saveLog(LogType logType, HttpServletRequest http_request, Long id) {
-        getClientIp(http_request);
+    public void saveLog(LogType logType, Long id) {
         Member member = memberService.findMemberById(id);
-        Log log = new Log(logType, member, ipAddress);
+        Log log = new Log(logType, member);
         System.out.println(log);
         logRepository.save(log);
     }
 
-    public void saveLog(LogType logType, HttpServletRequest http_request, String email) {
-        getClientIp(http_request);
+    public void saveLog(LogType logType, String email) {
         Member member = memberService.findMemberByEmail(email);
-        Log log = new Log(logType, member, ipAddress);
+        Log log = new Log(logType, member);
         System.out.println(log);
         logRepository.save(log);
-    }
-
-    public void getClientIp(HttpServletRequest request) {
-        ipAddress = null;
-        for (String headerType : headerTypes) {
-            ipAddress = request.getHeader(headerType);
-            if (ipAddress != null && !ipAddress.isEmpty() && !"unknown".equalsIgnoreCase(ipAddress)) {
-                break;
-            }
-        }
-        if (ipAddress == null || ipAddress.isEmpty() || "unknown".equalsIgnoreCase(ipAddress)) {
-            ipAddress = request.getRemoteAddr(); // Fallback to request's remote address
-        }
     }
 
     public void deleteAllLogsByMemberId(Long memberId) {

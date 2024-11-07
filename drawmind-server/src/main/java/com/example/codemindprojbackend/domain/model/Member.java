@@ -1,9 +1,6 @@
 package com.example.codemindprojbackend.domain.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -13,13 +10,19 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public class Member {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="member_seq")
     private Long seq;
     private String memberId;
     private String password;
 
-    public Member(String memberId, String password) {
+    @Column(name = "member_type")
+    @Enumerated(EnumType.ORDINAL)
+    private MemberType memberType;
+
+    public Member(String memberId, String password, MemberType memberType) {
+        this.memberType = memberType;
         this.memberId = memberId;
         this.password = password;
     }

@@ -4,7 +4,7 @@ import com.example.codemindprojbackend.api.request.MemoRequest;
 import com.example.codemindprojbackend.api.response.MemoResponse;
 import com.example.codemindprojbackend.domain.model.Post;
 import com.example.codemindprojbackend.domain.model.Member;
-import com.example.codemindprojbackend.domain.repository.MemoRepository;
+import com.example.codemindprojbackend.domain.repository.PostRepository;
 import com.example.codemindprojbackend.domain.repository.MemberRepository;
 import com.example.codemindprojbackend.exception.BusinessLogicException;
 import com.example.codemindprojbackend.api.response.ErrorCode;
@@ -16,10 +16,10 @@ import java.util.List;
 
 @Service
 @Transactional
-public class MemoService {
+public class PostService {
 
     @Autowired
-    private MemoRepository memoRepository;
+    private PostRepository postRepository;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -28,39 +28,38 @@ public class MemoService {
         System.out.println(request);
         Member member = memberRepository.findByEmail(request.getUserEmail())
                 .orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND, "Member not found"));
-        Post post = new Post(request.getMemoType(), member, request.getTitle(), request.getContent());
-        memoRepository.save(post);
+        Post post = new Post(null, null, null, null);
+        postRepository.save(post);
         return MemoResponse.Detail.of(post);
     }
 
     public MemoResponse.Detail updateMemo(Long id, MemoRequest.Update request) {
-        Post post = memoRepository.findById(id)
+        Post post = postRepository.findById(id)
                 .orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND, "Memo not found"));
         post.setTitle(request.getTitle());
         post.setContent(request.getContent());
-        post.setMemoType(request.getMemoType());
-        memoRepository.save(post);
+        postRepository.save(post);
         return MemoResponse.Detail.of(post);
     }
 
     public void deleteById(Long id) {
-        memoRepository.deleteById(id);
+        postRepository.deleteById(id);
     }
 
     public Post findMemoById(Long id) {
-        return memoRepository.findById(id)
+        return postRepository.findById(id)
                 .orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND, "Memo not found"));
     }
 
     public List<Post> findAllMemos() {
-        return memoRepository.findAll();
+        return postRepository.findAll();
     }
 
     public List<Post> findAllReversedMemos() {
-        return memoRepository.findAllMemosInReverseOrder();
+        return postRepository.findAllMemosInReverseOrder();
     }
 
     public void deleteAllMemosByMemberId(Long memberId) {
-        memoRepository.deleteAllByMemberId(memberId);
+        postRepository.deleteAllByMemberId(memberId);
     }
 }

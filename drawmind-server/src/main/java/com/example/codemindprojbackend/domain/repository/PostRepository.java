@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface MemoRepository extends JpaRepository<Post, Long> {
+public interface PostRepository extends JpaRepository<Post, Long> {
     @Modifying
     @Transactional
-    @Query("DELETE FROM Post m WHERE m.member.memberId = :memberId")
+    @Query("DELETE FROM Post m WHERE m.writer.memberId = :memberId")
     void deleteAllByMemberId(Long memberId);
 
     @Query("SELECT m FROM Post m ORDER BY m.writeDt DESC")

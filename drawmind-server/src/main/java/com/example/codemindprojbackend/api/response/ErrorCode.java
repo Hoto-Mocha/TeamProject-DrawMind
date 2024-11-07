@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ErrorCode {
     BAD_REQUEST(400),
-    NOT_FOUND(404);
+    NOT_FOUND(2003),
+    NO_PARAMETER(1001);
     private final int code;
     private String message;
 }

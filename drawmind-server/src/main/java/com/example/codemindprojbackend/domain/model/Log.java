@@ -29,22 +29,13 @@ public class Log {
     @Column(name = "create_dt")
     private LocalDateTime createDt;
 
-    @Column(name = "member_ip")
-    private String memberIp;
-
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "log_type")
     private LogType logType;
 
-    public Log(LogType logType, Member member, String memberIp) {
+    public Log(LogType logType, Member member) {
         this.logType = logType;
         this.member = member;
-        this.memberIp = memberIp;
     }
 
-    public Log(LogType logType, String memberIp) {
-        this.logType = logType;
-        this.memberIp = memberIp;
-        this.member = null;
-    }
 }

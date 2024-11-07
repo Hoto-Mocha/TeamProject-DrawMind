@@ -9,8 +9,7 @@ public class MemberRequest {
     @ToString
     @RequiredArgsConstructor
     public static class Create {
-        private Long memberId;
-        private String email;
+        private String memberId;
         private String password;
     }
 
@@ -19,6 +18,33 @@ public class MemberRequest {
     @ToString
     @RequiredArgsConstructor
     public static class Update {
+        private Long memberSeq;
         private String password;
+    }
+    //{memberSeq : 10, password : "asdf"}
+
+    @Getter
+    @Setter
+    @ToString
+    @RequiredArgsConstructor
+    public static class Delete {
+        private Long memberSeq;
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    @RequiredArgsConstructor
+    public static class Login {
+        private String memberId;
+        private String password;
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    @RequiredArgsConstructor
+    public static class Info {
+        private Long memberSeq;
     }
 }
