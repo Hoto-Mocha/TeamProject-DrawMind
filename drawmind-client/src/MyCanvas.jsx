@@ -154,7 +154,7 @@ function MyCanvas({postRef}) {
                 }}
                 onTouchMove={(e) => {
                     e.preventDefault();
-                    drawMobile()
+                    drawMobile(e)
                 }}
             />
             <Palette contextRef={contextRef} undo={undo} redo={redo} clear={clear}/>
