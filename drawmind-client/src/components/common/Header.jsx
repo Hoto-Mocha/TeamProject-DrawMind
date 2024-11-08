@@ -15,7 +15,7 @@ export default function Header() {
     <>
       <div className='header'>
         <div className='titleContainer'>
-          <Link className='headerTitle' to='/'><h2>MindDraw</h2></Link>
+          <Link className='headerTitle' to='/'><img className='titleImage' src='./src/assets/icons/title.png'></img></Link>
         </div>
         <div className="headerBox">
           <TfiMenuAlt className="menuIcon" onClick={handleShow} />
@@ -26,6 +26,7 @@ export default function Header() {
             <Offcanvas.Body style={{ "padding": "0", "display": "flex", "flexDirection": "column" }}>
               <Link className='offBoxNav' to='/login' onClick={handleClose}>로그인</Link>
               <Link className='offBoxNav' to='/register' onClick={handleClose}>회원 가입</Link>
+              <Link className='offBoxNav' to='/write' onClick={handleClose}>글쓰기(임시)</Link>
             </Offcanvas.Body>
           </Offcanvas>
           {/* <button className="btn btn-sm generalBtn">글쓰기</button> */}
