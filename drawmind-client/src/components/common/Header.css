@@ -30,7 +30,7 @@
 
 .menuIcon {
     width: 35px;
-    scale: 1.5;
+    scale: 2.2;
     color: #5454e2;
 }
 
@@ -42,8 +42,8 @@
     background-color: #5454e2;
     color: white;
     font-size: 0.8rem;
-    width: 60px;
-    height: 40px;
+    width: 70px;
+    height: 30px;
     transition: background-color 0.3s, transform 0.3s;
 }
 
