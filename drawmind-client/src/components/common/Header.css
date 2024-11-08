@@ -44,12 +44,15 @@
 
 .offBoxNav {
     background-color: lightgray;
-    margin: 1px;
+    margin: 3px;
+    margin-bottom: 0;
     padding: 5px;
-}
-
-.offBoxNav a {
     text-decoration: none;
     color: black;
     font-size: 0.8rem;
+}
+
+.headerTitle {
+    color: green;
+    text-decoration: none;
 }
