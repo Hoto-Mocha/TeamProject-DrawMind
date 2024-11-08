@@ -1,10 +1,10 @@
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import App from './App.jsx'
-import Layout from './Layout.jsx'
-import Login from './Login.jsx'
-import Register from './Register.jsx'
-import Write from './Write.jsx'
+import Layout from './components/common/Layout.jsx'
+import Login from './pages/Login.jsx'
+import Register from './pages/Register.jsx'
+import Write from './pages/Write.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom'
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import "./Header.css"
+import { TfiMenuAlt } from "react-icons/tfi";
 
 export default function Header() {
   const [show, setShow] = useState(false);
@@ -13,7 +14,7 @@ export default function Header() {
   return (
     <>
       <div className="headerBox">
-        <img className="menuIcon" src="./src/assets/icons/menuIcon.png" onClick={handleShow} />
+        <TfiMenuAlt className="menuIcon" onClick={handleShow}/>
         <Offcanvas show={show} onHide={handleClose} style={{ "width": "70%" }}>
           <Offcanvas.Header closeButton style={{ "borderBottom": "3px solid gray", "backgroundColor":"lightGray" }}>
             <Offcanvas.Title>메뉴</Offcanvas.Title>

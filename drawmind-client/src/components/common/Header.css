@@ -18,6 +18,8 @@
 
 .menuIcon {
     width: 35px;
+    scale: 1.5;
+    color: #55e80f;
 }
 
 .offcanvas {
