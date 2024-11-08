@@ -1,0 +1,67 @@
+.registerHeader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.registerBody {
+  margin-top: 100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.registerForm {
+  width: 70%;
+}
+
+.registerInput {
+  border: 1px solid #BDBDBD;
+}
+
+/* placeholder 색상 변경 */
+.input::placeholder {
+  color: #abb4bd;
+}
+
+/* placeholder 색상 변경 */
+.input::-webkit-input-placeholder{
+  color: #abb4bd;
+}
+
+/* placeholder 색상 변경 */
+.input:-ms-input-placeholder{
+  color: #abb4bd;
+}
+
+.registerFooter {
+  margin-top: 52px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.registerBtn {
+  background-color: #5454e2;
+  color: white;
+  font-size: 0.8rem;
+  width: 70%;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.registerBtn:hover {
+  background-color: rgb(47, 8, 139);
+  color: white;
+  transform: scale(1.05);
+}
+
+.registerBtn:active {
+  transform: scale(0.95);
+}
