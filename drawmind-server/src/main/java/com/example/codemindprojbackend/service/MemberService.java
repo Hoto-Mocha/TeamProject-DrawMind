@@ -28,6 +28,7 @@ public class MemberService {
 
     public MemberResponse.Detail registerMember(MemberRequest.Create request) {
         Member member = new Member(request.getMemberId(), request.getPassword(), MemberType.USER);
+        System.out.println(member);
         memberRepository.save(member);
         return MemberResponse.Detail.of(member);
     }
