@@ -1,14 +1,21 @@
 .headerBox {
-    background-color: #0000B1;
+    background-color: #2525b0;
     width: 100%;
     height: 50px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    border-bottom: 3px solid rgb(0, 89, 178);
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .headerBox h2 {
     color: white;
     text-align: center;
     margin: 0;
+}
+
+.menuIcon {
+    width: 35px;
 }
