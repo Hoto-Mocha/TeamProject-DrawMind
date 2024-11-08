@@ -7,8 +7,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ErrorCode {
     BAD_REQUEST(400),
+    LOGIN_REQUIRED(1003),
+    FILE_NOT_ALLOWED(1004),
+    NO_PERMISSION(1011),
+    NOT_CORRECT(2001),
+    MEMBER_EXISTS(2002),
     NOT_FOUND(2003),
-    NO_PARAMETER(1001);
+    ALREADY_EXISTS(2004),
+    DB_ERROR(5001),
+    MULTIPART_ERROR(5002);
     private final int code;
     private String message;
 }

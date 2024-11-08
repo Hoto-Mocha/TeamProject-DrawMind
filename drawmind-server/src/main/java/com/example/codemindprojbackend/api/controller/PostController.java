@@ -22,10 +22,12 @@ public class PostController {
     private final LogService logService;
     private final Long pageGroupCnt = 20L;
 
-    //TODO : implement page based on pageGroupCnt.
     @PostMapping("/list")
-    public List<PostResponse.Detail> findAllPost(@RequestBody PostRequest.List post_request) {
-        return null;
+    public ApiResponse<List<PostResponse.ListDetail>> findAllPost(@RequestBody PostRequest.List post_request) {
+        Long currentPage = post_request.getCurrentPage();
+        Long start = (currentPage - 1) * pageGroupCnt;
+        Long end = start + pageGroupCnt;
+        return ApiResponse.success(ResponseCode.OK, PostResponse.ListDetail.of(postService.findAllPostsBetween(start, end)));
     }
 
     @PostMapping("/write")
@@ -52,7 +54,7 @@ public class PostController {
 
     @PostMapping("/detail")
     @ResponseBody
-    public PostResponse.Detail findPostById(@RequestBody PostRequest.Info request) {
-        return PostResponse.Detail.of(postService.findPostById(request.getPostSeq()));
+    public ApiResponse<PostResponse.Detail> findPostById(@RequestBody PostRequest.Info request) {
+        return ApiResponse.success(ResponseCode.OK, PostResponse.Detail.of(postService.findPostById(request.getPostSeq())));
     }
 }

@@ -54,4 +54,8 @@ public class PostService {
     public void deleteAllMemosByMemberId(Long memberId) {
         postRepository.deleteAllByMemberId(memberId);
     }
+
+    public List<Post> findAllPostsBetween(Long start, Long end) {
+        return postRepository.findAllPostsBetween(start, end);
+    }
 }
