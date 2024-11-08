@@ -15,7 +15,7 @@ export default function Header() {
     <>
       <div className='header'>
         <div className='titleContainer'>
-          <Link className='headerTitle' to='/'><h2>MindDraw</h2></Link>
+          <Link className='headerTitle' to='/'><img className='titleImage' src='./src/assets/icons/title.png'></img></Link>
         </div>
         <div className="headerBox">
           <TfiMenuAlt className="menuIcon" onClick={handleShow} />

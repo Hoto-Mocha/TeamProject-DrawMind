@@ -25,14 +25,13 @@
     align-items: center;
 }
 
-.titleContainer h2 {
-    color: blue;
-    text-align: center;
-    margin: 0;
+.titleContainer .titleImage {
+    height: 70px;
 }
 
 .menuIcon {
     width: 35px;
+    margin-left: 10px;
     scale: 2.2;
     color: #5454e2;
 }
