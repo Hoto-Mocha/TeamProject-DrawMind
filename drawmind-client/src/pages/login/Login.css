@@ -1,0 +1,86 @@
+.loginHeader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.loginBody {
+  margin-top: 100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginForm {
+  width: 70%;
+}
+
+.loginInput {
+  border: 1px solid #BDBDBD;
+}
+
+/* placeholder 색상 변경 */
+.input::placeholder {
+  color: #abb4bd;
+}
+
+/* placeholder 색상 변경 */
+.input::-webkit-input-placeholder{
+  color: #abb4bd;
+}
+
+/* placeholder 색상 변경 */
+.input:-ms-input-placeholder{
+  color: #abb4bd;
+}
+
+.loginFooter {
+  margin-top: 100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginBtn {
+  background-color: #5454e2;
+  color: white;
+  font-size: 0.8rem;
+  margin-bottom: 16px;
+  width: 70%;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.loginBtn:hover {
+  background-color: rgb(47, 8, 139);
+  color: white;
+  transform: scale(1.05);
+}
+
+.loginBtn:active {
+  transform: scale(0.95);
+}
+
+.registerBtn {
+  background-color: #5454e2;
+  color: white;
+  font-size: 0.8rem;
+  width: 70%;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.registerBtn:hover {
+  background-color: rgb(47, 8, 139);
+  color: white;
+  transform: scale(1.05);
+}
+
+.registerBtn:active {
+  transform: scale(0.95);
+}

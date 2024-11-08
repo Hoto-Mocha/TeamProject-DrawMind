@@ -1,0 +1,75 @@
+.header {
+    position: sticky;
+    top: 0;
+    background-color: white;
+}
+
+.headerBox {
+    width: 100%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid #333399;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.titleContainer {
+    width: 100%;
+    height: 70px;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.titleContainer h2 {
+    color: blue;
+    text-align: center;
+    margin: 0;
+}
+
+.menuIcon {
+    width: 35px;
+    scale: 2.2;
+    color: #5454e2;
+}
+
+.offcanvas {
+    width: 30%;
+}
+
+.generalBtn {
+    background-color: #5454e2;
+    color: white;
+    font-size: 0.8rem;
+    width: 70px;
+    height: 30px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.generalBtn:hover {
+    color: white;
+}
+
+.generalBtn:active {
+    transform: scale(0.95);
+}
+
+.offBoxNav {
+    background-color: #ddddff;
+    border-radius: 5px;
+    margin: 3px;
+    margin-bottom: 0;
+    padding: 5px;
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+}
+
+.headerTitle {
+    color: green;
+    text-decoration: none;
+}
