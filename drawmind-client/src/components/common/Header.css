@@ -8,6 +8,8 @@
     border-bottom: 3px solid #333399;
     padding-left: 10px;
     padding-right: 10px;
+    position: sticky;
+    top: 0;
 }
 
 .headerBox h2 {
