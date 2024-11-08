@@ -16,6 +16,14 @@
   align-items: center;
 }
 
+.loginForm {
+  width: 70%;
+}
+
+.loginInput {
+  border: 1px solid #BDBDBD;
+}
+
 /* placeholder 색상 변경 */
 .input::placeholder {
   color: #abb4bd;

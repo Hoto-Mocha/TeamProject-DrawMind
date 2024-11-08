@@ -14,24 +14,26 @@ function Login() {
 
       {/* 아이디, 비밀번호 입력 부분 */}
       <div className='loginBody'>
-        <InputGroup size="sm" className="mb-3" style={{ border: '1px solid #BDBDBD', width: '70%' }}>
-          <Form.Control
-            className='input'
-            aria-label="Small"
-            aria-describedby="inputGroup-sizing-sm"
-            placeholder='아이디'
-          />
-        </InputGroup>
+        <form className='loginForm'>
+          <InputGroup size="sm" className="mb-3 loginInput">
+            <Form.Control
+              className='input'
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder='아이디'
+            />
+          </InputGroup>
 
-        <InputGroup size="sm" className="mb-3" style={{ border: '1px solid #BDBDBD', width: '70%' }}>
-          <Form.Control
-            className='input'
-            aria-label="Small"
-            aria-describedby="inputGroup-sizing-sm"
-            placeholder='비밀번호'
-            type='password'
-          />
-        </InputGroup>
+          <InputGroup size="sm" className="mb-3 loginInput">
+            <Form.Control
+              className='input'
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder='비밀번호'
+              type='password'
+            />
+          </InputGroup>
+        </form>
       </div>
 
       {/* 로그인, 회원가입 버튼 부분 */}
