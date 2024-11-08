@@ -20,7 +20,7 @@ export default function Header() {
         <div className="headerBox">
           <TfiMenuAlt className="menuIcon" onClick={handleShow} />
           <Offcanvas show={show} onHide={handleClose} style={{ "width": "70%" }}>
-            <Offcanvas.Header closeButton style={{ "borderBottom": "3px solid gray", "backgroundColor": "lightGray" }}>
+            <Offcanvas.Header closeButton style={{ "borderBottom": "3px solid #333399", "backgroundColor": "#5454e2", "color":"white"}}>
               <Offcanvas.Title>메뉴</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body style={{ "padding": "0", "display": "flex", "flexDirection": "column" }}>
@@ -28,7 +28,7 @@ export default function Header() {
               <Link className='offBoxNav' to='/register' onClick={handleClose}>회원 가입</Link>
             </Offcanvas.Body>
           </Offcanvas>
-          <button className="btn btn-sm generalBtn">글쓰기</button>
+          {/* <button className="btn btn-sm generalBtn">글쓰기</button> */}
         </div>
       </div>
     </>

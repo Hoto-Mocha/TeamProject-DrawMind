@@ -51,9 +51,7 @@
 }
 
 .generalBtn:hover {
-    background-color: rgb(47, 8, 139);
     color: white;
-    transform: scale(1.05);
 }
 
 .generalBtn:active {
@@ -61,7 +59,8 @@
 }
 
 .offBoxNav {
-    background-color: lightgray;
+    background-color: #ddddff;
+    border-radius: 5px;
     margin: 3px;
     margin-bottom: 0;
     padding: 5px;
