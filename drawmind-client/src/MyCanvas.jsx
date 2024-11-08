@@ -129,7 +129,6 @@ function MyCanvas({postRef}) {
         <div className="myCanvas" style={{position: "absolute"}}>
             <canvas
                 ref={canvasRef}
-
                 onMouseDown={() => {
                     setDrawing(true);
                     step = [];
