@@ -5,13 +5,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 3px solid #55e80f;
+    border-bottom: 3px solid #333399;
     padding-left: 10px;
     padding-right: 10px;
 }
 
 .headerBox h2 {
-    color: green;
+    color: blue;
     text-align: center;
     margin: 0;
 }
@@ -19,7 +19,7 @@
 .menuIcon {
     width: 35px;
     scale: 1.5;
-    color: #55e80f;
+    color: #5454e2;
 }
 
 .offcanvas {
@@ -27,7 +27,7 @@
 }
 
 .generalBtn {
-    background-color: #55e80f;
+    background-color: #5454e2;
     color: white;
     font-size: 0.8rem;
     width: 60px;
@@ -35,7 +35,7 @@
 }
 
 .generalBtn:hover {
-    background-color: #3fb00b;
+    background-color: rgb(47, 8, 139);
     color: white;
     transform: scale(1.05);
 }
