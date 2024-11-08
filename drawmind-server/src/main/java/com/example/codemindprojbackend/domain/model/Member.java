@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @RequiredArgsConstructor
 public class Member {
     @Id
@@ -18,7 +20,7 @@ public class Member {
     private String password;
 
     @Column(name = "member_type")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
     public Member(String memberId, String password, MemberType memberType) {

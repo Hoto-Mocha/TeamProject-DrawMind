@@ -29,7 +29,7 @@ public class Log {
     @Column(name = "create_dt")
     private LocalDateTime createDt;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "log_type")
     private LogType logType;
 
