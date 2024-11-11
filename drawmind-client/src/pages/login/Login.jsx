@@ -2,7 +2,7 @@ import React from 'react';
 import { FaKey } from "react-icons/fa";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import './Login.css';
+import '../../css/Login.css';
 import { Link } from 'react-router-dom';
 
 function Login() {

@@ -2,7 +2,7 @@ import React from 'react';
 import { FaUser } from "react-icons/fa";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import './Register.css';
+import '../../css/Register.css';
 
 function Register() {
   return (
