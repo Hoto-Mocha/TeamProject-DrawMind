@@ -154,6 +154,24 @@ function MyCanvas({ postRef }) {
                     <p>여기에 포스트 내용이 들어갑니다...</p>
                     <p>여기에 포스트 내용이 들어갑니다...</p>
                     <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
                 </div>
                 <div className="myCanvas">
                     <canvas
@@ -188,7 +206,9 @@ function MyCanvas({ postRef }) {
                     />
                 </div>
             </div>
-            <Palette contextRef={contextRef} undo={undo} redo={redo} clear={clear} />
+            <div className="toolArea">
+                <Palette contextRef={contextRef} undo={undo} redo={redo} clear={clear} />
+            </div>
         </div>
     );
 }
