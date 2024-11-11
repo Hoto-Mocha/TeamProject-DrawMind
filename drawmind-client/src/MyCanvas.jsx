@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Palette from "./Palette.jsx";
 import './css/MyCanvas.css';
 
-function MyCanvas({ postRef }) {
+function MyCanvas({ postRef, editorData, nextBtnHandler }) {
     const canvasRef = useRef(null);
     const [isDrawing, setDrawing] = useState(false);
     const contextRef = useRef(null);
@@ -127,51 +127,12 @@ function MyCanvas({ postRef }) {
 
     return (
         <div className="editorArea">
+            <div>
+                <button onClick={nextBtnHandler}>이전</button>
+            </div>
             <div className="drawEditorArea">
                 <div ref={postRef} className='contentBox'>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                <div dangerouslySetInnerHTML={{ __html : editorData }} />
                 </div>
                 <div className="myCanvas">
                     <canvas
