@@ -3,6 +3,7 @@ import { FaKey } from "react-icons/fa";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import './Login.css';
+import { Link } from 'react-router-dom';
 
 function Login() {
   return (
@@ -39,7 +40,7 @@ function Login() {
       {/* 로그인, 회원가입 버튼 부분 */}
       <div className='loginFooter'>
         <button className="btn btn-md loginBtn">로그인</button>
-        <button className="btn btn-md registerBtn">회원가입</button>
+        <Link to='/register' className="btn btn-md registerBtn">회원가입</Link>
       </div>
     </>
   );
