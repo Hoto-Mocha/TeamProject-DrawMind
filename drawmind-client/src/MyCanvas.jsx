@@ -1,8 +1,8 @@
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import Palette from "./Palette.jsx";
 import './css/MyCanvas.css';
 
-function MyCanvas({postRef}) {
+function MyCanvas({ postRef }) {
     const canvasRef = useRef(null);
     const [isDrawing, setDrawing] = useState(false);
     const contextRef = useRef(null);
@@ -41,8 +41,8 @@ function MyCanvas({postRef}) {
     // 그리기 기능
     const draw = (e) => {
         if (!isDrawing) return;
-        const {offsetX, offsetY} = e.nativeEvent;
-        step.push({offsetX, offsetY, color: contextRef.current.strokeStyle});
+        const { offsetX, offsetY } = e.nativeEvent;
+        step.push({ offsetX, offsetY, color: contextRef.current.strokeStyle });
         contextRef.current.lineTo(offsetX, offsetY);
         contextRef.current.stroke();
         contextRef.current.beginPath();
@@ -56,7 +56,7 @@ function MyCanvas({postRef}) {
         const rect = canvasRef.current.getBoundingClientRect();
         const offsetX = touch.clientX - rect.left;
         const offsetY = touch.clientY - rect.top;
-        step.push({offsetX, offsetY, color: contextRef.current.strokeStyle});
+        step.push({ offsetX, offsetY, color: contextRef.current.strokeStyle });
         contextRef.current.lineTo(offsetX, offsetY);
         contextRef.current.stroke();
         contextRef.current.beginPath();
@@ -79,7 +79,7 @@ function MyCanvas({postRef}) {
         context.beginPath();
 
         for (const path of undoSteps) {
-            for (const {offsetX, offsetY, color, clear} of path) {
+            for (const { offsetX, offsetY, color, clear } of path) {
                 if (clear === true) {
                     context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
                 } else {
@@ -121,43 +121,74 @@ function MyCanvas({postRef}) {
     // 화면 초기화 기능
     const clear = () => {
         contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        setUndoSteps((prevSteps) => [...prevSteps, [{clear: true}]]);
+        setUndoSteps((prevSteps) => [...prevSteps, [{ clear: true }]]);
     };
 
 
     return (
-        <div className="myCanvas" style={{position: "absolute"}}>
-            <canvas
-                ref={canvasRef}
-                onMouseDown={() => {
-                    setDrawing(true);
-                    step = [];
-                }}
-                onMouseUp={() => {
-                    setDrawing(false);
-                    contextRef.current.beginPath();
-                    setUndoSteps((prevSteps) => [...prevSteps, step]);
-                    setRedoSteps([]);
-                }}
-                onMouseMove={draw}
-                onTouchStart={(e) => {
-                    e.preventDefault();
-                    setDrawing(true);
-                    step = [];
-                }}
-                onTouchEnd={(e) => {
-                    e.preventDefault();
-                    setDrawing(false);
-                    contextRef.current.beginPath();
-                    setUndoSteps((prevSteps) => [...prevSteps, step]);
-                    setRedoSteps([]);
-                }}
-                onTouchMove={(e) => {
-                    e.preventDefault();
-                    drawMobile(e)
-                }}
-            />
-            <Palette contextRef={contextRef} undo={undo} redo={redo} clear={clear}/>
+        <div className="editorArea">
+            <div className="drawEditorArea">
+                <div ref={postRef} className='contentBox'>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                </div>
+                <div className="myCanvas">
+                    <canvas
+                        ref={canvasRef}
+                        onMouseDown={() => {
+                            setDrawing(true);
+                            step = [];
+                        }}
+                        onMouseUp={() => {
+                            setDrawing(false);
+                            contextRef.current.beginPath();
+                            setUndoSteps((prevSteps) => [...prevSteps, step]);
+                            setRedoSteps([]);
+                        }}
+                        onMouseMove={draw}
+                        onTouchStart={(e) => {
+                            e.preventDefault();
+                            setDrawing(true);
+                            step = [];
+                        }}
+                        onTouchEnd={(e) => {
+                            e.preventDefault();
+                            setDrawing(false);
+                            contextRef.current.beginPath();
+                            setUndoSteps((prevSteps) => [...prevSteps, step]);
+                            setRedoSteps([]);
+                        }}
+                        onTouchMove={(e) => {
+                            e.preventDefault();
+                            drawMobile(e)
+                        }}
+                    />
+                </div>
+            </div>
+            <Palette contextRef={contextRef} undo={undo} redo={redo} clear={clear} />
         </div>
     );
 }
