@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import MyCanvas from "../MyCanvas.jsx";
+import MyCanvas from "../../MyCanvas.jsx";
 import "../../css/Write.css"
 
 function Write() {
