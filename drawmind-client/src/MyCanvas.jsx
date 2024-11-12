@@ -176,13 +176,13 @@ function MyCanvas({ postRef, editorData, previousBtnHandler }) {
                 <div className="myCanvas">
                     <canvas
                         ref={canvasRef}
-                        onMouseDown={(e) => {
+                        onMouseDown={() => {
                             if (!moveAvailable) {
                                 setDrawing(true);
                                 step = [];
                             }
                         }}
-                        onMouseUp={(e) => {
+                        onMouseUp={() => {
                             if (!moveAvailable) {
                                 setDrawing(false);
                                 contextRef.current.beginPath();
