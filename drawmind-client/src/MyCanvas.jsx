@@ -10,7 +10,7 @@ function MyCanvas({ postRef, editorData, previousBtnHandler }) {
     const [config, setConfig] = useState({
         lineWidth : 1,
         lineCap: 'round',
-        strokeStyle: '#000000',
+        strokeStyle: 'black',
         lineJoin: 'round'
     })
 
