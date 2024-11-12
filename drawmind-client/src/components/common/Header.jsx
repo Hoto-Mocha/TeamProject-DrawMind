@@ -11,8 +11,7 @@ export default function Header() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleLogout = (e) => {
-    console.log('ㅎㅇ');
+  const handleLogout = () => {
     localStorage.removeItem('id');
   };
 
@@ -32,15 +31,23 @@ export default function Header() {
               {
                 localStorage.getItem('id') ?
                 (
-                  <Link className='offBoxNav' to='/login' onClick={(e) => {handleClose; e.preventDefault(); handleLogout(e); window.location.href='/login'}}>로그아웃</Link>
+                  <Link className='offBoxNav' to='/login' onClick={(e) => {handleClose; e.preventDefault(); handleLogout(); window.location.href='/login'}}>로그아웃</Link>
                 )
                 :
                 (
                   <Link className='offBoxNav' to='/login' onClick={handleClose}>로그인</Link>
                 )
               }
-              
-              <Link className='offBoxNav' to='/register' onClick={handleClose}>회원 가입</Link>
+              {
+                (localStorage.getItem('id')) ?
+                (
+                  <Link className='offBoxNav' to='/infoEdit' onClick={handleClose}>회원 정보 수정</Link>
+                )
+                :
+                (
+                  <Link className='offBoxNav' to='/register' onClick={handleClose}>회원 가입</Link>
+                )
+              }
               {
                 localStorage.getItem('id') && 
                 (
