@@ -12,14 +12,13 @@ function BrushSizeController({setIsBrushSizeClicked, brushSizeControllerRef, con
              }}
              style={{
                  position: 'absolute',
-                 width: '10rem',
-                 height: '2rem',
+                 width: '11.2rem',
+                 height: '2.3rem',
                  top: '-2.5rem',
                  left: '-4rem',
                  display: 'flex',
                  alignItems: 'center',
-                 justifyContent: 'space-around',
-
+                 justifyContent: 'space-between',
              }}
         >
             <ScrollBar

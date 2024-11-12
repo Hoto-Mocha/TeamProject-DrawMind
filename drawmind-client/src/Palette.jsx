@@ -36,10 +36,10 @@ function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable
                     })
                 }
                 <BrushSize config={config} setConfig={setConfig}></BrushSize>
-                <FaSquare style={checkStyle} className='palette-button icon'
+                <FaSquare style={checkStyle} className={'palette-button icon'}
                      onClick={() => setConfig({...config, lineCap: 'square', lineJoin: ''})}>
                 </FaSquare>
-                <FaCircle style={checkStyle} className='palette-button icon'
+                <FaCircle style={checkStyle} className={'palette-button icon'}
                      onClick={() => setConfig({...config, lineCap: 'round', lineJoin: 'round'})}>
                 </FaCircle>
             </div>
