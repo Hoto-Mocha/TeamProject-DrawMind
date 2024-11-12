@@ -49,13 +49,13 @@ function MyCanvas({ postRef, editorData, previousBtnHandler }) {
     };
 
     const drawPC = (e) => {
-        if (!isDrawing || !isDrawingMode) return;
+        if (!isDrawing || moveAvailable) return;
         const { offsetX, offsetY } = e.nativeEvent;
         draw(offsetX, offsetY);
     };
 
     const drawMobile = (e) => {
-        if (!isDrawing || !isDrawingMode) return;
+        if (!isDrawing || moveAvailable) return;
         const touch = e.touches[0];
         const rect = canvasRef.current.getBoundingClientRect();
         const offsetX = touch.clientX - rect.left;

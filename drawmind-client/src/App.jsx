@@ -32,9 +32,7 @@ export default function App() {
   function postItem(item) {
     return (
       <>
-        <div className="infoSection"
-             onClick={() => navigator('/write')}
-        >
+        <div className="infoSection">
           <p>{item.postTitle}</p>
           <p>{item.writer}</p>
         </div>

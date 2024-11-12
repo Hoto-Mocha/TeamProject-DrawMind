@@ -5,8 +5,8 @@ import Layout from './components/common/Layout.jsx'
 import Login from './pages/login/Login.jsx'
 import Register from './pages/register/Register.jsx'
 import Write from './pages/write/Write.jsx'
-import Edit from './pages/edit/Edit.jsx'
 import InfoEdit from './pages/infoEdit/InfoEdit.jsx'
+import Edit from "./pages/Edit.jsx";
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
