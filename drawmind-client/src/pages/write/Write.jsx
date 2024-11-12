@@ -3,6 +3,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import MyCanvas from "../../MyCanvas.jsx";
 import "../../css/Write.css"
 import 'ckeditor5/ckeditor5.css';
+import Form from 'react-bootstrap/Form';
 
 import {
     ClassicEditor,
@@ -55,6 +56,7 @@ function Write() {
     const editorContainerRef = useRef(null);
     const editorRef = useRef(null);
     const [isLayoutReady, setIsLayoutReady] = useState(false);
+    const [titleData, setTitleData] = useState('')
     const [editorData, setEditorData] = useState('');
     const [isDrawing, setIsDrawing] = useState(false);
 
@@ -240,9 +242,14 @@ function Write() {
     return (
         <div className='content'>
             {!isDrawing && <div className='textEditArea'>
-                <div>
-                    <input type='text' placeholder='제목'></input>
-                    <button className='btn btn-primary btn-sm' onClick={nextBtnHandler}>다음</button>
+                <div className='editorHeader'>
+                    <Form.Control
+                        value={titleData}
+                        onChange={(e) => setTitleData(e.target.value)}
+                        className='titleInput'
+                        placeholder='제목'
+                    />
+                    <button className='btn btn-primary btn-sm nextBtn' onClick={nextBtnHandler}>다음</button>
                 </div>
                 <div className="main-container">
                     <div className="editor-container editor-container_classic-editor" ref={editorContainerRef}>
@@ -260,7 +267,7 @@ function Write() {
                     </div>
                 </div>
             </div>}
-            
+
             {isDrawing && <MyCanvas
                 postRef={postRef}
                 editorData={editorData}

@@ -8,3 +8,12 @@
 .textEditArea .main-container {
     flex: 1
 }
+
+.editorHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nextBtn {
+    width: 80px;
+}

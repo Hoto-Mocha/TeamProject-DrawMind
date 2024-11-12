@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Color from "./Color.jsx";
 import './css/Palette.css'
-import {FaUndoAlt, FaRedoAlt, FaTrashAlt, FaSquare, FaCircle} from "react-icons/fa";
+import { FaUndoAlt, FaRedoAlt, FaTrashAlt, FaSquare, FaCircle, FaEraser } from "react-icons/fa";
 import { IoMdMove } from "react-icons/io";
 import { RiPencilFill } from "react-icons/ri";
 import ConfirmModal from "./components/common/ConfirmModal.jsx";
@@ -9,7 +9,7 @@ import BrushSize from "./BrushSize.jsx";
 
 const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple', 'black'];
 
-function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable, isErasing, setErasing, previousBtnHandler}) {
+function Palette({ config, setConfig, undo, redo, clear, btnToggle, moveAvailable, isErasing, setErasing, previousBtnHandler }) {
 
     const [show, setShow] = useState(false);
 
@@ -27,33 +27,35 @@ function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable
                     colors.map((color, index) => {
                         return (
                             <Color key={index}
-                                   color={color}
-                                   config={config}
-                                   setConfig={setConfig}
-                                   isErasing={isErasing}
-                                   setErasing={setErasing}
+                                color={color}
+                                config={config}
+                                setConfig={setConfig}
+                                isErasing={isErasing}
+                                setErasing={setErasing}
                             ></Color>
                         )
                     })
                 }
                 <BrushSize config={config} setConfig={setConfig}></BrushSize>
                 <FaSquare style={checkStyle} className={'palette-button icon'}
-                     onClick={() => setConfig({...config, lineCap: 'square', lineJoin: ''})}>
+                    onClick={() => setConfig({ ...config, lineCap: 'square', lineJoin: '' })}>
                 </FaSquare>
                 <FaCircle style={checkStyle} className={'palette-button icon'}
-                     onClick={() => setConfig({...config, lineCap: 'round', lineJoin: 'round'})}>
+                    onClick={() => setConfig({ ...config, lineCap: 'round', lineJoin: 'round' })}>
                 </FaCircle>
-                <div onClick={() => setErasing(prev => !prev)}>지우개</div>
+                <FaEraser className="icon"
+                    onClick={() => setErasing(prev => !prev)}>
+                </FaEraser>
             </div>
             <div className="btnPalette">
                 <div className="tools">
-                    {!moveAvailable && <RiPencilFill className="icon" onClick={btnToggle} style={{scale: '1.2'}}/>}
-                    {moveAvailable && <IoMdMove className="icon" onClick={btnToggle} style={{scale: '1.2'}}/>}
-                    <FaUndoAlt className="icon" onClick={undo}/>
-                    <FaRedoAlt className="icon" onClick={redo}/>
+                    {!moveAvailable && <RiPencilFill className="icon" onClick={btnToggle} style={{ scale: '1.2' }} />}
+                    {moveAvailable && <IoMdMove className="icon" onClick={btnToggle} style={{ scale: '1.2' }} />}
+                    <FaUndoAlt className="icon" onClick={undo} />
+                    <FaRedoAlt className="icon" onClick={redo} />
                 </div>
                 <div className="dangerousTools">
-                    <FaTrashAlt className="icon" onClick={handleShow}/>
+                    <FaTrashAlt className="icon" onClick={handleShow} />
                     <button className="btn btn-danger btn-sm" onClick={previousBtnHandler}>이전</button>
                 </div>
             </div>
