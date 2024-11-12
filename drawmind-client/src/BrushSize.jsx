@@ -30,6 +30,7 @@ function BrushSize({config, setConfig, isErasing}) {
                     height: config.lineWidth,
                     width: config.lineWidth,
                     backgroundColor: isErasing ? 'white' : config.strokeStyle,
+                    border: isErasing ? '1px solid black' : 'none',
                     borderRadius: config.lineCap === 'round' ? config.lineWidth / 2 : 0,
                 }}
             ></div>
