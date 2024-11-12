@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Palette from "./Palette.jsx";
 import './css/MyCanvas.css';
 
-function MyCanvas({ postRef }) {
+function MyCanvas({ postRef, editorData, nextBtnHandler }) {
     const canvasRef = useRef(null);
     const [isDrawing, setDrawing] = useState(false);
     const contextRef = useRef(null);
@@ -11,6 +11,7 @@ function MyCanvas({ postRef }) {
     let step = [];
     const [undoSteps, setUndoSteps] = useState([]);
     const [redoSteps, setRedoSteps] = useState([]);
+    const [moveAvailable, setMoveAvailable] = useState(false);
 
     // 화면 크기 조절에 대응
     const resizeCanvas = () => {
@@ -124,90 +125,75 @@ function MyCanvas({ postRef }) {
         setUndoSteps((prevSteps) => [...prevSteps, [{ clear: true }]]);
     };
 
+    const btnToggle = () => {
+        setMoveAvailable(!moveAvailable)
+        const scrollContainer = document.querySelector(".drawEditorArea");
+        if (moveAvailable && scrollContainer) {
+            scrollContainer.style.overflow = "hidden"; // 스크롤 잠금
+        } else if (scrollContainer) {
+            scrollContainer.style.overflow = "auto"; // 스크롤 복구
+        }
+    }
 
     return (
         <div className="editorArea">
+            <div>
+                <button onClick={nextBtnHandler}>이전</button>
+            </div>
             <div className="drawEditorArea">
                 <div ref={postRef} className='contentBox'>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
-                    <p>여기에 포스트 내용이 들어갑니다...</p>
+                    <div dangerouslySetInnerHTML={{ __html: editorData }} />
                 </div>
                 <div className="myCanvas">
                     <canvas
                         ref={canvasRef}
-                        onMouseDown={() => {
-                            setDrawing(true);
-                            step = [];
+                        onMouseDown={(e) => {
+                            if (!moveAvailable) {
+                                setDrawing(true);
+                                step = [];
+                            }
                         }}
-                        onMouseUp={() => {
-                            setDrawing(false);
-                            contextRef.current.beginPath();
-                            setUndoSteps((prevSteps) => [...prevSteps, step]);
-                            setRedoSteps([]);
+                        onMouseUp={(e) => {
+                            if (!moveAvailable) {
+                                setDrawing(false);
+                                contextRef.current.beginPath();
+                                setUndoSteps((prevSteps) => [...prevSteps, step]);
+                                setRedoSteps([]);
+                            }
                         }}
-                        onMouseMove={draw}
+                        onMouseMove={(e) => {
+                            if (!moveAvailable) {
+                                draw(e);
+                            }
+                        }}
                         onTouchStart={(e) => {
-                            e.preventDefault();
-                            setDrawing(true);
-                            step = [];
+                            if (!moveAvailable) {
+                                e.preventDefault();
+                                setDrawing(true);
+                                step = [];
+                            }
                         }}
                         onTouchEnd={(e) => {
-                            e.preventDefault();
-                            setDrawing(false);
-                            contextRef.current.beginPath();
-                            setUndoSteps((prevSteps) => [...prevSteps, step]);
-                            setRedoSteps([]);
+                            if (!moveAvailable) {
+                                e.preventDefault();
+                                setDrawing(false);
+                                contextRef.current.beginPath();
+                                setUndoSteps((prevSteps) => [...prevSteps, step]);
+                                setRedoSteps([]);
+                            }
                         }}
                         onTouchMove={(e) => {
-                            e.preventDefault();
-                            drawMobile(e)
+                            if (!moveAvailable) {
+                                e.preventDefault();
+                                drawMobile(e);
+                            }
                         }}
                     />
+
                 </div>
             </div>
             <div className="toolArea">
-                <Palette contextRef={contextRef} undo={undo} redo={redo} clear={clear} />
+                <Palette contextRef={contextRef} undo={undo} redo={redo} clear={clear} btnToggle={btnToggle} moveAvailable={moveAvailable} />
             </div>
         </div>
     );
