@@ -7,3 +7,7 @@
     width: 2rem;
     height: 2rem;
 }
+
+.color:hover, .palette-button:hover {
+    cursor: pointer;
+}

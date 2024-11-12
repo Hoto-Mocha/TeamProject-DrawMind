@@ -1,4 +1,3 @@
-import config from "bootstrap/js/src/util/config.js";
 
 function Color({color, config, setConfig}) {
     function handleColorClick() {

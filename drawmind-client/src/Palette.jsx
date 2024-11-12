@@ -20,19 +20,20 @@ function Palette({config, setConfig, undo, redo, clear, isDrawingMode, setDrawin
                     )
                 })
             }
-            <button onClick={undo}>undo</button>
-            <button onClick={redo}>redo</button>
-            <button onClick={clear}>clear</button>
+            <div className={'palette-button'} onClick={undo}>↶</div>
+            <div className={'palette-button'} onClick={redo}>↷</div>
+            <div className={'palette-button'} onClick={clear}>clear</div>
             <BrushSize config={config} setConfig={setConfig}></BrushSize>
-            <button onClick={() => setDrawingMode(!isDrawingMode)}>
+            <div className={'palette-button'} onClick={() => setDrawingMode(!isDrawingMode)}>
                 {isDrawingMode ? "스크롤 모드로 전환" : "드로잉 모드로 전환"}
-            </button>
-            <button onClick={() => setConfig({...config, lineCap: 'square', lineJoin: ''})}>
+            </div>
+            <div className={'palette-button'} onClick={() => setConfig({...config, lineCap: 'square', lineJoin: ''})}>
                 <div>네모</div>
-            </button>
-            <button onClick={() => setConfig({...config, lineCap: 'round', lineJoin: 'round'})}>
+            </div>
+            <div className={'palette-button'}
+                 onClick={() => setConfig({...config, lineCap: 'round', lineJoin: 'round'})}>
                 <div>동그라미</div>
-            </button>
+            </div>
         </div>
     )
 }
