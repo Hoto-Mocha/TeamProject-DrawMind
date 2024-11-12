@@ -7,6 +7,7 @@ import toast, { toastConfig } from 'react-simple-toasts';
 import 'react-simple-toasts/dist/style.css';
 import '../../../node_modules/react-simple-toasts/dist/theme/dark.css';
 import '../../css/InfoEdit.css';
+import { handleLogout } from "../../components/common/Layout"
 
 toastConfig({ 
   theme: 'dark',
@@ -27,6 +28,7 @@ function InfoEdit() {
       return alert('새 비밀번호와 새 비밀번호 확인 값은 같아야 합니다!');
     }
     
+    handleLogout()
     navigate('/login');
     toast('비밀번호가 변경되었습니다! 😊');
   };

@@ -10,3 +10,7 @@ export default function Layout({ children }) {
     </div>
   )
 }
+
+export const handleLogout = () => {
+  localStorage.removeItem('id');
+};

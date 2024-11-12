@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import './Header.css'
 import { TfiMenuAlt } from "react-icons/tfi";
+import { handleLogout } from "./Layout"
 
 export default function Header() {
   const [show, setShow] = useState(false);
@@ -12,10 +13,6 @@ export default function Header() {
   const handleShow = () => setShow(true);
 
   let navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem('id');
-  };
 
   return (
     <>
