@@ -1,7 +1,7 @@
 import {useRef, useState, useEffect} from "react";
 import BrushSizeController from "./BrushSizeController.jsx";
 
-function BrushSize({config, setConfig}) {
+function BrushSize({config, setConfig, isErasing}) {
     const [isBrushSizeClicked, setIsBrushSizeClicked] = useState(false);
     const brushSizeControllerRef = useRef(null);
     const [buttonOffsetX, setButtonOffsetX] = useState(2);
@@ -29,7 +29,7 @@ function BrushSize({config, setConfig}) {
                 style={{
                     height: config.lineWidth,
                     width: config.lineWidth,
-                    backgroundColor: config.strokeStyle,
+                    backgroundColor: isErasing ? 'white' : config.strokeStyle,
                     borderRadius: config.lineCap === 'round' ? config.lineWidth / 2 : 0,
                 }}
             ></div>
