@@ -2,7 +2,6 @@ import React from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import "../../css/Header.css";
 import './Header.css'
 import { TfiMenuAlt } from "react-icons/tfi";
 
