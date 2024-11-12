@@ -1,12 +1,5 @@
 
 
-.screen {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-}
-
 .myCanvas {
     position: absolute;
 }
@@ -43,7 +36,8 @@
     position: absolute;
     background: none;
     width: 100%;
-    border: 1px solid #333399;
+    border: 1px solid #8d0e0e;
+    border-radius: 7px;
     user-select : none;
 }
 

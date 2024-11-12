@@ -26,7 +26,7 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
             canvasElement.width = postElement.clientWidth;
             canvasElement.height = postElement.clientHeight;
 
-            const context = canvasElement.getContext("2d");
+            const context = canvasElement.getContext("2d", {willReadFrequently: true});
             context.scale(1, 1);
             contextRef.current = context;
             contextRef.current.lineWidth = 2;
