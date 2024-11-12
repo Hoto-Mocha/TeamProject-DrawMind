@@ -9,7 +9,7 @@ import BrushSize from "./BrushSize.jsx";
 
 const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple', 'black'];
 
-function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable, nextBtnHandler}) {
+function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable, previousBtnHandler}) {
 
 
     const [show, setShow] = useState(false);
