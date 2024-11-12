@@ -1,4 +1,5 @@
-import "./css/App.css"
+import "./App.css"
+import {useNavigate} from "react-router-dom";
 
 export default function App() {
 
@@ -25,6 +26,8 @@ export default function App() {
     { "postSeq": 20, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
     { "postSeq": 21, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
   ]
+
+  const navigator = useNavigate()
 
   function postItem(item) {
     return (

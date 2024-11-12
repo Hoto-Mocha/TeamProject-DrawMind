@@ -1,25 +1,22 @@
-import { FaCheck } from "react-icons/fa6";
-import "../src/css/Color.css"
+import {FaCheck} from "react-icons/fa";
 
-function Color({color, contextRef, selectedColor, setSelectedColor}) {
+function Color({color, config, setConfig}) {
     function handleColorClick() {
-        contextRef.current.strokeStyle = color;
-        setSelectedColor(color)
+        setConfig({...config, strokeStyle: color});
     }
 
     function isThisColorSelected() {
-        return selectedColor === color;
+        return config.strokeStyle === color;
     }
 
     function isColorYellow() {
-        return selectedColor === "yellow";
+        return config.strokeStyle === "yellow";
     }
 
     const checkStyle = {
         display: isThisColorSelected() ? "block" : "none",
         color: isColorYellow() ? "black" : "white"
     }
-
     return (
         <div
             className="color"

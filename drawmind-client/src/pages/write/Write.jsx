@@ -48,6 +48,7 @@ import {
 } from 'ckeditor5';
 
 import translations from 'ckeditor5/translations/ko.js';
+import ConfirmModal from '../../components/common/ConfirmModal.jsx';
 
 function Write() {
 
@@ -217,12 +218,21 @@ function Write() {
     };
 
     // CKEditor에서 데이터가 변경될 때마다 상태를 업데이트
-	const handleEditorChange = (event, editor) => {
-		setEditorData(editor.getData());
-	};
+    const handleEditorChange = (event, editor) => {
+        setEditorData(editor.getData());
+    };
 
     const nextBtnHandler = () => {
         setIsDrawing(!isDrawing)
+    }
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const previousBtnHandler = () => {
+        handleShow()
     }
 
     const postRef = useRef(null);  // 포스트를 참조하는 useRef
@@ -250,7 +260,21 @@ function Write() {
                     </div>
                 </div>
             </div>}
-            {isDrawing && <MyCanvas postRef={postRef} editorData={editorData} nextBtnHandler={nextBtnHandler}></MyCanvas>}
+            
+            {isDrawing && <MyCanvas
+                postRef={postRef}
+                editorData={editorData}
+                previousBtnHandler={previousBtnHandler}
+            />}
+            <ConfirmModal
+                show={show}
+                handleClose={handleClose}
+                title="정말로 돌아가시겠습니까?"
+                message="이전 화면으로 돌아가면 그린 그림은 모두 사라집니다."
+                noBtnMsg="취소"
+                yesBtnMsg="확인"
+                yesBtnHandler={nextBtnHandler}
+            />
         </div>
     );
 }

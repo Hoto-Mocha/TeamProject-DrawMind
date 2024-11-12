@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import "../../css/Header.css";
+import './Header.css'
 import { TfiMenuAlt } from "react-icons/tfi";
 
 export default function Header() {
@@ -51,7 +52,7 @@ export default function Header() {
                 )
               }
               {
-                localStorage.getItem('id') && 
+                localStorage.getItem('id') &&
                 (
                   <Link className='offBoxNav' to='/write' onClick={handleClose}>글쓰기(임시)</Link>
                 )

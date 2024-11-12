@@ -1,0 +1,10 @@
+.scrollBar {
+    width: 8rem;
+    height: 0.2rem;
+    background: black;
+    border-radius: 0.2rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer; /* 커서가 스크롤바에 있을 때 포인터 모양으로 변경 */
+}

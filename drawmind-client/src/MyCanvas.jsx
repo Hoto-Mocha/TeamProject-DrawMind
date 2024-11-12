@@ -2,18 +2,32 @@ import { useEffect, useRef, useState } from "react";
 import Palette from "./Palette.jsx";
 import './css/MyCanvas.css';
 
-function MyCanvas({ postRef, editorData, nextBtnHandler }) {
+function MyCanvas({ postRef, editorData, previousBtnHandler }) {
     const canvasRef = useRef(null);
     const [isDrawing, setDrawing] = useState(false);
     const contextRef = useRef(null);
     const savedImageRef = useRef(null);
+    const [config, setConfig] = useState({
+        lineWidth : 1,
+        lineCap: 'round',
+        strokeStyle: 'black',
+        lineJoin: 'round'
+    })
 
     let step = [];
     const [undoSteps, setUndoSteps] = useState([]);
     const [redoSteps, setRedoSteps] = useState([]);
     const [moveAvailable, setMoveAvailable] = useState(false);
 
-    // 화면 크기 조절에 대응
+    function brushSetting() {
+        const canvasElement = canvasRef.current;
+        contextRef.current = canvasElement.getContext("2d");
+        contextRef.current.lineWidth = config.lineWidth;  // 선의 두께 설정
+        contextRef.current.lineCap = config.lineCap;  // 선 끝 부분 둥글게 설정
+        contextRef.current.strokeStyle = config.strokeStyle;  // 기본 색상 설정
+        contextRef.current.lineJoin = config.lineJoin
+    }
+
     const resizeCanvas = () => {
         const postElement = postRef.current;
         const canvasElement = canvasRef.current;
@@ -26,42 +40,48 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
             canvasElement.width = postElement.clientWidth;
             canvasElement.height = postElement.clientHeight;
 
-            const context = canvasElement.getContext("2d", {willReadFrequently: true});
+            const context = canvasElement.getContext("2d", { willReadFrequently: true });
             context.scale(1, 1);
-            contextRef.current = context;
-            contextRef.current.lineWidth = 2;
-            contextRef.current.lineCap = "round";
-            contextRef.current.strokeStyle = '#000000'; // 초기 색상 설정
-
             if (savedImageRef.current) {
                 context.putImageData(savedImageRef.current, 0, 0);
             }
         }
     };
 
-    // 그리기 기능
-    const draw = (e) => {
-        if (!isDrawing) return;
+    const drawPC = (e) => {
+        if (!isDrawing || moveAvailable) return;
         const { offsetX, offsetY } = e.nativeEvent;
-        step.push({ offsetX, offsetY, color: contextRef.current.strokeStyle });
-        contextRef.current.lineTo(offsetX, offsetY);
-        contextRef.current.stroke();
-        contextRef.current.beginPath();
-        contextRef.current.moveTo(offsetX, offsetY);
+        draw(offsetX, offsetY);
     };
 
-    // 그리기 기능 on Mobile
-    function drawMobile(e) {
-        if (!isDrawing) return;
+    const drawMobile = (e) => {
+        if (!isDrawing || moveAvailable) return;
         const touch = e.touches[0];
         const rect = canvasRef.current.getBoundingClientRect();
         const offsetX = touch.clientX - rect.left;
         const offsetY = touch.clientY - rect.top;
-        step.push({ offsetX, offsetY, color: contextRef.current.strokeStyle });
+        draw(offsetX, offsetY);
+    };
+
+    function draw(offsetX, offsetY) {
+        // 처음 시작할 때만 moveTo()로 시작점을 설정하고, 그 이후엔 lineTo()로만 이어가도록 합니다.
+        if (step.length === 0) {
+            contextRef.current.beginPath(); // 경로 시작
+            contextRef.current.moveTo(offsetX, offsetY); // 시작점 설정
+        }
+
+        // step 배열에 그려진 점 저장
+        step.push({
+            offsetX,
+            offsetY,
+            color: contextRef.current.strokeStyle,
+            width: contextRef.current.lineWidth,
+            lineCap: contextRef.current.lineCap,
+            lineJoin: contextRef.current.lineJoin,
+        });
+
         contextRef.current.lineTo(offsetX, offsetY);
         contextRef.current.stroke();
-        contextRef.current.beginPath();
-        contextRef.current.moveTo(offsetX, offsetY);
     }
 
     // 창 크기 조절 시 resizeCanvas를 호출함
@@ -80,26 +100,38 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
         context.beginPath();
 
         for (const path of undoSteps) {
-            for (const { offsetX, offsetY, color, clear } of path) {
+            context.beginPath(); // 경로 시작
+            for (const { offsetX, offsetY, color, width, clear, lineCap, lineJoin } of path) {
                 if (clear === true) {
                     context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
                 } else {
                     context.strokeStyle = color;
-                    context.lineTo(offsetX, offsetY);
-                    context.stroke();
-                    context.moveTo(offsetX, offsetY);
+                    context.lineWidth = width;
+                    context.lineJoin = lineJoin
+                    context.lineCap = lineCap
+                    if (path.indexOf({ offsetX, offsetY, color, width, clear }) === 0) {
+                        // 첫 번째 점에서 moveTo로 시작점을 설정
+                        context.moveTo(offsetX, offsetY);
+                    } else {
+                        // 이후 점에서 lineTo로 선을 그립니다.
+                        context.lineTo(offsetX, offsetY);
+                    }
                 }
             }
-            context.beginPath();
+            context.stroke(); // 마지막에 stroke로 선을 화면에 표시합니다.
         }
     };
 
     //
     useEffect(() => {
         drawPath();
+        brushSetting()
     }, [undoSteps]);
 
-    // undo 기능
+    useEffect(() => {
+        brushSetting()
+    }, [config]);
+
     const undo = () => {
         setUndoSteps((prevSteps) => {
             if (prevSteps.length === 0) return prevSteps;
@@ -144,13 +176,13 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
                 <div className="myCanvas">
                     <canvas
                         ref={canvasRef}
-                        onMouseDown={(e) => {
+                        onMouseDown={() => {
                             if (!moveAvailable) {
                                 setDrawing(true);
                                 step = [];
                             }
                         }}
-                        onMouseUp={(e) => {
+                        onMouseUp={() => {
                             if (!moveAvailable) {
                                 setDrawing(false);
                                 contextRef.current.beginPath();
@@ -158,11 +190,7 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
                                 setRedoSteps([]);
                             }
                         }}
-                        onMouseMove={(e) => {
-                            if (!moveAvailable) {
-                                draw(e);
-                            }
-                        }}
+                        onMouseMove={drawPC}
                         onTouchStart={(e) => {
                             if (!moveAvailable) {
                                 e.preventDefault();
@@ -190,7 +218,16 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
                 </div>
             </div>
             <div className="toolArea">
-                <Palette contextRef={contextRef} undo={undo} redo={redo} clear={clear} btnToggle={btnToggle} moveAvailable={moveAvailable} nextBtnHandler={nextBtnHandler} />
+                <Palette
+                    config={config}
+                    setConfig={setConfig}
+                    undo={undo}
+                    redo={redo}
+                    clear={clear}
+                    btnToggle={btnToggle}
+                    moveAvailable={moveAvailable}
+                    previousBtnHandler={previousBtnHandler}
+                />
             </div>
         </div>
     );
