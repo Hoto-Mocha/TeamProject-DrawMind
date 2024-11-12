@@ -17,6 +17,8 @@ function Login() {
       return alert('아이디 또는 비밀번호를 입력해주세요!');
     }
 
+    localStorage.setItem('id', id);
+
     navigate('/');
   };
 
