@@ -32,7 +32,7 @@
 .drawEditorArea {
     flex: 1;
     min-height: 300px;
-    overflow: auto;
+    overflow: hidden;
     border: 3px solid #333399;
     border-radius: 10px;
     margin: 10px;
