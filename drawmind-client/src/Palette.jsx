@@ -17,7 +17,8 @@ function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable
     const handleShow = () => setShow(true);
 
     const checkStyle = {
-        color: config.strokeStyle
+        color: isErasing ? 'white' : config.strokeStyle,
+        border: isErasing ? '1px solid black' : 'none'
     }
 
     return (
@@ -36,7 +37,7 @@ function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable
                         )
                     })
                 }
-                <BrushSize config={config} setConfig={setConfig}></BrushSize>
+                <BrushSize config={config} setConfig={setConfig} isErasing={isErasing} ></BrushSize>
                 <FaSquare style={checkStyle} className={'palette-button icon'}
                      onClick={() => setConfig({...config, lineCap: 'square', lineJoin: ''})}>
                 </FaSquare>
