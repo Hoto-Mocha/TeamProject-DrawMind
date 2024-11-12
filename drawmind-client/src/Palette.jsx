@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Color from "./Color.jsx";
 import './css/Palette.css'
-import { FaUndoAlt, FaRedoAlt, FaTrashAlt } from "react-icons/fa";
+import {FaUndoAlt, FaRedoAlt, FaTrashAlt, FaSquare, FaCircle} from "react-icons/fa";
 import { IoMdMove } from "react-icons/io";
 import { RiPencilFill } from "react-icons/ri";
 import ConfirmModal from "./components/common/ConfirmModal.jsx";
@@ -43,6 +43,7 @@ function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable
                 <FaCircle style={checkStyle} className={'palette-button icon'}
                      onClick={() => setConfig({...config, lineCap: 'round', lineJoin: 'round'})}>
                 </FaCircle>
+                <div onClick={() => setErasing(prev => !prev)}>지우개</div>
             </div>
             <div className="btnPalette">
                 <div className="tools">
