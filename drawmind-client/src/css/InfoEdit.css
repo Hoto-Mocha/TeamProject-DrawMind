@@ -1,0 +1,68 @@
+.infoEditHeader {
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.infoEditBody {
+  margin-top: 100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.infoEditForm {
+  width: 70%;
+}
+
+.infoEditInput {
+  border: 1px solid #BDBDBD;
+}
+
+/* placeholder 색상 변경 */
+.input::placeholder {
+  color: #abb4bd;
+}
+
+/* placeholder 색상 변경 */
+.input::-webkit-input-placeholder{
+  color: #abb4bd;
+}
+
+/* placeholder 색상 변경 */
+.input:-ms-input-placeholder{
+  color: #abb4bd;
+}
+
+.infoEditFooter {
+  margin-top: 52px;
+  margin-bottom: 100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.infoEditBtn {
+  background-color: #5454e2;
+  color: white;
+  font-size: 0.8rem;
+  width: 70%;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.infoEditBtn:hover {
+  background-color: rgb(47, 8, 139);
+  color: white;
+  transform: scale(1.05);
+}
+
+.infoEditBtn:active {
+  transform: scale(0.95);
+}
