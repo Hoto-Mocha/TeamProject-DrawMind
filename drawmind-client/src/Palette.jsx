@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Color from "./Color.jsx";
 import './css/Palette.css'
-import { FaUndoAlt, FaRedoAlt, FaTrashAlt } from "react-icons/fa";
+import { FaUndoAlt, FaRedoAlt, FaTrashAlt, FaSquare, FaCircle  } from "react-icons/fa";
 import { IoMdMove } from "react-icons/io";
 import { RiPencilFill } from "react-icons/ri";
 import ConfirmModal from "./components/common/ConfirmModal.jsx";
@@ -16,6 +16,10 @@ function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const checkStyle = {
+        color: config.strokeStyle
+    }
 
     return (
         <div className='palette'>
@@ -32,14 +36,12 @@ function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable
                     })
                 }
                 <BrushSize config={config} setConfig={setConfig}></BrushSize>
-                <div className={'palette-button'}
+                <FaSquare style={checkStyle} className='palette-button icon'
                      onClick={() => setConfig({...config, lineCap: 'square', lineJoin: ''})}>
-                    <div>네모</div>
-                </div>
-                <div className={'palette-button'}
+                </FaSquare>
+                <FaCircle style={checkStyle} className='palette-button icon'
                      onClick={() => setConfig({...config, lineCap: 'round', lineJoin: 'round'})}>
-                    <div>동그라미</div>
-                </div>
+                </FaCircle>
             </div>
             <div className="btnPalette">
                 <div className="tools">
