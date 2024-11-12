@@ -1,11 +1,10 @@
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import Palette from "./Palette.jsx";
 import './css/MyCanvas.css';
 
-function MyCanvas({postRef}) {
+function MyCanvas({ postRef, editorData, previousBtnHandler }) {
     const canvasRef = useRef(null);
     const [isDrawing, setDrawing] = useState(false);
-    const [isDrawingMode, setDrawingMode] = useState(true); // 드로잉 모드 상태 추가
     const contextRef = useRef(null);
     const savedImageRef = useRef(null);
     const [config, setConfig] = useState({
@@ -18,6 +17,7 @@ function MyCanvas({postRef}) {
     let step = [];
     const [undoSteps, setUndoSteps] = useState([]);
     const [redoSteps, setRedoSteps] = useState([]);
+    const [moveAvailable, setMoveAvailable] = useState(false);
 
     function brushSetting() {
         const canvasElement = canvasRef.current;
@@ -40,7 +40,7 @@ function MyCanvas({postRef}) {
             canvasElement.width = postElement.clientWidth;
             canvasElement.height = postElement.clientHeight;
 
-            const context = canvasElement.getContext("2d");
+            const context = canvasElement.getContext("2d", { willReadFrequently: true });
             context.scale(1, 1);
             if (savedImageRef.current) {
                 context.putImageData(savedImageRef.current, 0, 0);
@@ -84,6 +84,7 @@ function MyCanvas({postRef}) {
         contextRef.current.stroke();
     }
 
+    // 창 크기 조절 시 resizeCanvas를 호출함
     useEffect(() => {
         resizeCanvas();
         window.addEventListener("resize", resizeCanvas);
@@ -92,9 +93,12 @@ function MyCanvas({postRef}) {
         };
     }, []);
 
+    // 저장된 기록을 기반으로 그림 다시 그리기
     const drawPath = () => {
         const context = canvasRef.current.getContext("2d");
         context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        context.beginPath();
+
         for (const path of undoSteps) {
             context.beginPath(); // 경로 시작
             for (const { offsetX, offsetY, color, width, clear, lineCap, lineJoin } of path) {
@@ -118,6 +122,7 @@ function MyCanvas({postRef}) {
         }
     };
 
+    //
     useEffect(() => {
         drawPath();
         brushSetting()
@@ -136,6 +141,7 @@ function MyCanvas({postRef}) {
         });
     };
 
+    // redo 기능
     const redo = () => {
         setRedoSteps((prevRedoSteps) => {
             if (prevRedoSteps.length === 0) return prevRedoSteps;
@@ -145,64 +151,83 @@ function MyCanvas({postRef}) {
         });
     };
 
+    // 화면 초기화 기능
     const clear = () => {
         contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        setUndoSteps((prevSteps) => [...prevSteps, [{clear: true}]]);
+        setUndoSteps((prevSteps) => [...prevSteps, [{ clear: true }]]);
     };
 
+    const btnToggle = () => {
+        setMoveAvailable(!moveAvailable)
+        const scrollContainer = document.querySelector(".drawEditorArea");
+        if (moveAvailable && scrollContainer) {
+            scrollContainer.style.overflow = "hidden"; // 스크롤 잠금
+        } else if (scrollContainer) {
+            scrollContainer.style.overflow = "auto"; // 스크롤 복구
+        }
+    }
+
     return (
-        <div style={{position: "absolute"}}>
-            <canvas
-                className={`myCanvas ${isDrawingMode ? 'drawing' : 'scrolling'}`}
-                ref={canvasRef}
-                style={{touchAction: isDrawingMode ? 'none' : 'auto'}} // 터치 액션 동적 적용
-                onMouseDown={() => {
-                    if (isDrawingMode) {
-                        setDrawing(true);
-                        step = [];
-                    }
-                }}
-                onMouseUp={() => {
-                    if (isDrawingMode) {
-                        setDrawing(false);
-                        contextRef.current.beginPath();
-                        setUndoSteps((prevSteps) => [...prevSteps, step]);
-                        setRedoSteps([]);
-                    }
-                }}
-                onMouseMove={drawPC}
-                onTouchStart={(e) => {
-                    if (isDrawingMode) {
-                        e.preventDefault();
-                        setDrawing(true);
-                        step = [];
-                    }
-                }}
-                onTouchEnd={(e) => {
-                    if (isDrawingMode) {
-                        e.preventDefault();
-                        setDrawing(false);
-                        contextRef.current.beginPath();
-                        setUndoSteps((prevSteps) => [...prevSteps, step]);
-                        setRedoSteps([]);
-                    }
-                }}
-                onTouchMove={(e) => {
-                    if (isDrawingMode) {
-                        e.preventDefault();
-                        drawMobile(e);
-                    }
-                }}
-            />
-            <Palette
-                config={config}
-                setConfig={setConfig}
-                undo={undo}
-                redo={redo}
-                clear={clear}
-                isDrawingMode={isDrawingMode}
-                setDrawingMode={setDrawingMode} // 모드 제어 함수 전달
-            />
+        <div className="editorArea">
+            <div className="drawEditorArea">
+                <div ref={postRef} className='contentBox'>
+                    <div dangerouslySetInnerHTML={{ __html: editorData }} />
+                </div>
+                <div className="myCanvas">
+                    <canvas
+                        ref={canvasRef}
+                        onMouseDown={(e) => {
+                            if (!moveAvailable) {
+                                setDrawing(true);
+                                step = [];
+                            }
+                        }}
+                        onMouseUp={(e) => {
+                            if (!moveAvailable) {
+                                setDrawing(false);
+                                contextRef.current.beginPath();
+                                setUndoSteps((prevSteps) => [...prevSteps, step]);
+                                setRedoSteps([]);
+                            }
+                        }}
+                        onMouseMove={drawPC}
+                        onTouchStart={(e) => {
+                            if (!moveAvailable) {
+                                e.preventDefault();
+                                setDrawing(true);
+                                step = [];
+                            }
+                        }}
+                        onTouchEnd={(e) => {
+                            if (!moveAvailable) {
+                                e.preventDefault();
+                                setDrawing(false);
+                                contextRef.current.beginPath();
+                                setUndoSteps((prevSteps) => [...prevSteps, step]);
+                                setRedoSteps([]);
+                            }
+                        }}
+                        onTouchMove={(e) => {
+                            if (!moveAvailable) {
+                                e.preventDefault();
+                                drawMobile(e);
+                            }
+                        }}
+                    />
+
+                </div>
+            </div>
+            <div className="toolArea">
+                <Palette
+                    config={config}
+                    setConfig={setConfig}
+                    undo={undo}
+                    redo={redo}
+                    clear={clear}
+                    btnToggle={btnToggle}
+                    moveAvailable={moveAvailable}
+                />
+            </div>
         </div>
     );
 }
