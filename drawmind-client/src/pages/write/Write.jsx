@@ -260,6 +260,7 @@ function Write() {
                     </div>
                 </div>
             </div>}
+            
             {isDrawing && <MyCanvas
                 postRef={postRef}
                 editorData={editorData}

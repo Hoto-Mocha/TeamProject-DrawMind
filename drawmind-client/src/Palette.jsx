@@ -8,7 +8,7 @@ import ConfirmModal from "./components/common/ConfirmModal.jsx";
 
 const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple', 'black'];
 
-function Palette({ contextRef, undo, redo, clear, btnToggle, moveAvailable }) {
+function Palette({ contextRef, undo, redo, clear, btnToggle, moveAvailable, previousBtnHandler }) {
 
     const [selectedColor, setSelectedColor] = useState('black')
 
@@ -16,10 +16,6 @@ function Palette({ contextRef, undo, redo, clear, btnToggle, moveAvailable }) {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    const previousBtnHandler = () => {
-        handleShow()
-    }
 
     return (
         <div className='palette'>

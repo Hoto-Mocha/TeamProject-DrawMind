@@ -197,6 +197,7 @@ function MyCanvas({ postRef, editorData, previousBtnHandler }) {
                     clear={clear}
                     btnToggle={btnToggle}
                     moveAvailable={moveAvailable}
+                    previousBtnHandler={previousBtnHandler}
                 />
             </div>
         </div>
