@@ -132,7 +132,7 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
             </div>
             <div className="drawEditorArea">
                 <div ref={postRef} className='contentBox'>
-                <div dangerouslySetInnerHTML={{ __html : editorData }} />
+                    <div dangerouslySetInnerHTML={{ __html: editorData }} />
                 </div>
                 <div className="myCanvas">
                     <canvas

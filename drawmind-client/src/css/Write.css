@@ -1,9 +1,3 @@
-.contentBox {
-    position: absolute;
-    background: none;
-    width: 100%;
-}
-
 .textEditArea {
     width: 100%;
     display: flex;
