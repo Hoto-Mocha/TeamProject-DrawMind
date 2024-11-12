@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Color from "./Color.jsx";
 import './css/Palette.css'
-import { FaUndoAlt, FaRedoAlt, FaTrashAlt, FaSquare, FaCircle  } from "react-icons/fa";
+import { FaUndoAlt, FaRedoAlt, FaTrashAlt } from "react-icons/fa";
 import { IoMdMove } from "react-icons/io";
 import { RiPencilFill } from "react-icons/ri";
 import ConfirmModal from "./components/common/ConfirmModal.jsx";
@@ -9,8 +9,7 @@ import BrushSize from "./BrushSize.jsx";
 
 const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple', 'black'];
 
-function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable, previousBtnHandler}) {
-
+function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable, isErasing, setErasing, previousBtnHandler}) {
 
     const [show, setShow] = useState(false);
 
@@ -31,6 +30,8 @@ function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable
                                    color={color}
                                    config={config}
                                    setConfig={setConfig}
+                                   isErasing={isErasing}
+                                   setErasing={setErasing}
                             ></Color>
                         )
                     })
