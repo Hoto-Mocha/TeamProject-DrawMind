@@ -3,7 +3,7 @@ import './css/Palette.css'
 
 const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple', 'black'];
 
-function Palette({contextRef, undo, redo, clear}) {
+function Palette({contextRef, undo, redo, clear, btnToggle, moveAvailable }) {
     return (
         <div className={'palette'}>
             {/* 색깔 바꾸는 곳 */}
@@ -20,6 +20,8 @@ function Palette({contextRef, undo, redo, clear}) {
             <button onClick={undo}>undo</button>
             <button onClick={redo}>redo</button>
             <button onClick={clear}>clear</button>
+            {!moveAvailable && <button onClick={btnToggle}>move</button>}
+            {moveAvailable && <button onClick={btnToggle}>draw</button>}
         </div>
     )
 }

@@ -11,6 +11,7 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
     let step = [];
     const [undoSteps, setUndoSteps] = useState([]);
     const [redoSteps, setRedoSteps] = useState([]);
+    const [moveAvailable, setMoveAvailable] = useState(false);
 
     // 화면 크기 조절에 대응
     const resizeCanvas = () => {
@@ -124,6 +125,10 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
         setUndoSteps((prevSteps) => [...prevSteps, [{ clear: true }]]);
     };
 
+    const btnToggle = () => {
+        setMoveAvailable(!moveAvailable)
+        console.log(moveAvailable)
+    }
 
     return (
         <div className="editorArea">
@@ -137,38 +142,53 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
                 <div className="myCanvas">
                     <canvas
                         ref={canvasRef}
-                        onMouseDown={() => {
-                            setDrawing(true);
-                            step = [];
+                        onMouseDown={(e) => {
+                            if (!moveAvailable) {
+                                setDrawing(true);
+                                step = [];
+                            }
                         }}
-                        onMouseUp={() => {
-                            setDrawing(false);
-                            contextRef.current.beginPath();
-                            setUndoSteps((prevSteps) => [...prevSteps, step]);
-                            setRedoSteps([]);
+                        onMouseUp={(e) => {
+                            if (!moveAvailable) {
+                                setDrawing(false);
+                                contextRef.current.beginPath();
+                                setUndoSteps((prevSteps) => [...prevSteps, step]);
+                                setRedoSteps([]);
+                            }
                         }}
-                        onMouseMove={draw}
+                        onMouseMove={(e) => {
+                            if (!moveAvailable) {
+                                draw(e);
+                            }
+                        }}
                         onTouchStart={(e) => {
-                            e.preventDefault();
-                            setDrawing(true);
-                            step = [];
+                            if (!moveAvailable) {
+                                e.preventDefault();
+                                setDrawing(true);
+                                step = [];
+                            }
                         }}
                         onTouchEnd={(e) => {
-                            e.preventDefault();
-                            setDrawing(false);
-                            contextRef.current.beginPath();
-                            setUndoSteps((prevSteps) => [...prevSteps, step]);
-                            setRedoSteps([]);
+                            if (!moveAvailable) {
+                                e.preventDefault();
+                                setDrawing(false);
+                                contextRef.current.beginPath();
+                                setUndoSteps((prevSteps) => [...prevSteps, step]);
+                                setRedoSteps([]);
+                            }
                         }}
                         onTouchMove={(e) => {
-                            e.preventDefault();
-                            drawMobile(e)
+                            if (!moveAvailable) {
+                                e.preventDefault();
+                                drawMobile(e);
+                            }
                         }}
                     />
+
                 </div>
             </div>
             <div className="toolArea">
-                <Palette contextRef={contextRef} undo={undo} redo={redo} clear={clear} />
+                <Palette contextRef={contextRef} undo={undo} redo={redo} clear={clear} btnToggle={btnToggle} moveAvailable={moveAvailable} />
             </div>
         </div>
     );
