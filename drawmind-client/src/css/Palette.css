@@ -1,11 +1,18 @@
 .palette {
     display: flex;
     padding: 10px;
+    flex-direction: column;
     justify-content: space-between;
 }
 
-.colorPalette, .btnPalette {
+.colorPalette {
     display: flex;
+    margin-bottom: 10px;
+}
+
+.btnPalette {
+    display: flex;
+    justify-content: space-between;
 }
 
 .icon {
@@ -20,4 +27,13 @@
     width: 2rem;
     height: 2rem;
     border-radius: 1rem;
+    border: 2px solid black;
+}
+
+.tools {
+    display: flex;
+}
+
+.dangerousTools {
+    display: flex;
 }

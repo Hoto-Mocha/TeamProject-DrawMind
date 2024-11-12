@@ -137,9 +137,6 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
 
     return (
         <div className="editorArea">
-            <div>
-                <button onClick={nextBtnHandler}>이전</button>
-            </div>
             <div className="drawEditorArea">
                 <div ref={postRef} className='contentBox'>
                     <div dangerouslySetInnerHTML={{ __html: editorData }} />
@@ -193,7 +190,7 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
                 </div>
             </div>
             <div className="toolArea">
-                <Palette contextRef={contextRef} undo={undo} redo={redo} clear={clear} btnToggle={btnToggle} moveAvailable={moveAvailable} />
+                <Palette contextRef={contextRef} undo={undo} redo={redo} clear={clear} btnToggle={btnToggle} moveAvailable={moveAvailable} nextBtnHandler={nextBtnHandler} />
             </div>
         </div>
     );
