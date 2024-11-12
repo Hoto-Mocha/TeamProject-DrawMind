@@ -1,7 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import Palette from "./Palette.jsx";
 import './css/MyCanvas.css';
-import context from "react-bootstrap/NavbarContext";
 
 function MyCanvas({postRef}) {
     const canvasRef = useRef(null);

@@ -30,7 +30,7 @@ function BrushSize({config, setConfig}) {
                     height: config.lineWidth,
                     width: config.lineWidth,
                     backgroundColor: config.strokeStyle,
-                    borderRadius: config.lineWidth / 2,
+                    borderRadius: config.lineCap === 'round' ? config.lineWidth / 2 : 0,
                 }}
             ></div>
             {

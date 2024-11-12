@@ -28,7 +28,7 @@ function BrushSizeController({setIsBrushSizeClicked, brushSizeControllerRef, con
                 buttonOffsetX={buttonOffsetX}
                 setButtonOffsetX={setButtonOffsetX}
             ></ScrollBar>
-            {config.lineWidth}
+            {Math.round(config.lineWidth)}
         </div>
     )
 }
