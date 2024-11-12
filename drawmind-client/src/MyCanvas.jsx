@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Palette from "./Palette.jsx";
 import './css/MyCanvas.css';
 
-function MyCanvas({ postRef, editorData, nextBtnHandler }) {
+function MyCanvas({ postRef, editorData, previousBtnHandler }) {
     const canvasRef = useRef(null);
     const [isDrawing, setDrawing] = useState(false);
     const contextRef = useRef(null);
@@ -26,7 +26,7 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
             canvasElement.width = postElement.clientWidth;
             canvasElement.height = postElement.clientHeight;
 
-            const context = canvasElement.getContext("2d", {willReadFrequently: true});
+            const context = canvasElement.getContext("2d", { willReadFrequently: true });
             context.scale(1, 1);
             contextRef.current = context;
             contextRef.current.lineWidth = 2;
@@ -190,7 +190,14 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
                 </div>
             </div>
             <div className="toolArea">
-                <Palette contextRef={contextRef} undo={undo} redo={redo} clear={clear} btnToggle={btnToggle} moveAvailable={moveAvailable} nextBtnHandler={nextBtnHandler} />
+                <Palette
+                    contextRef={contextRef}
+                    undo={undo}
+                    redo={redo}
+                    clear={clear}
+                    btnToggle={btnToggle}
+                    moveAvailable={moveAvailable}
+                />
             </div>
         </div>
     );
