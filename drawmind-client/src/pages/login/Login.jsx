@@ -22,8 +22,6 @@ function Login() {
     navigate('/');
   };
 
-  
-
   return (
     <>
       {/* 열쇠 아이콘 부분 */}
