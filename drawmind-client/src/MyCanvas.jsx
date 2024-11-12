@@ -127,7 +127,12 @@ function MyCanvas({ postRef, editorData, nextBtnHandler }) {
 
     const btnToggle = () => {
         setMoveAvailable(!moveAvailable)
-        console.log(moveAvailable)
+        const scrollContainer = document.querySelector(".drawEditorArea");
+        if (moveAvailable && scrollContainer) {
+            scrollContainer.style.overflow = "hidden"; // 스크롤 잠금
+        } else if (scrollContainer) {
+            scrollContainer.style.overflow = "auto"; // 스크롤 복구
+        }
     }
 
     return (
