@@ -40,12 +40,14 @@
 }
 
 .loginFooter {
-  margin-top: 100px;
+  margin-top: 52px;
+  margin-bottom: 100px;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
 }
 
 .loginBtn {

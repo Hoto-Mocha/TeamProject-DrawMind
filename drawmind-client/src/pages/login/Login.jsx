@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaKey } from "react-icons/fa";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { useNavigate, Link } from 'react-router-dom';
 import '../../css/Login.css';
-import { Link } from 'react-router-dom';
 
 function Login() {
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+
+  let navigate = useNavigate();
+
+  // 로그인 버튼 눌렀을 때 이벤트
+  const handleLoginBtn = () => {
+    if (!(id && password)) {
+      return alert('아이디 또는 비밀번호를 입력해주세요!');
+    }
+
+    navigate('/');
+  };
+
   return (
     <>
       {/* 열쇠 아이콘 부분 */}
@@ -22,6 +36,8 @@ function Login() {
               aria-label="Small"
               aria-describedby="inputGroup-sizing-sm"
               placeholder='아이디'
+              value={id}
+              onChange={(e) => setId(e.target.value)}
             />
           </InputGroup>
 
@@ -32,6 +48,8 @@ function Login() {
               aria-describedby="inputGroup-sizing-sm"
               placeholder='비밀번호'
               type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </InputGroup>
         </form>
@@ -39,7 +57,7 @@ function Login() {
 
       {/* 로그인, 회원가입 버튼 부분 */}
       <div className='loginFooter'>
-        <button className="btn btn-md loginBtn">로그인</button>
+        <button className="btn btn-md loginBtn" onClick={handleLoginBtn}>로그인</button>
         <Link to='/register' className="btn btn-md registerBtn">회원가입</Link>
       </div>
     </>
