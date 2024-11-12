@@ -1,12 +1,12 @@
 import {FaCheck} from "react-icons/fa";
 
-function Color({color, config, setConfig}) {
+function Color({color, config, setConfig, isErasing, setErasing}) {
     function handleColorClick() {
         setConfig({...config, strokeStyle: color});
     }
 
     function isThisColorSelected() {
-        return config.strokeStyle === color;
+        return config.strokeStyle === color && !isErasing;
     }
 
     function isColorYellow() {
@@ -21,7 +21,7 @@ function Color({color, config, setConfig}) {
         <div
             className="color"
             style={{ backgroundColor: color }}
-            onClick={handleColorClick}
+            onClick={() => {handleColorClick(); setErasing(false) }}
         ><FaCheck className="paletteIcon" style={checkStyle} /></div>
     )
 }

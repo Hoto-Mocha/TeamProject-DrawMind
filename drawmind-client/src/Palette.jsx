@@ -9,8 +9,7 @@ import BrushSize from "./BrushSize.jsx";
 
 const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple', 'black'];
 
-function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable, previousBtnHandler}) {
-
+function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable, isErasing, setErasing, previousBtnHandler}) {
 
     const [show, setShow] = useState(false);
 
@@ -27,11 +26,13 @@ function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable
                                    color={color}
                                    config={config}
                                    setConfig={setConfig}
+                                   isErasing={isErasing}
+                                   setErasing={setErasing}
                             ></Color>
                         )
                     })
                 }
-                <BrushSize config={config} setConfig={setConfig}></BrushSize>
+                <BrushSize config={config} setConfig={setConfig} isErasing={isErasing}></BrushSize>
                 <div className={'palette-button'}
                      onClick={() => setConfig({...config, lineCap: 'square', lineJoin: ''})}>
                     <div>네모</div>
@@ -39,6 +40,9 @@ function Palette({config, setConfig, undo, redo, clear, btnToggle, moveAvailable
                 <div className={'palette-button'}
                      onClick={() => setConfig({...config, lineCap: 'round', lineJoin: 'round'})}>
                     <div>동그라미</div>
+                </div>
+                <div onClick={(e) => {e.stopPropagation(); setErasing(prev => !prev)}}>
+                    <div>지우개</div>
                 </div>
             </div>
             <div className="btnPalette">
