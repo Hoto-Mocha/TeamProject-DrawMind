@@ -3,7 +3,7 @@ import { FaKey } from "react-icons/fa";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useNavigate, Link } from 'react-router-dom';
-import '../../css/Login.css';
+import './Login.css'
 
 function Login() {
   const [id, setId] = useState('');
@@ -22,7 +22,7 @@ function Login() {
     navigate('/');
   };
 
-  
+
 
   return (
     <>

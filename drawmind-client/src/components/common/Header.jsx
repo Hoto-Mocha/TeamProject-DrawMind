@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import "../../css/Header.css"
+import './Header.css'
 import { TfiMenuAlt } from "react-icons/tfi";
 
 export default function Header() {
@@ -39,10 +39,10 @@ export default function Header() {
                   <Link className='offBoxNav' to='/login' onClick={handleClose}>로그인</Link>
                 )
               }
-              
+
               <Link className='offBoxNav' to='/register' onClick={handleClose}>회원 가입</Link>
               {
-                localStorage.getItem('id') && 
+                localStorage.getItem('id') &&
                 (
                   <Link className='offBoxNav' to='/write' onClick={handleClose}>글쓰기(임시)</Link>
                 )

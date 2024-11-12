@@ -1,23 +1,8 @@
-import { FaCheck } from "react-icons/fa6";
-import "../src/css/Color.css"
+import config from "bootstrap/js/src/util/config.js";
 
-function Color({color, contextRef, selectedColor, setSelectedColor}) {
+function Color({color, config, setConfig}) {
     function handleColorClick() {
-        contextRef.current.strokeStyle = color;
-        setSelectedColor(color)
-    }
-
-    function isThisColorSelected() {
-        return selectedColor === color;
-    }
-
-    function isColorYellow() {
-        return selectedColor === "yellow";
-    }
-
-    const checkStyle = {
-        display: isThisColorSelected() ? "block" : "none",
-        color: isColorYellow() ? "black" : "white"
+        setConfig({...config, strokeStyle: color});
     }
 
     return (
@@ -25,7 +10,7 @@ function Color({color, contextRef, selectedColor, setSelectedColor}) {
             className="color"
             style={{ backgroundColor: color }}
             onClick={handleColorClick}
-        ><FaCheck className="paletteIcon" style={checkStyle} /></div>
+        ></div>
     )
 }
 
