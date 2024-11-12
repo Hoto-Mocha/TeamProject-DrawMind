@@ -232,7 +232,7 @@ function Write() {
             {!isDrawing && <div className='textEditArea'>
                 <div>
                     <input type='text' placeholder='제목'></input>
-                    <button onClick={nextBtnHandler}>다음</button>
+                    <button className='btn btn-primary btn-sm' onClick={nextBtnHandler}>다음</button>
                 </div>
                 <div className="main-container">
                     <div className="editor-container editor-container_classic-editor" ref={editorContainerRef}>
