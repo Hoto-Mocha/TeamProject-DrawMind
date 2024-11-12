@@ -1,7 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import "../../css/Header.css";
 import './Header.css'
 import { TfiMenuAlt } from "react-icons/tfi";
 
@@ -10,6 +11,8 @@ export default function Header() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  let navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem('id');
@@ -31,7 +34,7 @@ export default function Header() {
               {
                 localStorage.getItem('id') ?
                 (
-                  <Link className='offBoxNav' to='/login' onClick={(e) => {handleClose; e.preventDefault(); handleLogout(); window.location.href='/login'}}>로그아웃</Link>
+                  <Link className='offBoxNav' to='/login' onClick={(e) => {handleClose(); e.preventDefault(); handleLogout(); navigate('/login')}}>로그아웃</Link>
                 )
                 :
                 (
