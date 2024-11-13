@@ -7,8 +7,9 @@ import toast, { toastConfig } from 'react-simple-toasts';
 import 'react-simple-toasts/dist/style.css';
 import '../../../node_modules/react-simple-toasts/dist/theme/dark.css';
 import '../../css/Register.css';
+import API from '../../API';
 
-toastConfig({ 
+toastConfig({
   theme: 'dark',
 });
 
@@ -27,9 +28,13 @@ function Register() {
     if (password != passwordConfirm) {
       return alert('비밀번호와 비밀번호확인 값은 같아야 합니다!');
     }
-    
-    navigate('/login');
-    toast('회원가입에 성공하였습니다! 😊');
+
+    API.join(id, password)
+      .then((res) => {
+        console.log(res.data)
+        navigate('/login');
+        toast('회원가입에 성공하였습니다! 😊');
+      })
   };
 
   return (
