@@ -13,14 +13,14 @@ public class MemberResponse {
     public static class Detail {
         private Long memberSeq;
         private String memberId;
-        private String password;
 
         public static MemberResponse.Detail of(Member member) {
             return Detail.builder()
                     .memberSeq(member.getSeq())
                     .memberId(member.getMemberId())
-                    .password(member.getPassword())
                     .build();
         }
     }
+
+
 }

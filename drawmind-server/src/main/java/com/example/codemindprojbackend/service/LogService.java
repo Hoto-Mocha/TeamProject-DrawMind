@@ -20,7 +20,7 @@ public class LogService {
     private MemberService memberService;
 
     public void saveLog(LogType logType, Long memberSeq) {
-        Member member = memberService.findMemberById(memberSeq);
+        Member member = memberService.findMemberBySeq(memberSeq);
         Log log = new Log(logType, member);
         System.out.println(log);
         logRepository.save(log);

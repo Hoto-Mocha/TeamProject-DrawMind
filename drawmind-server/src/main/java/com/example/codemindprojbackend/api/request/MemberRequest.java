@@ -40,11 +40,4 @@ public class MemberRequest {
         private String password;
     }
 
-    @Getter
-    @Setter
-    @ToString
-    @RequiredArgsConstructor
-    public static class Info {
-        private Long memberSeq;
-    }
 }

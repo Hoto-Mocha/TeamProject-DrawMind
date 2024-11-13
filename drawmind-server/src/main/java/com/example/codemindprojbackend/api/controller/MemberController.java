@@ -5,6 +5,7 @@ import com.example.codemindprojbackend.api.response.ApiResponse;
 import com.example.codemindprojbackend.api.response.MemberResponse;
 import com.example.codemindprojbackend.api.response.ResponseCode;
 import com.example.codemindprojbackend.domain.model.LogType;
+import com.example.codemindprojbackend.domain.model.Member;
 import com.example.codemindprojbackend.service.LogService;
 import com.example.codemindprojbackend.service.MemberService;
 import com.example.codemindprojbackend.service.PostService;
@@ -32,10 +33,10 @@ public class MemberController {
         return ApiResponse.success(ResponseCode.OK, memberService.updateMember(member_request, member_request.getMemberSeq()));
     }
 
-    @PostMapping("/info")
+    @PostMapping("/login")
     @ResponseBody
-    public MemberResponse.Detail findMemberOne(@RequestBody MemberRequest.Info member_info) {
-        return MemberResponse.Detail.of(memberService.findMemberById(member_info.getMemberSeq()));
+    public ApiResponse<MemberResponse.Detail> login(@RequestBody MemberRequest.Login member_request) {
+        return ApiResponse.success(ResponseCode.OK, memberService.findMemberById(member_request.getMemberId()));
     }
 
     @PostMapping("/quit")

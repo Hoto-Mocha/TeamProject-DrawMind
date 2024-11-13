@@ -17,9 +17,15 @@ public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
 
-    public Member findMemberById(Long id) {
+    public Member findMemberBySeq(Long id) {
         return memberRepository.findById(id)
                 .orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND, "Could not find member"));
+    }
+
+    public MemberResponse.Detail findMemberById(String id) {
+        Member member = memberRepository.findByMemberId(id)
+               .orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND, "Could not find member"));
+        return MemberResponse.Detail.of(member);
     }
 
     public void deleteById(Long id) {
