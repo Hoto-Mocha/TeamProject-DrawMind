@@ -26,19 +26,20 @@ function Register() {
   const [modalMsg, setModalMsg] = useState('');
   const [modalTitle, setModalTitle] = useState("경고");
   const handleClose = () => setModalShow(false);
-  const handleShow = () => setModalShow(true);
+  const handleShow = (message) => {
+    setModalMsg(message)
+    setModalShow(true)
+  };
   //모달 처리 부분 끝
 
   // 회원가입 버튼 눌렀을 때 이벤트
   const handleRegisterBtn = () => {
     if (!(id && password && passwordConfirm)) {
-      setModalMsg('모든 값을 채워주세요!')
-      handleShow()
+      handleShow('모든 값을 채워주세요!')
       return
     }
     if (password != passwordConfirm) {
-      setModalMsg('비밀번호와 비밀번호확인 값은 같아야 합니다!')
-      handleShow()
+      handleShow('비밀번호와 비밀번호확인 값은 같아야 합니다!')
       return
     }
 
@@ -102,9 +103,9 @@ function Register() {
       <div className='registerFooter'>
         <button className="btn btn-md registerBtn" onClick={handleRegisterBtn}>회원가입</button>
       </div>
-      
+
       {/* 모달 */}
-      <AlertModal show={modalShow} handleClose={handleClose} title={modalTitle} message={modalMsg}/>
+      <AlertModal show={modalShow} handleClose={handleClose} title={modalTitle} message={modalMsg} />
     </>
   );
 }

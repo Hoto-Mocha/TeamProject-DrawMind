@@ -18,14 +18,16 @@ function Login() {
   const [modalMsg, setModalMsg] = useState('');
   const [modalTitle, setModalTitle] = useState("경고");
   const handleClose = () => setModalShow(false);
-  const handleShow = () => setModalShow(true);
+  const handleShow = (message) => {
+    setModalMsg(message)
+    setModalShow(true)
+  };
   //모달 처리 부분 끝
 
   // 로그인 버튼 눌렀을 때 이벤트
   const handleLoginBtn = () => {
     if (!(id && password)) {
-      setModalMsg('아이디 또는 비밀번호를 입력해주세요!')
-      handleShow()
+      handleShow('아이디 또는 비밀번호를 입력해주세요!')
       return
     }
 
@@ -40,8 +42,7 @@ function Login() {
           navigate('/');
         }
         else {
-          setModalMsg('아이디 또는 비밀번호가 맞지 않습니다.')
-          handleShow()
+          handleShow('아이디 또는 비밀번호가 맞지 않습니다.')
           return
         }
 

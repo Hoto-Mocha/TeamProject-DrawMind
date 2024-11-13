@@ -20,25 +20,26 @@ function InfoEdit() {
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
   let navigate = useNavigate();
-  
+
   //모달 처리 부분
   const [modalShow, setModalShow] = useState(false);
   const [modalMsg, setModalMsg] = useState('');
   const [modalTitle, setModalTitle] = useState("경고");
   const handleClose = () => setModalShow(false);
-  const handleShow = () => setModalShow(true);
+  const handleShow = (message) => {
+    setModalMsg(message)
+    setModalShow(true)
+  };
   //모달 처리 부분 끝
 
   // 비밀번호 변경 버튼 눌렀을 때 이벤트
   const handleInfoEditBtn = () => {
     if (!(password && passwordConfirm)) {
-      setModalMsg('모든 값을 채워주세요!')
-      handleShow()
+      handleShow('모든 값을 채워주세요!')
       return
     }
     if (password != passwordConfirm) {
-      setModalMsg('새 비밀번호와 새 비밀번호 확인 값은 같아야 합니다!')
-      handleShow()
+      handleShow('새 비밀번호와 새 비밀번호 확인 값은 같아야 합니다!')
       return
     }
 
@@ -94,7 +95,7 @@ function InfoEdit() {
       </div>
 
       {/* 모달 */}
-      <AlertModal show={modalShow} handleClose={handleClose} title={modalTitle} message={modalMsg}/>
+      <AlertModal show={modalShow} handleClose={handleClose} title={modalTitle} message={modalMsg} />
     </>
   );
 }
