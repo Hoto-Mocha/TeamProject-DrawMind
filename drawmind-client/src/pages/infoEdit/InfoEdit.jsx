@@ -45,18 +45,23 @@ function InfoEdit() {
 
     API.memberUpdate(localStorage.getItem('memberSeq'), password)
       .then((res) => {
-        handleLogout()
-        navigate('/login');
-        toast('비밀번호가 변경되었습니다! 😊');
+        if (res.data.code === 0) {
+          handleLogout()
+          navigate('/login');
+          toast('비밀번호가 변경되었습니다! 😊');
+        }
+        else {
+          toast('비밀번호 변경에 실패했습니다.');
+        }
       })
   };
 
   // 회원탈퇴 버튼 눌렀을 때 이벤트
   const handleQuitBtn = () => {
     API.memberQuit(localStorage.getItem('memberSeq'))
-    .then((res) => {
-      toast('회원탈퇴를 완료하였습니다.');
-    })
+      .then((res) => {
+        toast('회원탈퇴를 완료하였습니다.');
+      })
   };
 
   return (
