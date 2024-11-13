@@ -27,8 +27,8 @@ export default {
     detail(postSeq) { //게시글 상세
         return instance.post('/api/post/detail', {postSeq: postSeq});
     },
-    write(memberSeq, title, content, imageURL) { //게시글 작성
-        return instance.post('/api/post/write', {memberSeq: memberSeq, title: title, content: content, imageURL: imageURL});
+    write(memberSeq, title, content, imageURL, postWidth) { //게시글 작성
+        return instance.post('/api/post/write', {memberSeq: memberSeq, title: title, content: content, imageURL: imageURL, postWidth: postWidth});
     },
     update(postSeq, title, content) { //게시글 수정
         return instance.post('/api/post/update', {postSeq: postSeq, title: title, content: content});
