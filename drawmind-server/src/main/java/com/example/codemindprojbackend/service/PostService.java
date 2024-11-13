@@ -51,8 +51,8 @@ public class PostService {
                 .orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND, "Memo not found"));
     }
 
-    public void deleteAllMemosByMemberId(Long memberId) {
-        postRepository.deleteAllByMemberId(memberId);
+    public void deleteAllPostsByMemberSeq(Long memberId) {
+        postRepository.deleteAllByMemberSeq(memberId);
     }
 
     public List<Post> findAllPostsBetween(Long start, Long end) {

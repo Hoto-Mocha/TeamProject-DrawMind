@@ -11,8 +11,8 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
     @Modifying
     @Transactional
-    @Query("DELETE FROM Post p WHERE p.writer.memberId = :memberId")
-    void deleteAllByMemberId(Long memberId);
+    @Query("DELETE FROM Post p WHERE p.writer.seq = :seq")
+    void deleteAllByMemberSeq(Long seq);
 
     @Query("SELECT p FROM Post p ORDER BY p.writeDt DESC")
     List<Post> findAllPostsInReverseOrder();

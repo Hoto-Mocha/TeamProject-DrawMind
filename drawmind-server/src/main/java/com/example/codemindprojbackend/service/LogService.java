@@ -26,7 +26,7 @@ public class LogService {
         logRepository.save(log);
     }
 
-    public void deleteAllLogsByMemberId(Long memberId) {
-        logRepository.deleteAllByMemberId(memberId);
+    public void deleteAllLogsByMemberSeq(Long seq) {
+        logRepository.deleteAllByMemberSeq(seq);
     }
 }

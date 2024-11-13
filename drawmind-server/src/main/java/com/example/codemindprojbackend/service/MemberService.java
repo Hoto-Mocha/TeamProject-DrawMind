@@ -27,6 +27,11 @@ public class MemberService {
                 .orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND, "Could not find member"));
     }
 
+    public Member checkMemberById(String id) {
+        return memberRepository.findByMemberId(id)
+               .orElse(null);
+    }
+
     public void deleteById(Long id) {
         memberRepository.deleteById(id);
     }

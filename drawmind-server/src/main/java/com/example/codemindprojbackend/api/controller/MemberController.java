@@ -25,7 +25,12 @@ public class MemberController {
     @PostMapping("/join")
     @ResponseBody
     public ApiResponse<MemberResponse.Detail> registerMember(@RequestBody MemberRequest.Create request) {
-        return ApiResponse.success(ResponseCode.OK, memberService.registerMember(request));
+        if(memberService.checkMemberById(request.getMemberId()) == null) {
+            memberService.registerMember(request);
+            return ApiResponse.success(ResponseCode.OK, memberService.registerMember(request));
+        } else {
+            throw new BusinessLogicException(ErrorCode.MEMBER_EXISTS, "Member Already exist.");
+        }
     }
 
     @PostMapping("/update")
@@ -51,8 +56,8 @@ public class MemberController {
     @ResponseBody
     public ApiResponse<Void> deleteMember(@RequestBody MemberRequest.Delete member_request) {
         Long currentSeq = member_request.getMemberSeq();
-        logService.deleteAllLogsByMemberId(currentSeq);
-        postService.deleteAllMemosByMemberId(currentSeq);
+        logService.deleteAllLogsByMemberSeq(currentSeq);
+        postService.deleteAllPostsByMemberSeq(currentSeq);
         memberService.deleteById(currentSeq);
         return ApiResponse.success(ResponseCode.OK);
     }

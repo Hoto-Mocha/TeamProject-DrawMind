@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
-    BAD_REQUEST(400),
     LOGIN_REQUIRED(1003),
     FILE_NOT_ALLOWED(1004),
     NO_PERMISSION(1011),
