@@ -8,6 +8,7 @@ import ConfirmModal from "./components/common/ConfirmModal.jsx";
 import BrushSize from "./BrushSize.jsx";
 import { goToPreviewPage } from "../src/pages/write/Write.jsx"
 import { useNavigate } from "react-router-dom";
+import API from "./API.jsx";
 
 const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple', 'black'];
 
@@ -30,7 +31,7 @@ function Palette({ config, setConfig, undo, redo, clear, btnToggle, moveAvailabl
         if (canvas) {
             const imageURL = canvas.toDataURL('image/png')
             console.log(imageURL)
-            
+            API.write()
             goToPreviewPage(navigate, titleData, editorData, imageURL, editorSize)
         }
     }

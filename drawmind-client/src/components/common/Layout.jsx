@@ -12,5 +12,6 @@ export default function Layout({ children }) {
 }
 
 export const handleLogout = () => {
-  localStorage.removeItem('id');
+  localStorage.removeItem('memberId');
+  localStorage.removeItem('memberSeq');
 };

@@ -28,7 +28,7 @@ export default function Header() {
             </Offcanvas.Header>
             <Offcanvas.Body style={{ "padding": "0", "display": "flex", "flexDirection": "column" }}>
               {
-                localStorage.getItem('id') ?
+                localStorage.getItem('memberId') ?
                 (
                   <Link className='offBoxNav' to='/login' onClick={(e) => {handleClose(); e.preventDefault(); handleLogout(); navigate('/login')}}>로그아웃</Link>
                 )
@@ -38,7 +38,7 @@ export default function Header() {
                 )
               }
               {
-                (localStorage.getItem('id')) ?
+                (localStorage.getItem('memberId')) ?
                 (
                   <Link className='offBoxNav' to='/infoEdit' onClick={handleClose}>회원 정보 수정</Link>
                 )
@@ -48,7 +48,7 @@ export default function Header() {
                 )
               }
               {
-                localStorage.getItem('id') &&
+                localStorage.getItem('memberId') &&
                 (
                   <Link className='offBoxNav' to='/write' onClick={handleClose}>글쓰기(임시)</Link>
                 )

@@ -9,31 +9,31 @@ export default {
     test() { // 테스트
         return instance.get('/api/test');
     },
-    login(id, pw) { //로그인
+    memberLogin(id, pw) { //로그인
         return instance.post('/api/member/login', {memberId: id, password: pw});
     },
-    join(id, pw) { //회원가입
+    memberJoin(id, pw) { //회원가입
         return instance.post('/api/member/join', {memberId: id, password: pw});
     },
-    update(memberSeq, pw) { //회원정보수정
-        return instance.post('/api/member/update', {memberSeq: memberSeq, password: pw});
+    memberUpdate(memberSeq, pw) { //회원정보수정
+        return instance.post('/api/member/update', {memberSeq, password: pw});
     },
-    quit(memberSeq) { //회원탈퇴
-        return instance.post('/api/member/quit', {memberSeq: memberSeq});
+    memberQuit(memberSeq) { //회원탈퇴
+        return instance.post('/api/member/quit', {memberSeq});
     },
-    list(currentPage) { //게시글 리스트
-        return instance.post('/api/post/list', {currentPage: currentPage});
+    postList(currentPage) { //게시글 리스트
+        return instance.post('/api/post/list', {currentPage});
     },
-    detail(postSeq) { //게시글 상세
-        return instance.post('/api/post/detail', {postSeq: postSeq});
+    postDetail(postSeq) { //게시글 상세
+        return instance.post('/api/post/detail', {postSeq});
     },
-    write(memberSeq, title, content, imageURL, postWidth) { //게시글 작성
-        return instance.post('/api/post/write', {memberSeq: memberSeq, title: title, content: content, imageURL: imageURL, postWidth: postWidth});
+    postWrite(memberSeq, title, content, imageURL, postWidth) { //게시글 작성
+        return instance.post('/api/post/write', {memberSeq, title, content, imageURL, postWidth});
     },
-    update(postSeq, title, content) { //게시글 수정
-        return instance.post('/api/post/update', {postSeq: postSeq, title: title, content: content});
+    postUpdate(postSeq, title, content) { //게시글 수정
+        return instance.post('/api/post/update', {postSeq, title, content});
     },
-    delete(postSeq) { //게시글 삭제
-        return instance.post('/api/post/delete', {postSeq: postSeq});
+    postDelete(postSeq) { //게시글 삭제
+        return instance.post('/api/post/delete', {postSeq});
     }
 }

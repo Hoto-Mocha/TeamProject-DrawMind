@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useNavigate, Link } from 'react-router-dom';
 import '../../css/Login.css';
+import API from '../../API';
 
 function Login() {
   const [id, setId] = useState('');
@@ -17,9 +18,15 @@ function Login() {
       return alert('아이디 또는 비밀번호를 입력해주세요!');
     }
 
-    localStorage.setItem('id', id);
+    API.memberLogin(id, password)
+    .then((res) => {
+      console.log(res.data)
+      
+      localStorage.setItem('memberSeq', JSON.stringify(res.data.data.memberSeq));
+      localStorage.setItem('memberId', JSON.stringify(res.data.data.memberId));
 
-    navigate('/');
+      navigate('/');
+    })
   };
 
   return (

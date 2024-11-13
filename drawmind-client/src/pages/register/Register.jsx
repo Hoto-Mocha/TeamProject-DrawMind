@@ -29,7 +29,7 @@ function Register() {
       return alert('비밀번호와 비밀번호확인 값은 같아야 합니다!');
     }
 
-    API.join(id, password)
+    API.memberJoin(id, password)
       .then((res) => {
         console.log(res.data)
         navigate('/login');

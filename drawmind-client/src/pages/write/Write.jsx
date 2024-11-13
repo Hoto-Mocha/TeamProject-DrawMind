@@ -299,7 +299,7 @@ function Write() {
 }
 
 export function goToPreviewPage(navigate, title, content, imgURL, editorSize) {
-    let writer = localStorage.getItem('id');
+    let writer = localStorage.getItem('memberId');
     let date = new Date().toLocaleDateString()
     const data = { writer, date, title, content, imgURL, editorSize };
     navigate('/contentview', { state: data });
