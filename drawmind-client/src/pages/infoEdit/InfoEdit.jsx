@@ -59,9 +59,11 @@ function InfoEdit() {
   // 회원탈퇴 버튼 눌렀을 때 이벤트
   const handleQuitBtn = () => {
     API.memberQuit(localStorage.getItem('memberSeq'))
-      .then((res) => {
-        toast('회원탈퇴를 완료하였습니다.');
-      })
+    .then((res) => {
+      handleLogout();
+      navigate('/');
+      toast('회원탈퇴를 완료하였습니다.');
+    })
   };
 
   return (
