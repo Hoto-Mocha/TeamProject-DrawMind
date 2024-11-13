@@ -37,10 +37,13 @@ public class Post {
     @Column(columnDefinition = "TEXT", name = "img_url")
     private String imgURL;
 
-    public Post(Member writer, String title, String content, String imgURL) {
+    private Long postWidth;
+
+    public Post(Member writer, String title, String content, String imgURL, Long postWidth) {
         this.writer = writer;
         this.title = title;
         this.content = content;
         this.imgURL = imgURL;
+        this.postWidth = postWidth;
     }
 }

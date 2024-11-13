@@ -28,7 +28,7 @@ public class PostService {
         System.out.println(request);
         Member member = memberRepository.findById(request.getMemberSeq())
                 .orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND, "Member not found"));
-        Post post = new Post(member, request.getTitle(), request.getContent(), request.getImageURL());
+        Post post = new Post(member, request.getTitle(), request.getContent(), request.getImageURL(), request.getPostWidth());
         postRepository.save(post);
         return PostResponse.WriteResponse.of(post);
     }

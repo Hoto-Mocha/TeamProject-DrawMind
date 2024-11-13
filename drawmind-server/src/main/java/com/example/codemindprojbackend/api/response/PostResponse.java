@@ -45,21 +45,23 @@ public class PostResponse {
         private String content;
         private String imgURL;
         private LocalDateTime regDate;
+        private Long postWidth;
 
         public static Detail of(Post post) {
             return Detail.builder()
-                   .postTitle(post.getTitle())
-                   .writer(post.getWriter().getMemberId())
-                   .content(post.getContent())
-                   .imgURL(post.getImgURL())
-                   .regDate(post.getWriteDt())
-                   .build();
+                    .postTitle(post.getTitle())
+                    .writer(post.getWriter().getMemberId())
+                    .content(post.getContent())
+                    .imgURL(post.getImgURL())
+                    .regDate(post.getWriteDt())
+                    .postWidth(post.getPostWidth())
+                    .build();
         }
 
         public static List<Detail> of(List<Post> posts) {
             return posts.stream()
-                   .map(PostResponse.Detail::of)
-                   .collect(Collectors.toList());
+                    .map(PostResponse.Detail::of)
+                    .collect(Collectors.toList());
         }
     }
 
@@ -71,8 +73,8 @@ public class PostResponse {
 
         public static WriteResponse of(Post post) {
             return WriteResponse.builder()
-                   .postSeq(post.getSeq())
-                   .build();
+                    .postSeq(post.getSeq())
+                    .build();
         }
     }
 

@@ -12,6 +12,7 @@ public class PostRequest {
         private String title;
         private String content;
         private String imageURL;
+        private Long postWidth;
     }
 
     @Getter
