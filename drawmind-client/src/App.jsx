@@ -1,13 +1,11 @@
+import API from "./API";
 import "./App.css"
-import {useNavigate} from "react-router-dom";
 
 export default function App() {
 
   const data = [
     { "postSeq": 1, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:10" },
   ]
-
-  const navigator = useNavigate()
 
   function postItem(item) {
     return (
@@ -21,12 +19,20 @@ export default function App() {
     )
   }
 
+  const testBtnHandler =  () => {
+    API.test()
+    .then((res) => {
+      console.log(res.data)
+    })
+  }
+
   return (
     <>
       <div className="postList">
         {data.map((item, index) => {
           return (<div className="postListItem" key={index}>{postItem(item)}</div>)
         })}
+        <button className="btn btn-primary" onClick={testBtnHandler}>API 테스트</button>
       </div>
     </>
   )
