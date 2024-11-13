@@ -10,6 +10,7 @@ import '../../css/InfoEdit.css';
 import { handleLogout } from "../../components/common/Layout"
 import API from '../../API';
 import AlertModal from '../../components/common/AlertModal';
+import ConfirmModal from '../../components/common/ConfirmModal';
 
 toastConfig({
   theme: 'dark',
@@ -30,6 +31,10 @@ function InfoEdit() {
     setModalMsg(message)
     setModalShow(true)
   };
+
+  const [confirmModalShow, setConfirmModalShow] = useState(false);
+  const confirmModalHandleClose = () => setConfirmModalShow(false);
+  const confirmModalHandleShow = () => setConfirmModalShow(true);
   //모달 처리 부분 끝
 
   // 비밀번호 변경 버튼 눌렀을 때 이벤트
@@ -59,11 +64,19 @@ function InfoEdit() {
   // 회원탈퇴 버튼 눌렀을 때 이벤트
   const handleQuitBtn = () => {
     API.memberQuit(localStorage.getItem('memberSeq'))
-    .then((res) => {
-      handleLogout();
-      navigate('/');
-      toast('회원탈퇴를 완료하였습니다.');
-    })
+      .then((res) => {
+        if (res.data.code === 0) {
+          handleLogout();
+          navigate('/');
+          toast('회원탈퇴를 완료하였습니다.');
+        }
+        else {
+          toast('회원탈퇴가 완료되지 않았습니다.')
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   };
 
   return (
@@ -105,11 +118,25 @@ function InfoEdit() {
       {/* 비밀번호 변경 버튼 부분 */}
       <div className="infoEditFooter">
         <button className="btn btn-md infoEditBtn" onClick={handleInfoEditBtn}>비밀번호 변경</button>
-        <button className="btn btn-md quit" onClick={handleQuitBtn}>회원탈퇴</button>
+        <button className="btn btn-md quit" onClick={confirmModalHandleShow}>회원탈퇴</button>
       </div>
 
       {/* 모달 */}
-      <AlertModal show={modalShow} handleClose={handleClose} title={modalTitle} message={modalMsg} />
+      <AlertModal
+        show={modalShow}
+        handleClose={handleClose}
+        title={modalTitle}
+        message={modalMsg}
+      />
+      <ConfirmModal
+        show={confirmModalShow}
+        handleClose={confirmModalHandleClose}
+        title="정말로 탈퇴하시겠습니까?"
+        message="회원 탈퇴 시 되돌릴 수 없습니다."
+        noBtnMsg="취소"
+        yesBtnMsg="확인"
+        yesBtnHandler={handleQuitBtn}
+      />
     </>
   );
 }
