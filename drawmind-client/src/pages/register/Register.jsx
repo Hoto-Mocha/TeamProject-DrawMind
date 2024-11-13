@@ -45,8 +45,15 @@ function Register() {
 
     API.memberJoin(id, password)
       .then((res) => {
-        navigate('/login');
-        toast('회원가입에 성공하였습니다! 😊');
+        if (res.data.code === 0) {
+          navigate('/login');
+          toast('회원가입에 성공하였습니다! 😊');
+        } else {
+          toast('이미 가입된 ID입니다.');
+        }
+      })
+      .catch((err) => {
+        console.log(err)
       })
   };
 

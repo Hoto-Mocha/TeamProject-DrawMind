@@ -12,7 +12,7 @@ function Login() {
   const [password, setPassword] = useState('');
 
   let navigate = useNavigate();
-  
+
   //모달 처리 부분
   const [modalShow, setModalShow] = useState(false);
   const [modalMsg, setModalMsg] = useState('');
@@ -46,7 +46,7 @@ function Login() {
 
       })
       .catch((err) => {
-
+        console.log(err)
       })
   };
 
@@ -92,7 +92,7 @@ function Login() {
       </div>
 
       {/* 모달 */}
-      <AlertModal show={modalShow} handleClose={handleClose} title={modalTitle} message={modalMsg}/>
+      <AlertModal show={modalShow} handleClose={handleClose} title={modalTitle} message={modalMsg} />
     </>
   );
 }
