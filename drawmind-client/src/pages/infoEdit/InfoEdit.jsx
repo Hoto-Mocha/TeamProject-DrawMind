@@ -8,8 +8,9 @@ import 'react-simple-toasts/dist/style.css';
 import '../../../node_modules/react-simple-toasts/dist/theme/dark.css';
 import '../../css/InfoEdit.css';
 import { handleLogout } from "../../components/common/Layout"
+import API from '../../API';
 
-toastConfig({ 
+toastConfig({
   theme: 'dark',
 });
 
@@ -18,7 +19,7 @@ function InfoEdit() {
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
   let navigate = useNavigate();
-  
+
   // 비밀번호 변경 버튼 눌렀을 때 이벤트
   const handleInfoEditBtn = () => {
     if (!(password && passwordConfirm)) {
@@ -27,10 +28,15 @@ function InfoEdit() {
     if (password != passwordConfirm) {
       return alert('새 비밀번호와 새 비밀번호 확인 값은 같아야 합니다!');
     }
-    
-    handleLogout()
-    navigate('/login');
-    toast('비밀번호가 변경되었습니다! 😊');
+
+    API.memberUpdate(localStorage.getItem('memberSeq'), password)
+      .then((res) => {
+        console.log(res.data)
+
+        handleLogout()
+        navigate('/login');
+        toast('비밀번호가 변경되었습니다! 😊');
+      })
   };
 
   return (
