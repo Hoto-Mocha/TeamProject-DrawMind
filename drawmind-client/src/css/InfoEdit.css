@@ -54,6 +54,7 @@
   color: white;
   font-size: 0.8rem;
   width: 70%;
+  margin-bottom: 16px;
   transition: background-color 0.3s, transform 0.3s;
 }
 
@@ -64,5 +65,23 @@
 }
 
 .infoEditBtn:active {
+  transform: scale(0.95);
+}
+
+.quit {
+  background-color: #5454e2;
+  color: white;
+  font-size: 0.8rem;
+  width: 70%;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.quit:hover {
+  background-color: rgb(47, 8, 139);
+  color: white;
+  transform: scale(1.05);
+}
+
+.quit:active {
   transform: scale(0.95);
 }

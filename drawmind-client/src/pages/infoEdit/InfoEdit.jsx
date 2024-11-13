@@ -39,6 +39,15 @@ function InfoEdit() {
       })
   };
 
+  // 회원탈퇴 버튼 눌렀을 때 이벤트
+  const handleQuitBtn = () => {
+    API.memberQuit(localStorage.getItem('memberSeq'))
+    .then((res) => {
+      console.log(res.data.code);
+      toast('회원탈퇴를 완료하였습니다.');
+    })
+  };
+
   return (
     <>
       {/* 사람열쇠 아이콘 부분 */}
@@ -78,6 +87,7 @@ function InfoEdit() {
       {/* 비밀번호 변경 버튼 부분 */}
       <div className="infoEditFooter">
         <button className="btn btn-md infoEditBtn" onClick={handleInfoEditBtn}>비밀번호 변경</button>
+        <button className="btn btn-md quit" onClick={handleQuitBtn}>회원탈퇴</button>
       </div>
     </>
   );
