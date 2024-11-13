@@ -8,6 +8,7 @@ import 'react-simple-toasts/dist/style.css';
 import '../../../node_modules/react-simple-toasts/dist/theme/dark.css';
 import '../../css/Register.css';
 import API from '../../API';
+import AlertModal from '../../components/common/AlertModal';
 
 toastConfig({
   theme: 'dark',
@@ -20,13 +21,25 @@ function Register() {
 
   let navigate = useNavigate();
 
+  //모달 처리 부분
+  const [modalShow, setModalShow] = useState(false);
+  const [modalMsg, setModalMsg] = useState('');
+  const [modalTitle, setModalTitle] = useState("경고");
+  const handleClose = () => setModalShow(false);
+  const handleShow = () => setModalShow(true);
+  //모달 처리 부분 끝
+
   // 회원가입 버튼 눌렀을 때 이벤트
   const handleRegisterBtn = () => {
     if (!(id && password && passwordConfirm)) {
-      return alert('모든 값을 채워주세요!');
+      setModalMsg('모든 값을 채워주세요!')
+      handleShow()
+      return
     }
     if (password != passwordConfirm) {
-      return alert('비밀번호와 비밀번호확인 값은 같아야 합니다!');
+      setModalMsg('비밀번호와 비밀번호확인 값은 같아야 합니다!')
+      handleShow()
+      return
     }
 
     API.memberJoin(id, password)
@@ -89,6 +102,9 @@ function Register() {
       <div className='registerFooter'>
         <button className="btn btn-md registerBtn" onClick={handleRegisterBtn}>회원가입</button>
       </div>
+      
+      {/* 모달 */}
+      <AlertModal show={modalShow} handleClose={handleClose} title={modalTitle} message={modalMsg}/>
     </>
   );
 }

@@ -5,28 +5,50 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { useNavigate, Link } from 'react-router-dom';
 import '../../css/Login.css';
 import API from '../../API';
+import AlertModal from '../../components/common/AlertModal';
 
 function Login() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
   let navigate = useNavigate();
+  
+  //모달 처리 부분
+  const [modalShow, setModalShow] = useState(false);
+  const [modalMsg, setModalMsg] = useState('');
+  const [modalTitle, setModalTitle] = useState("경고");
+  const handleClose = () => setModalShow(false);
+  const handleShow = () => setModalShow(true);
+  //모달 처리 부분 끝
 
   // 로그인 버튼 눌렀을 때 이벤트
   const handleLoginBtn = () => {
     if (!(id && password)) {
-      return alert('아이디 또는 비밀번호를 입력해주세요!');
+      setModalMsg('아이디 또는 비밀번호를 입력해주세요!')
+      handleShow()
+      return
     }
 
     API.memberLogin(id, password)
-    .then((res) => {
-      console.log(res.data)
-      
-      localStorage.setItem('memberSeq', JSON.stringify(res.data.body.memberSeq));
-      localStorage.setItem('memberId', JSON.stringify(res.data.body.memberId));
+      .then((res) => {
+        console.log(res.data)
 
-      navigate('/');
-    })
+        if (res.data.code === 0) {
+          localStorage.setItem('memberSeq', JSON.stringify(res.data.body.memberSeq));
+          localStorage.setItem('memberId', JSON.stringify(res.data.body.memberId));
+
+          navigate('/');
+        }
+        else {
+          setModalMsg('아이디 또는 비밀번호가 맞지 않습니다.')
+          handleShow()
+          return
+        }
+
+      })
+      .catch((err) => {
+
+      })
   };
 
   return (
@@ -69,6 +91,9 @@ function Login() {
         <button className="btn btn-md loginBtn" onClick={handleLoginBtn}>로그인</button>
         <Link to='/register' className="btn btn-md registerBtn">회원가입</Link>
       </div>
+
+      {/* 모달 */}
+      <AlertModal show={modalShow} handleClose={handleClose} title={modalTitle} message={modalMsg}/>
     </>
   );
 }
