@@ -20,6 +20,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    padding: 10px;
 }
 
 .editorArea {
@@ -34,9 +35,7 @@
     flex: 1;
     min-height: 300px;
     overflow: hidden;
-    border: 3px solid #333399;
-    border-radius: 10px;
-    margin: 10px;
+    box-sizing: content-box;
     position: relative;
 }
 
@@ -44,8 +43,11 @@
     position: absolute;
     background: none;
     width: 100%;
-    border: 1px solid #333399;
     user-select : none;
+    overflow-wrap: break-word;
+    padding-left: 9.6px;
+    padding-right: 9.6px;
+    border: 1px solid red;
 }
 
 .toolArea {

@@ -6,11 +6,15 @@ import { IoMdMove } from "react-icons/io";
 import { RiPencilFill } from "react-icons/ri";
 import ConfirmModal from "./components/common/ConfirmModal.jsx";
 import BrushSize from "./BrushSize.jsx";
+import { goToPreviewPage } from "../src/pages/write/Write.jsx"
+import { useNavigate } from "react-router-dom";
 
 const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple', 'black'];
 
-function Palette({ config, setConfig, undo, redo, clear, btnToggle, moveAvailable, isErasing, setErasing, previousBtnHandler }) {
+function Palette({ config, setConfig, undo, redo, clear, btnToggle, moveAvailable, isErasing, setErasing, previousBtnHandler, canvasRef, titleData, editorData, editorSize }) {
 
+    const navigate = useNavigate();
+    
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -19,6 +23,16 @@ function Palette({ config, setConfig, undo, redo, clear, btnToggle, moveAvailabl
     const checkStyle = {
         color: isErasing ? 'white' : config.strokeStyle,
         border: isErasing ? '1px solid black' : 'none'
+    }
+
+    const nextBtnHandler = () => {
+        const canvas = canvasRef.current
+        if (canvas) {
+            const imageURL = canvas.toDataURL('image/png')
+            console.log(imageURL)
+            
+            goToPreviewPage(navigate, titleData, editorData, imageURL, editorSize)
+        }
     }
 
     return (
@@ -58,6 +72,7 @@ function Palette({ config, setConfig, undo, redo, clear, btnToggle, moveAvailabl
                 <div className="dangerousTools">
                     <FaTrashAlt className="icon" onClick={handleShow} />
                     <button className="btn btn-danger btn-sm" onClick={previousBtnHandler}>이전</button>
+                    <button className="btn btn-primary btn-sm" onClick={nextBtnHandler}>완료</button>
                 </div>
             </div>
             <ConfirmModal

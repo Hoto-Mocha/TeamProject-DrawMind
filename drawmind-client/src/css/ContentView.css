@@ -1,0 +1,35 @@
+.contentView {
+    margin-top: 10px;
+}
+
+.contentView-title {
+
+}
+
+.contentView-content-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.contentView-image {
+    position: absolute;
+}
+
+.contentView-content {
+    overflow-wrap: break-word;
+}
+
+.contentView-postInfo {
+    display: flex;
+    justify-content: space-between;
+}
+
+.contentView-postInfo p {
+    color: gray;
+}
+
+.sidePadding {
+    padding-left: 9.6px;
+    padding-right: 9.6px;
+}

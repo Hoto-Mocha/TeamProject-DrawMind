@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from "react";
 import Palette from "./Palette.jsx";
 import './css/MyCanvas.css';
 
-function MyCanvas({postRef, editorData, previousBtnHandler}) {
+function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSize}) {
     const canvasRef = useRef(null);
     const contextRef = useRef(null);
     const savedImageRef = useRef(null);
@@ -37,6 +37,7 @@ function MyCanvas({postRef, editorData, previousBtnHandler}) {
             if (contextRef.current) {
                 savedImageRef.current = contextRef.current.getImageData(0, 0, canvasElement.width, canvasElement.height);
             }
+            console.log("postElement width : ", postElement.clientWidth)
 
             canvasElement.width = postElement.clientWidth;
             canvasElement.height = postElement.clientHeight;
@@ -227,6 +228,7 @@ function MyCanvas({postRef, editorData, previousBtnHandler}) {
 
                 </div>
             </div>
+            <hr />
             <div className="toolArea">
                 <Palette
                     config={config}
@@ -239,6 +241,10 @@ function MyCanvas({postRef, editorData, previousBtnHandler}) {
                     isErasing={isErasing}
                     setErasing={setErasing}
                     previousBtnHandler={previousBtnHandler}
+                    canvasRef={canvasRef}
+                    titleData={titleData}
+                    editorData={editorData}
+                    editorSize={editorSize}
                 />
             </div>
         </div>

@@ -56,12 +56,22 @@ function Write() {
     const editorContainerRef = useRef(null);
     const editorRef = useRef(null);
     const [isLayoutReady, setIsLayoutReady] = useState(false);
+    const [isDrawing, setIsDrawing] = useState(false);
+
     const [titleData, setTitleData] = useState('')
     const [editorData, setEditorData] = useState('');
-    const [isDrawing, setIsDrawing] = useState(false);
+
+    const [editorSize, setEditorSize] = useState(0)
 
     useEffect(() => {
         setIsLayoutReady(true);
+
+        const editorElement = editorRef.current;
+        if (editorElement) {
+            const width = editorElement.clientWidth
+            console.log("editorElement width : ", width)
+            setEditorSize(width)
+        }
 
         return () => setIsLayoutReady(false);
     }, []);
@@ -270,8 +280,10 @@ function Write() {
 
             {isDrawing && <MyCanvas
                 postRef={postRef}
+                titleData={titleData}
                 editorData={editorData}
                 previousBtnHandler={previousBtnHandler}
+                editorSize={editorSize}
             />}
             <ConfirmModal
                 show={show}
@@ -285,5 +297,12 @@ function Write() {
         </div>
     );
 }
+
+export function goToPreviewPage(navigate, title, content, imgURL, editorSize) {
+    let writer = localStorage.getItem('id');
+    let date = new Date().toLocaleDateString()
+    const data = { writer, date, title, content, imgURL, editorSize };
+    navigate('/contentview', { state: data });
+};
 
 export default Write
