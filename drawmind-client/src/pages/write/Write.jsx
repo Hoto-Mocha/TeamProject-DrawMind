@@ -69,7 +69,6 @@ function Write() {
         const editorElement = editorRef.current;
         if (editorElement) {
             const width = editorElement.clientWidth
-            console.log("editorElement width : ", width)
             setEditorSize(width)
         }
 

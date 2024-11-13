@@ -45,8 +45,6 @@ function InfoEdit() {
 
     API.memberUpdate(localStorage.getItem('memberSeq'), password)
       .then((res) => {
-        console.log(res.data)
-
         handleLogout()
         navigate('/login');
         toast('비밀번호가 변경되었습니다! 😊');
@@ -57,7 +55,6 @@ function InfoEdit() {
   const handleQuitBtn = () => {
     API.memberQuit(localStorage.getItem('memberSeq'))
     .then((res) => {
-      console.log(res.data.code);
       toast('회원탈퇴를 완료하였습니다.');
     })
   };

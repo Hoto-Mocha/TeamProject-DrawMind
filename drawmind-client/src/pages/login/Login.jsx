@@ -33,8 +33,6 @@ function Login() {
 
     API.memberLogin(id, password)
       .then((res) => {
-        console.log(res.data)
-
         if (res.data.code === 0) {
           localStorage.setItem('memberSeq', JSON.stringify(res.data.body.memberSeq));
           localStorage.setItem('memberId', JSON.stringify(res.data.body.memberId));

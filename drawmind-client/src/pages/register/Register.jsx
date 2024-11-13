@@ -45,7 +45,6 @@ function Register() {
 
     API.memberJoin(id, password)
       .then((res) => {
-        console.log(res.data)
         navigate('/login');
         toast('회원가입에 성공하였습니다! 😊');
       })
