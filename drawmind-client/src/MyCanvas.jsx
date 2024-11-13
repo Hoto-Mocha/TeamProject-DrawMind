@@ -37,7 +37,6 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
             if (contextRef.current) {
                 savedImageRef.current = contextRef.current.getImageData(0, 0, canvasElement.width, canvasElement.height);
             }
-            console.log("postElement width : ", postElement.clientWidth)
 
             canvasElement.width = postElement.clientWidth;
             canvasElement.height = postElement.clientHeight;

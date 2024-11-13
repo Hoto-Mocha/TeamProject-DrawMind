@@ -30,7 +30,6 @@ function Palette({ config, setConfig, undo, redo, clear, btnToggle, moveAvailabl
         const canvas = canvasRef.current
         if (canvas) {
             const imageURL = canvas.toDataURL('image/png')
-            console.log(imageURL)
             API.write()
             goToPreviewPage(navigate, titleData, editorData, imageURL, editorSize)
         }
