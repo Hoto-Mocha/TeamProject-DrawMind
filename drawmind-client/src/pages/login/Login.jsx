@@ -22,8 +22,8 @@ function Login() {
     .then((res) => {
       console.log(res.data)
       
-      localStorage.setItem('memberSeq', JSON.stringify(res.data.data.memberSeq));
-      localStorage.setItem('memberId', JSON.stringify(res.data.data.memberId));
+      localStorage.setItem('memberSeq', JSON.stringify(res.data.body.memberSeq));
+      localStorage.setItem('memberId', JSON.stringify(res.data.body.memberId));
 
       navigate('/');
     })
