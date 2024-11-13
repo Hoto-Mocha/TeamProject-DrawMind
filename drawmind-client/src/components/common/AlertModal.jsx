@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function Modal({ show, handleClose, title, message }) {
+function AlertModal({ show, handleClose, title, message }) {
     return (
         <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
@@ -17,4 +17,4 @@ function Modal({ show, handleClose, title, message }) {
     );
 }
 
-export default Modal;
+export default AlertModal;
