@@ -2,10 +2,12 @@ package com.example.codemindprojbackend.api.controller;
 
 import com.example.codemindprojbackend.api.request.MemberRequest;
 import com.example.codemindprojbackend.api.response.ApiResponse;
+import com.example.codemindprojbackend.api.response.ErrorCode;
 import com.example.codemindprojbackend.api.response.MemberResponse;
 import com.example.codemindprojbackend.api.response.ResponseCode;
 import com.example.codemindprojbackend.domain.model.LogType;
 import com.example.codemindprojbackend.domain.model.Member;
+import com.example.codemindprojbackend.exception.BusinessLogicException;
 import com.example.codemindprojbackend.service.LogService;
 import com.example.codemindprojbackend.service.MemberService;
 import com.example.codemindprojbackend.service.PostService;
@@ -28,15 +30,21 @@ public class MemberController {
 
     @PostMapping("/update")
     @ResponseBody
-    public ApiResponse<MemberResponse.Detail> updateMember(@RequestBody MemberRequest.Update member_request) {
+    public ApiResponse<Void> updateMember(@RequestBody MemberRequest.Update member_request) {
         logService.saveLog(LogType.MEMBER_MODIFY, member_request.getMemberSeq());
-        return ApiResponse.success(ResponseCode.OK, memberService.updateMember(member_request, member_request.getMemberSeq()));
+        return ApiResponse.success(ResponseCode.OK);
     }
 
     @PostMapping("/login")
     @ResponseBody
     public ApiResponse<MemberResponse.Detail> login(@RequestBody MemberRequest.Login member_request) {
-        return ApiResponse.success(ResponseCode.OK, memberService.findMemberById(member_request.getMemberId()));
+        Member member = memberService.findMemberById(member_request.getMemberId());
+        if (!member.getPassword().equals(member_request.getPassword())) {
+            throw new BusinessLogicException(ErrorCode.NOT_CORRECT, "Invalid password.");
+        }
+        return ApiResponse.success(ResponseCode.OK,
+                MemberResponse.Detail
+                        .of(memberService.findMemberById(member_request.getMemberId())));
     }
 
     @PostMapping("/quit")
