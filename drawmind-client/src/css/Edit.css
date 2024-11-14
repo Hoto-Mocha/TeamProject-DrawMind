@@ -1,0 +1,19 @@
+.textEditArea {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.textEditArea .main-container {
+    flex: 1
+}
+
+.editorHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nextBtn {
+    width: 80px;
+}
