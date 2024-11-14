@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import toast, { toastConfig } from 'react-simple-toasts';
 import API from "./API";
 import "./App.css";
+import { Link } from 'react-router-dom';
 
 toastConfig({
   theme: 'dark',
@@ -14,6 +15,7 @@ export default function App() {
   useEffect(() => {
     API.postList(currentPage)
     .then((res) => {
+      console.log(res.data.body)
       const data = res.data.body;
       setData(data);
     })
@@ -35,18 +37,23 @@ export default function App() {
     )
   }
 
-  const testBtnHandler =  () => {
+  const testBtnHandler = () => {
     API.test()
     .then((res) => {
       console.log(res.data)
     })
   }
 
+  const linkStyle = {
+    textDecoration: "none",
+    color: "black"
+  }
+
   return (
     <>
       <div className="postList">
         {data.map((item, index) => {
-          return (<div className="postListItem" key={index}>{postItem(item)}</div>)
+          return (<Link to={`/contentView/${item.postSeq}`} className="postListItem" key={index} style={linkStyle}>{postItem(item)}</Link>)
         })}
         <button className="btn btn-primary" onClick={testBtnHandler}>API 테스트</button>
       </div>
