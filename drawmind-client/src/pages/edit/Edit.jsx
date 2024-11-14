@@ -239,7 +239,6 @@ function Edit() {
   const nextBtnHandler = () => {
     API.postUpdate(postSeq, titleData, editorData)
       .then((res) => {
-        console.log(res.data)
         if (res.data.code === 0) {
           navigate(`/contentview/${postSeq}`)
           toast('글 수정이 완료되었습니다.')

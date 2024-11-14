@@ -15,7 +15,6 @@ export default function App() {
   useEffect(() => {
     API.postList(currentPage)
     .then((res) => {
-      console.log(res.data.body)
       const data = res.data.body;
       setData(data);
     })
@@ -26,13 +25,15 @@ export default function App() {
   }, []);
   
   function postItem(item) {
+    const writeDate = item.regDate.substring(0, 10)
+    const writeTime = item.regDate.substring(11, 16)
     return (
       <>
         <div className="infoSection">
           <p>{item.postTitle}</p>
           <p>{item.writer}</p>
         </div>
-        <p>{item.regDate}</p>
+        <p>{writeDate + ', ' + writeTime}</p>
       </>
     )
   }

@@ -308,7 +308,6 @@ export function completeWriting(navigate, title, content, imgURL, editorSize) {
     if (memberSeq) { //로그인이 되어 있을 경우 정상 실행
         API.postWrite(memberSeq, title, content, imgURL, editorSize)
             .then((res) => {
-                console.log(res.data)
                 navigate(`/contentview/${res.data.body.postSeq}`);
                 toast('게시글 작성이 완료되었습니다.')
             })

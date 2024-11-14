@@ -27,7 +27,7 @@ function ContentView() {
                 .then((res) => {
                     if (res.data.body) {
                         let writer = res.data.body.writer
-                        let date = res.data.body.regDate
+                        let date = res.data.body.regDate.substring(0, 10) + ', ' + res.data.body.regDate.substring(11, 16)
                         let title = res.data.body.postTitle
                         let content = res.data.body.content
                         let imgURL = res.data.body.imgURL
@@ -63,7 +63,6 @@ function ContentView() {
     const postDeleteHandler = () => {
         API.postDelete(postSeq)
             .then((res) => {
-                console.log(res.data)
                 if (res.data.code === 0) {
                     toast('게시글 삭제가 완료되었습니다.')
                     navigate('/')
