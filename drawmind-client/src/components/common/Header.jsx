@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import './Header.css'
 import { TfiMenuAlt } from "react-icons/tfi";
+import { IoMenu } from "react-icons/io5";
 import { handleLogout } from "./Layout"
 
 export default function Header() {
@@ -23,7 +24,7 @@ export default function Header() {
           </Link>
         </div>
         <div className="headerBox">
-          <TfiMenuAlt className="menuIcon" onClick={handleShow} />
+          <IoMenu className="menuIcon" onClick={handleShow} />
           <Offcanvas show={show} onHide={handleClose} style={{ "width": "70%" }}>
             <Offcanvas.Header closeButton style={{ "borderBottom": "3px solid #333399", "backgroundColor": "#5454e2", "color": "white" }}>
               <Offcanvas.Title>메뉴</Offcanvas.Title>
