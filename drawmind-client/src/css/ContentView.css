@@ -6,6 +6,12 @@
 
 }
 
+.contentView-post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .contentView-content-container {
     position: relative;
     display: flex;
