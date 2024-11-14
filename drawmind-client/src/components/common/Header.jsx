@@ -18,34 +18,36 @@ export default function Header() {
     <>
       <div className='header'>
         <div className='titleContainer'>
-          <Link className='headerTitle' to='/'><img className='titleImage' src='./src/assets/icons/title.png'></img></Link>
+          <Link className='headerTitle' to='/'>
+            <img className='titleImage' src='/assets/icons/title.png' />
+          </Link>
         </div>
         <div className="headerBox">
           <TfiMenuAlt className="menuIcon" onClick={handleShow} />
           <Offcanvas show={show} onHide={handleClose} style={{ "width": "70%" }}>
-            <Offcanvas.Header closeButton style={{ "borderBottom": "3px solid #333399", "backgroundColor": "#5454e2", "color":"white"}}>
+            <Offcanvas.Header closeButton style={{ "borderBottom": "3px solid #333399", "backgroundColor": "#5454e2", "color": "white" }}>
               <Offcanvas.Title>메뉴</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body style={{ "padding": "0", "display": "flex", "flexDirection": "column" }}>
               {
                 localStorage.getItem('memberId') ?
-                (
-                  <Link className='offBoxNav' to='/login' onClick={(e) => {handleClose(); e.preventDefault(); handleLogout(); navigate('/login')}}>로그아웃</Link>
-                )
-                :
-                (
-                  <Link className='offBoxNav' to='/login' onClick={handleClose}>로그인</Link>
-                )
+                  (
+                    <Link className='offBoxNav' to='/login' onClick={(e) => { handleClose(); e.preventDefault(); handleLogout(); navigate('/login') }}>로그아웃</Link>
+                  )
+                  :
+                  (
+                    <Link className='offBoxNav' to='/login' onClick={handleClose}>로그인</Link>
+                  )
               }
               {
                 (localStorage.getItem('memberId')) ?
-                (
-                  <Link className='offBoxNav' to='/infoEdit' onClick={handleClose}>회원 정보 수정</Link>
-                )
-                :
-                (
-                  <Link className='offBoxNav' to='/register' onClick={handleClose}>회원 가입</Link>
-                )
+                  (
+                    <Link className='offBoxNav' to='/infoEdit' onClick={handleClose}>회원 정보 수정</Link>
+                  )
+                  :
+                  (
+                    <Link className='offBoxNav' to='/register' onClick={handleClose}>회원 가입</Link>
+                  )
               }
               {
                 localStorage.getItem('memberId') &&
