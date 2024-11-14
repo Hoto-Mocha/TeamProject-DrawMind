@@ -54,6 +54,7 @@ function Register() {
       })
       .catch((err) => {
         console.log(err)
+        toast('회원가입에 실패했습니다.')
       })
   };
 

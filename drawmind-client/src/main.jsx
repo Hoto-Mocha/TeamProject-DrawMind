@@ -19,7 +19,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/write' element={<Write />}></Route>
         <Route path='/edit' element={<Edit />}></Route>
         <Route path='/infoEdit' element={<InfoEdit />}></Route>
-        <Route path='/contentview' element={<ContentView />}></Route>
+        <Route path='/contentview/:postSeq' element={<ContentView />}></Route>
       </Routes>
     </Layout>
   </BrowserRouter >

@@ -55,7 +55,7 @@ import API from '../../API.jsx';
 
 toastConfig({
     theme: 'dark',
-  });
+});
 
 function Write() {
 
@@ -307,14 +307,20 @@ export function completeWriting(navigate, title, content, imgURL, editorSize) {
     let memberSeq = localStorage.getItem('memberSeq');
     if (memberSeq) { //로그인이 되어 있을 경우 정상 실행
         API.postWrite(memberSeq, title, content, imgURL, editorSize)
-        .then((res) => {
-            console.log(res.data)
-            
-        })
+            .then((res) => {
+                console.log(res.data)
+                navigate(`/contentview/${res.data.body.postSeq}`);
+                toast('게시글 작성이 완료되었습니다.')
+            })
+            .catch((err) => {
+                console.log(err)
+                toast('게시글을 등록할 수 없었습니다.')
+            })
     }
     else { //로그인이 안 된 경우 비정상 작업. 메인 페이지로 이동
         toast('로그인 정보를 얻을 수 없었습니다. 메인 페이지로 돌아갑니다.')
         navigate('/');
+    }
 };
 
 export default Write

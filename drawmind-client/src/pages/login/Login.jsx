@@ -6,6 +6,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import '../../css/Login.css';
 import API from '../../API';
 import AlertModal from '../../components/common/AlertModal';
+import toast from 'react-simple-toasts';
 
 function Login() {
   const [id, setId] = useState('');
@@ -47,6 +48,7 @@ function Login() {
       })
       .catch((err) => {
         console.log(err)
+        toast('로그인에 실패했습니다.')
       })
   };
 

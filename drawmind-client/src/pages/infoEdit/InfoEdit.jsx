@@ -76,6 +76,7 @@ function InfoEdit() {
       })
       .catch((err) => {
         console.log(err)
+        toast('회원탈퇴를 하지 못했습니다.')
       })
   };
 
