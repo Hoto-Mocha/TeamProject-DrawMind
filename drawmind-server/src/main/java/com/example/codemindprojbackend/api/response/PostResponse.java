@@ -24,6 +24,7 @@ public class PostResponse {
             return ListDetail.builder()
                     .postSeq(post.getSeq())
                     .postTitle(post.getTitle())
+                    .writer(post.getWriter().getMemberId())
                     .regDate(post.getWriteDt())
                     .build();
         }

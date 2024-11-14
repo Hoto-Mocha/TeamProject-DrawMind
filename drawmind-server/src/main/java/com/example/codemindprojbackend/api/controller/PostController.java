@@ -39,15 +39,12 @@ public class PostController {
     @PostMapping("/update")
     @ResponseBody
     public ApiResponse<PostResponse.Detail> updatePost(@RequestBody PostRequest.Update request) {
-        System.out.println(request);
-        logService.saveLog(LogType.POST_MODIFY, request.getPostSeq());
         return ApiResponse.success(ResponseCode.OK, postService.updatePost(request));
     }
 
     @PostMapping("/delete")
     @ResponseBody
     public ApiResponse<Integer> deletePost(@RequestBody PostRequest.Delete request) {
-        logService.saveLog(LogType.POST_DELETE, request.getPostSeq());
         postService.deleteById(request.getPostSeq());
         return ApiResponse.success(ResponseCode.OK);
     }
