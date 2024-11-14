@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import "../../css/contentView.css";
 import API from '../../API';
 import toast, { toastConfig } from 'react-simple-toasts';
+import ConfirmModal from '../../components/common/ConfirmModal';
 
 toastConfig({
     theme: 'dark',
@@ -12,6 +13,13 @@ function ContentView() {
     const postSeq = parseInt(useParams().postSeq);
 
     const [data, setData] = useState({})
+
+    const navigate = useNavigate();
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     useEffect(() => {
         function getPostData() {
@@ -53,10 +61,33 @@ function ContentView() {
         setImageVisiblity(!imageVisiblity)
     }
 
+    const postDeleteHandler = () => {
+        API.postDelete(postSeq)
+            .then((res) => {
+                console.log(res.data)
+                if (res.data.code === 0) {
+                    toast('게시글 삭제가 완료되었습니다.')
+                    navigate('/')
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+                toast('게시글을 삭제할 수 없었습니다.')
+            })
+    }
+
+    function isWriter() {
+        const writer = '"'+data.writer+'"'
+        return writer === localStorage.getItem('memberId')
+    }
+
     return (
         <div>
             {data && <div className='contentView'>
-                <h1 className='contentView-title sidePadding'>{data.title}</h1>
+                <div className='contentView-post-header'>
+                    <h1 className='contentView-title sidePadding'>{data.title}</h1>
+                    {isWriter() && <button className='btn btn-danger btn-sm' onClick={handleShow}>삭제</button>}
+                </div>
                 <div className='contentView-postInfo sidePadding'>
                     <p>{data.writer}</p>
                     <p>{data.date}</p>
@@ -71,6 +102,15 @@ function ContentView() {
                     {!imageVisiblity && <button className='btn btn-primary nonSelect' onClick={imageVisiblityBtnHandler}>이미지 보이기</button>}
                 </div>
             </div>}
+            <ConfirmModal
+                show={show}
+                handleClose={handleClose}
+                title="게시글을 삭제하시겠습니까?"
+                message="게시글을 삭제하면 되돌릴 수 없습니다."
+                noBtnMsg="취소"
+                yesBtnMsg="확인"
+                yesBtnHandler={postDeleteHandler}
+            />
         </div>
 
     )
