@@ -1,12 +1,28 @@
+import React, { useState, useEffect } from 'react';
+import toast, { toastConfig } from 'react-simple-toasts';
 import API from "./API";
-import "./App.css"
+import "./App.css";
+
+toastConfig({
+  theme: 'dark',
+});
 
 export default function App() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [data, setData] = useState([]);
 
-  const data = [
-    { "postSeq": 1, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:10" },
-  ]
-
+  useEffect(() => {
+    API.postList(currentPage)
+    .then((res) => {
+      const data = res.data.body;
+      setData(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      toast('게시글 목록을 불러올 수 없습니다.');
+    });
+  }, []);
+  
   function postItem(item) {
     return (
       <>
