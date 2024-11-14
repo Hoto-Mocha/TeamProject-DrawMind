@@ -21,8 +21,8 @@ public class Post {
     @Column(name="post_seq")
     private Long seq;
 
-    @OneToOne
-    @JoinColumn(name = "writer_seq")
+    @ManyToOne
+    @JoinColumn(name = "writer")
     private Member writer;
 
     @LastModifiedDate
