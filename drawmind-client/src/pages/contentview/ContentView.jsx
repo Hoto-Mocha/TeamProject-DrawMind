@@ -33,7 +33,6 @@ function ContentView() {
                         let imgURL = res.data.body.imgURL
                         let editorSize = res.data.body.postWidth - 2
                         setData({ writer, date, title, content, imgURL, editorSize })
-                        console.log(data)
                     }
                     else {
                         toast('게시글 정보를 불러올 수 없었습니다.')
@@ -77,8 +76,17 @@ function ContentView() {
     }
 
     function isWriter() {
-        const writer = '"'+data.writer+'"'
+        const writer = JSON.stringify(data.writer)
         return writer === localStorage.getItem('memberId')
+    }
+
+    const editBtnHandler = (data) => {
+        const postData = {
+            title: data.title,
+            content: data.content,
+            postSeq: postSeq
+        }
+        navigate('/edit', { state: postData })
     }
 
     return (
@@ -86,7 +94,10 @@ function ContentView() {
             {data && <div className='contentView'>
                 <div className='contentView-post-header'>
                     <h1 className='contentView-title sidePadding'>{data.title}</h1>
-                    {isWriter() && <button className='btn btn-danger btn-sm' onClick={handleShow}>삭제</button>}
+                    {isWriter() && <div>
+                        <button className='btn btn-danger btn-sm' onClick={handleShow}>삭제</button>
+                        <button className='btn btn-primary btn-sm' onClick={() => { editBtnHandler(data) }}>수정</button>
+                    </div>}
                 </div>
                 <div className='contentView-postInfo sidePadding'>
                     <p>{data.writer}</p>
