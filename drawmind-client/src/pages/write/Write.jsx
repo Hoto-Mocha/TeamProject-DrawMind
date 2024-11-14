@@ -4,6 +4,7 @@ import MyCanvas from "../../MyCanvas.jsx";
 import "../../css/Write.css"
 import 'ckeditor5/ckeditor5.css';
 import Form from 'react-bootstrap/Form';
+import toast, { toastConfig } from 'react-simple-toasts';
 
 import {
     ClassicEditor,
@@ -50,6 +51,11 @@ import {
 
 import translations from 'ckeditor5/translations/ko.js';
 import ConfirmModal from '../../components/common/ConfirmModal.jsx';
+import API from '../../API.jsx';
+
+toastConfig({
+    theme: 'dark',
+  });
 
 function Write() {
 
@@ -297,11 +303,18 @@ function Write() {
     );
 }
 
-export function goToPreviewPage(navigate, title, content, imgURL, editorSize) {
-    let writer = localStorage.getItem('memberId');
-    let date = new Date().toLocaleDateString()
-    const data = { writer, date, title, content, imgURL, editorSize };
-    navigate('/contentview', { state: data });
+export function completeWriting(navigate, title, content, imgURL, editorSize) {
+    let memberSeq = localStorage.getItem('memberSeq');
+    if (memberSeq) { //로그인이 되어 있을 경우 정상 실행
+        API.postWrite(memberSeq, title, content, imgURL, editorSize)
+        .then((res) => {
+            console.log(res.data)
+            
+        })
+    }
+    else { //로그인이 안 된 경우 비정상 작업. 메인 페이지로 이동
+        toast('로그인 정보를 얻을 수 없었습니다. 메인 페이지로 돌아갑니다.')
+        navigate('/');
 };
 
 export default Write

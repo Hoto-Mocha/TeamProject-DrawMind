@@ -6,7 +6,7 @@ import { IoMdMove } from "react-icons/io";
 import { RiPencilFill } from "react-icons/ri";
 import ConfirmModal from "./components/common/ConfirmModal.jsx";
 import BrushSize from "./BrushSize.jsx";
-import { goToPreviewPage } from "../src/pages/write/Write.jsx"
+import { completeWriting } from "../src/pages/write/Write.jsx"
 import { useNavigate } from "react-router-dom";
 import API from "./API.jsx";
 
@@ -31,7 +31,7 @@ function Palette({ config, setConfig, undo, redo, clear, btnToggle, moveAvailabl
         if (canvas) {
             const imageURL = canvas.toDataURL('image/png')
             API.write()
-            goToPreviewPage(navigate, titleData, editorData, imageURL, editorSize)
+            completeWriting(navigate, titleData, editorData, imageURL, editorSize)
         }
     }
 
