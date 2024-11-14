@@ -1,0 +1,55 @@
+.screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.myCanvas {
+    position: absolute;
+}
+
+.myCanvas.drawing:hover {
+    cursor: crosshair;
+}
+.myCanvas.scrolling:hover {
+    cursor: pointer;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.editorArea {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.drawEditorArea {
+    flex: 1;
+    min-height: 300px;
+    overflow: hidden;
+    box-sizing: content-box;
+    position: relative;
+}
+
+.contentBox {
+    position: absolute;
+    background: none;
+    width: 100%;
+    user-select : none;
+    overflow-wrap: break-word;
+    padding-left: 9.6px;
+    padding-right: 9.6px;
+    border: 1px solid red;
+}
+
+.toolArea {
+    height: 100px;
+}

@@ -1,31 +1,28 @@
-import "./App.css"
+import React, { useState, useEffect } from 'react';
+import toast, { toastConfig } from 'react-simple-toasts';
+import API from "./API";
+import "./App.css";
+
+toastConfig({
+  theme: 'dark',
+});
 
 export default function App() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [data, setData] = useState([]);
 
-  const data = [
-    { "postSeq": 1, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:10" },
-    { "postSeq": 2, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:12" },
-    { "postSeq": 3, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 4, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 5, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 6, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 7, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 8, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 9, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 10, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 11, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 12, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 13, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 14, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 15, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 16, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 17, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 18, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 19, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 20, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-    { "postSeq": 21, "postTitle": "게시글 제목", "writer": "관리자", "regDate": "2024-11-08 14:14" },
-  ]
-
+  useEffect(() => {
+    API.postList(currentPage)
+    .then((res) => {
+      const data = res.data.body;
+      setData(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      toast('게시글 목록을 불러올 수 없습니다.');
+    });
+  }, []);
+  
   function postItem(item) {
     return (
       <>
@@ -38,12 +35,20 @@ export default function App() {
     )
   }
 
+  const testBtnHandler =  () => {
+    API.test()
+    .then((res) => {
+      console.log(res.data)
+    })
+  }
+
   return (
     <>
       <div className="postList">
         {data.map((item, index) => {
           return (<div className="postListItem" key={index}>{postItem(item)}</div>)
         })}
+        <button className="btn btn-primary" onClick={testBtnHandler}>API 테스트</button>
       </div>
     </>
   )
