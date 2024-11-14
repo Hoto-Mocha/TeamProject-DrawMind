@@ -7,7 +7,7 @@ import Register from './pages/register/Register.jsx'
 import Write from './pages/write/Write.jsx'
 import InfoEdit from './pages/infoEdit/InfoEdit.jsx'
 import Edit from './pages/edit/Edit.jsx'
-import ContentView from './pages/contentview/contentView.jsx'
+import ContentView from './pages/contentview/ContentView.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
