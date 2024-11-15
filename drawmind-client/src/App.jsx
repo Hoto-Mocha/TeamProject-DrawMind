@@ -3,6 +3,7 @@ import toast, { toastConfig } from 'react-simple-toasts';
 import API from "./API";
 import "./App.css";
 import { Link } from 'react-router-dom';
+import PullToRefresh from 'react-pull-to-refresh';
 
 toastConfig({
   theme: 'dark',
@@ -16,6 +17,13 @@ export default function App() {
 
   function isScrollEnd() {
     return window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 10 //현재 화면의 맨 아래 가장자리가 페이지 맨 아래보다 0px 위 이내인 경우를 뜻함
+  }
+
+  function loadFirstPage() {
+    setPosts([])
+    setIsLastPage(false)
+    setNextPage(0)
+    loadPage()
   }
 
   function loadPage() {
@@ -103,12 +111,18 @@ export default function App() {
 
   return (
     <>
-      <div className="postList">
-        {posts.map((item, index) => {
-          return (<Link to={`/contentView/${item.postSeq}`} className="postListItem" key={index} style={linkStyle}>{postItem(item)}</Link>)
-        })}
-        {/* <button className="btn btn-primary" onClick={testBtnHandler}>API 테스트</button> */}
-      </div>
+      <PullToRefresh
+        onRefresh={loadFirstPage}
+        
+      >
+        <></>
+        <div className="postList">
+          {posts.map((item, index) => {
+            return (<Link to={`/contentView/${item.postSeq}`} className="postListItem" key={index} style={linkStyle}>{postItem(item)}</Link>)
+          })}
+          {/* <button className="btn btn-primary" onClick={testBtnHandler}>API 테스트</button> */}
+        </div>
+      </PullToRefresh>
       {!isLastPage && loading && <div className='loading'>
         <p>Loading...</p>
       </div>}
