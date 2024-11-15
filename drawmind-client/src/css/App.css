@@ -1,24 +1,16 @@
-.app {
-    position: relative;
-}
-
-.screen {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-}
-
-.canvas {
-    position: absolute;
-}
-
 .postList {
+    padding: 10px;
+}
+
+.refreshBtnContainer {
     margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .postListItem {
-    height: 60px;
+    height: 20%;
     display: flex;
     align-items: end;
     justify-content: space-between;
@@ -50,6 +42,13 @@
     align-items: end;
 }
 
-button {
-    user-select : none;
+.nonSelect {
+    user-select: none;
+}
+
+.app-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10px;
 }

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import toast, { toastConfig } from 'react-simple-toasts';
 import API from "./API";
-import "./App.css";
+import "./css/App.css";
 import { Link } from 'react-router-dom';
 
 toastConfig({
@@ -9,7 +9,7 @@ toastConfig({
 });
 
 export default function App() {
-  const [nextPage, setNextPage] = useState(0);
+  const nextPageRef = useRef(0);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false)
@@ -21,26 +21,26 @@ export default function App() {
   function loadFirstPage() {
     setPosts([])
     setIsLastPage(false)
-    setNextPage(0)
+    nextPageRef.current = 0
     loadPage()
   }
 
   function loadPage() {
     if (isScrollEnd()) {
       console.log('로드 시작')
-      console.log('불러올 페이지: ', nextPage)
+      console.log('불러올 페이지: ', nextPageRef.current)
 
       setLoading(true);
 
       new Promise(resolve => {
         resolve(
-          API.postList(nextPage)
+          API.postList(nextPageRef.current)
             .then((res) => {
               console.log(res.data)
               const postList = res.data.body;
               if (postList.length > 0) {
                 setPosts((prevPosts) => [...prevPosts, ...postList])
-                setNextPage(nextPage + 1)
+                nextPageRef.current += 1
               }
               else {
                 setIsLastPage(true)
@@ -67,13 +67,13 @@ export default function App() {
 
   useEffect(() => {
     if (!loading && !isLastPage) {
-      loadPage(nextPage);
+      loadPage();
     }
   }, [loading]);
   useEffect(() => {
     if (!loading && !isLastPage) {
       const handleScroll = () => {
-        loadPage(nextPage);
+        loadPage();
       };
 
 
@@ -110,6 +110,9 @@ export default function App() {
 
   return (
     <>
+      <div className='refreshBtnContainer'>
+        <button className='btn btn-primary btn-sm' onClick={loadFirstPage}>새로고침</button>
+      </div>
       <div className="postList">
         {posts.map((item, index) => {
           return (<Link to={`/contentView/${item.postSeq}`} className="postListItem" key={index} style={linkStyle}>{postItem(item)}</Link>)
