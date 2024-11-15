@@ -18,6 +18,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT p FROM Post p ORDER BY p.writeDt DESC")
     List<Post> findAllPostsInReverseOrder();
 
-    @Query("SELECT p FROM Post p")
+    @Query("SELECT p FROM Post p ORDER BY p.writeDt DESC")
     List<Post> findAllPosts(Pageable pageable);
 }
