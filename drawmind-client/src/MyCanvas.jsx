@@ -51,7 +51,6 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
 
     const drawPC = (e) => {
         if (!isDrawingRef.current || moveAvailable) return;
-        console.log('호출됨')
         const {offsetX, offsetY} = e.nativeEvent;
         draw(offsetX, offsetY);
     };
@@ -67,7 +66,6 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
 
     function draw(offsetX, offsetY) {
         if (stepRef.current.length === 0) {
-            console.log('step 초기화됨')
             contextRef.current.beginPath();
             contextRef.current.moveTo(offsetX, offsetY);
         }
