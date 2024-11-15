@@ -10,6 +10,8 @@ import com.example.codemindprojbackend.exception.BusinessLogicException;
 import com.example.codemindprojbackend.api.response.ErrorCode;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,7 +57,8 @@ public class PostService {
         postRepository.deleteAllByMemberSeq(memberId);
     }
 
-    public List<Post> findAllPostsBetween(Long start, Long end) {
-        return postRepository.findAllPostsBetween(start, end);
+    public List<Post> findPosts(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return postRepository.findAllPosts(pageable);
     }
 }

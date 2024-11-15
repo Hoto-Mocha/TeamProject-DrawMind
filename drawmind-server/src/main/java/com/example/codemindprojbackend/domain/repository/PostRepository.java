@@ -1,6 +1,7 @@
 package com.example.codemindprojbackend.domain.repository;
 
 import com.example.codemindprojbackend.domain.model.Post;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +18,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT p FROM Post p ORDER BY p.writeDt DESC")
     List<Post> findAllPostsInReverseOrder();
 
-    @Query("SELECT p FROM Post p WHERE p.seq BETWEEN :start and :end ORDER BY p.writeDt DESC")
-    List<Post> findAllPostsBetween(Long start, Long end);
+    @Query("SELECT p FROM Post p ORDER BY p.writeDt DESC")
+    List<Post> findAllPosts(Pageable pageable);
 }

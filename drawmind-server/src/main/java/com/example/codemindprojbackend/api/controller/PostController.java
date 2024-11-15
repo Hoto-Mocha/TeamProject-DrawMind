@@ -19,15 +19,11 @@ import java.util.List;
 @RequestMapping("/api/post")
 public class PostController {
     private final PostService postService;
-    private final LogService logService;
-    private final Long pageGroupCnt = 20L;
 
     @PostMapping("/list")
     public ApiResponse<List<PostResponse.ListDetail>> findAllPost(@RequestBody PostRequest.List post_request) {
-        Long currentPage = post_request.getCurrentPage();
-        Long start = (currentPage - 1) * pageGroupCnt;
-        Long end = start + pageGroupCnt;
-        return ApiResponse.success(ResponseCode.OK, PostResponse.ListDetail.of(postService.findAllPostsBetween(start, end)));
+        int currentPage = post_request.getCurrentPage();
+        return ApiResponse.success(ResponseCode.OK, PostResponse.ListDetail.of(postService.findPosts(currentPage, 5)));
     }
 
     @PostMapping("/write")
