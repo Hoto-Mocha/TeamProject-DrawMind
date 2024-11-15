@@ -53,7 +53,7 @@ export default function Header() {
               {
                 localStorage.getItem('memberId') &&
                 (
-                  <Link className='offBoxNav' to='/write' onClick={handleClose}>글쓰기(임시)</Link>
+                  <Link className='offBoxNav' to='/write' onClick={handleClose}>글쓰기</Link>
                 )
               }
             </Offcanvas.Body>
