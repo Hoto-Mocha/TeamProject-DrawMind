@@ -26,7 +26,6 @@ public class MemberController {
     @ResponseBody
     public ApiResponse<MemberResponse.Detail> registerMember(@RequestBody MemberRequest.Create request) {
         if(memberService.checkMemberById(request.getMemberId()) == null) {
-            memberService.registerMember(request);
             return ApiResponse.success(ResponseCode.OK, memberService.registerMember(request));
         } else {
             throw new BusinessLogicException(ErrorCode.MEMBER_EXISTS, "Member Already exist.");
@@ -37,6 +36,7 @@ public class MemberController {
     @ResponseBody
     public ApiResponse<Void> updateMember(@RequestBody MemberRequest.Update member_request) {
         logService.saveLog(LogType.MEMBER_MODIFY, member_request.getMemberSeq());
+        memberService.updateMember(member_request, member_request.getMemberSeq());
         return ApiResponse.success(ResponseCode.OK);
     }
 
