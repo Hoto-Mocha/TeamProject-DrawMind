@@ -6,7 +6,7 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
     const canvasRef = useRef(null);
     const contextRef = useRef(null);
     const savedImageRef = useRef(null);
-    const [isDrawing, setDrawing] = useState(false);
+    const isDrawingRef = useRef(false);
     const [isErasing, setErasing] = useState(false);
     const [config, setConfig] = useState({
         lineWidth: 1,
@@ -15,7 +15,7 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
         lineJoin: 'round'
     })
 
-    let step = [];
+    const stepRef = useRef([])
     const [undoSteps, setUndoSteps] = useState([]);
     const [redoSteps, setRedoSteps] = useState([]);
     const [moveAvailable, setMoveAvailable] = useState(false);
@@ -50,13 +50,13 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
     };
 
     const drawPC = (e) => {
-        if (!isDrawing || moveAvailable) return;
+        if (!isDrawingRef.current || moveAvailable) return;
         const {offsetX, offsetY} = e.nativeEvent;
         draw(offsetX, offsetY);
     };
 
     const drawMobile = (e) => {
-        if (!isDrawing || moveAvailable) return;
+        if (!isDrawingRef.current || moveAvailable) return;
         const touch = e.touches[0];
         const rect = canvasRef.current.getBoundingClientRect();
         const offsetX = touch.clientX - rect.left;
@@ -65,12 +65,12 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
     };
 
     function draw(offsetX, offsetY) {
-        if (step.length === 0) {
+        if (stepRef.current.length === 0) {
             contextRef.current.beginPath();
             contextRef.current.moveTo(offsetX, offsetY);
         }
 
-        step.push({
+        stepRef.current.push({
             offsetX,
             offsetY,
             color: contextRef.current.strokeStyle,
@@ -188,16 +188,17 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
                 <div className="myCanvas">
                     <canvas
                         ref={canvasRef}
-                        onMouseDown={() => {
+                        onMouseDown={(e) => {
                             if (!moveAvailable) {
-                                setDrawing(true);
-                                step = [];
+                                isDrawingRef.current = true;
+                                stepRef.current = []
+                                drawPC(e)
                             }
                         }}
                         onMouseUp={() => {
                             if (!moveAvailable) {
-                                setDrawing(false);
-                                setUndoSteps((prevSteps) => [...prevSteps, step]);
+                                isDrawingRef.current = false
+                                setUndoSteps((prevSteps) => [...prevSteps, stepRef.current]);
                                 setRedoSteps([]);
                             }
                         }}
@@ -205,15 +206,16 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
                         onTouchStart={(e) => {
                             if (!moveAvailable) {
                                 e.preventDefault();
-                                setDrawing(true);
-                                step = [];
+                                isDrawingRef.current = true;
+                                stepRef.current = [];
+                                drawMobile(e)
                             }
                         }}
                         onTouchEnd={(e) => {
                             if (!moveAvailable) {
                                 e.preventDefault();
-                                setDrawing(false);
-                                setUndoSteps((prevSteps) => [...prevSteps, step]);
+                                isDrawingRef.current = false
+                                setUndoSteps((prevSteps) => [...prevSteps, stepRef.current]);
                                 setRedoSteps([]);
                             }
                         }}
