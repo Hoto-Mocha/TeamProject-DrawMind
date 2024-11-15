@@ -3,19 +3,32 @@
 }
 
 .contentView-title {
-
+    
 }
 
 .contentView-post-header {
+    padding: 10px;
+}
+
+.contentView-post-title-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.contentview-btn {
+    margin: 0px 5px;
+}
+
+.contentview-body {
+    padding: 0 20px;
+}
+
 .contentView-content-container {
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: baseline;
+    margin-bottom: 15px;
 }
 
 .contentView-image {
