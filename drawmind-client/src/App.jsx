@@ -3,7 +3,6 @@ import toast, { toastConfig } from 'react-simple-toasts';
 import API from "./API";
 import "./App.css";
 import { Link } from 'react-router-dom';
-import PullToRefresh from 'react-pull-to-refresh';
 
 toastConfig({
   theme: 'dark',
@@ -111,19 +110,13 @@ export default function App() {
 
   return (
     <>
-      <PullToRefresh
-        onRefresh={loadFirstPage}
-        
-      >
-        <></>
-        <div className="postList">
-          {posts.map((item, index) => {
-            return (<Link to={`/contentView/${item.postSeq}`} className="postListItem" key={index} style={linkStyle}>{postItem(item)}</Link>)
-          })}
-          {/* <button className="btn btn-primary" onClick={testBtnHandler}>API 테스트</button> */}
-        </div>
-      </PullToRefresh>
-      {!isLastPage && loading && <div className='loading'>
+      <div className="postList">
+        {posts.map((item, index) => {
+          return (<Link to={`/contentView/${item.postSeq}`} className="postListItem" key={index} style={linkStyle}>{postItem(item)}</Link>)
+        })}
+        {/* <button className="btn btn-primary" onClick={testBtnHandler}>API 테스트</button> */}
+      </div>
+      {!isLastPage && loading && <div className='app-loading'>
         <p>Loading...</p>
       </div>}
     </>

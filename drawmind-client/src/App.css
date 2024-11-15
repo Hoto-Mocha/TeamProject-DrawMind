@@ -1,5 +1,4 @@
 .postList {
-    margin-top: 10px;
     padding: 10px;
 }
 
@@ -40,7 +39,7 @@
     user-select: none;
 }
 
-.loading {
+.app-loading {
     display: flex;
     justify-content: center;
     align-items: center;
