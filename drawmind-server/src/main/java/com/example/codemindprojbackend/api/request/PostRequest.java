@@ -38,7 +38,7 @@ public class PostRequest {
     @ToString
     @RequiredArgsConstructor
     public static class List {
-        private Long currentPage;
+        private int currentPage;
     }
 
     @Getter
