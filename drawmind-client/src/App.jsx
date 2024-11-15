@@ -27,16 +27,12 @@ export default function App() {
 
   function loadPage() {
     if (isScrollEnd()) {
-      console.log('로드 시작')
-      console.log('불러올 페이지: ', nextPageRef.current)
-
       setLoading(true);
 
       new Promise(resolve => {
         resolve(
           API.postList(nextPageRef.current)
             .then((res) => {
-              console.log(res.data)
               const postList = res.data.body;
               if (postList.length > 0) {
                 setPosts((prevPosts) => [...prevPosts, ...postList])
