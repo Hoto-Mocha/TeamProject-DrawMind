@@ -50,5 +50,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 10px;
+}
+
+.refreshBtnContainer {
+    width: 100%; /* Ensures the container stretches across the full width */
+    display: flex;
+    justify-content: center; /* Center button horizontally */
+    align-items: center; /* Center button vertically */
+}
+
+.refreshBtnContainer button {
+    width: 100%; /* Makes the button take up full width */
+    height: 50px; /* Adjust the height as needed */
+    font-size: 18px; /* Adjust font size */
+    text-align: center; /* Center text */
 }
