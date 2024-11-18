@@ -1,9 +1,9 @@
-import React, {useState, useEffect, useRef} from 'react';
-import toast, {toastConfig} from 'react-simple-toasts';
+import React, { useState, useEffect, useRef } from 'react';
+import toast, { toastConfig } from 'react-simple-toasts';
 import API from "./API";
 import "./css/App.css";
 import rollingGif from "./images/Rolling.gif"
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 toastConfig({
     theme: 'dark',
@@ -85,10 +85,15 @@ export default function App() {
         return (
             <>
                 <div className="infoSection">
-                    <p>{item.postTitle}</p>
-                    <p>{item.writer}</p>
+                    <div className='infoTitle'>
+                        <p>{item.postTitle}</p>
+                    </div>
+                    <div className='infoContent'>
+                        <p>{item.writer}</p>
+                        <p>{writeDate + ', ' + writeTime}</p>
+                    </div>
                 </div>
-                <p>{writeDate + ', ' + writeTime}</p>
+
             </>
         )
     }
@@ -106,12 +111,12 @@ export default function App() {
             <div className="postList">
                 {posts.map((item, index) => {
                     return (<Link to={`/contentView/${item.postSeq}`} className="postListItem" key={index}
-                                  style={linkStyle}>{postItem(item)}</Link>)
+                        style={linkStyle}>{postItem(item)}</Link>)
                 })}
                 {/* <button className="btn btn-primary" onClick={testBtnHandler}>API 테스트</button> */}
             </div>
             {!isLastPage && loading && <div className='app-loading'>
-                <img src={rollingGif} style={{width:'5vw', height:'5vw'}}/>
+                <img src={rollingGif} style={{ width: '5vw', height: '5vw' }} />
             </div>}
         </>
     )

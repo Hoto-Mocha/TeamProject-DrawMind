@@ -20,6 +20,10 @@
     padding: 7px;
 }
 
+.postListItem div {
+    flex: 1;
+}
+
 .postListItem p {
     text-align: start;
     font-size: 1rem;
@@ -28,6 +32,15 @@
 
 .postListItem .infoSection p {
     font-weight: bold;
+}
+
+.infoTitle {
+    flex: 1
+}
+
+.infoContent {
+    display: flex;
+    justify-content: space-between;
 }
 
 .postListItem .infoSection {
