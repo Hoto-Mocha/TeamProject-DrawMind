@@ -231,6 +231,9 @@ function Write() {
         table: {
             contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
         },
+        mediaEmbed: {
+            previewsInData:true
+        },
         translations: [translations]
     };
 
@@ -240,6 +243,7 @@ function Write() {
     };
 
     const nextBtnHandler = () => {
+        console.log(editorData)
         setIsDrawing(!isDrawing)
     }
 
