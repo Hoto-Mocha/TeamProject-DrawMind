@@ -243,7 +243,6 @@ function Write() {
     };
 
     const nextBtnHandler = () => {
-        console.log(editorData)
         setIsDrawing(!isDrawing)
     }
 
