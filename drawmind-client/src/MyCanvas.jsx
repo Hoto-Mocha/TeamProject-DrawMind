@@ -183,7 +183,7 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
         <div className="editorArea">
             <div className="drawEditorArea">
                 <div ref={postRef} className='contentBox'>
-                    <div dangerouslySetInnerHTML={{__html: editorData}}/>
+                    <div className="innerHtml" dangerouslySetInnerHTML={{__html: editorData}}/>
                 </div>
                 <div className="myCanvas">
                     <canvas

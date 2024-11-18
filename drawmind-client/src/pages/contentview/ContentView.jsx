@@ -108,7 +108,7 @@ function ContentView() {
                 <div className='contentview-body'>
                     <div className='contentView-content-container'>
                         <img className='contentView-image' src={data.imgURL} style={imageStyle}></img>
-                        <div className='contentView-content sidePadding' dangerouslySetInnerHTML={{ __html: data.content }} style={contentStyle} />
+                        <div className='contentView-content sidePadding innerHtml' dangerouslySetInnerHTML={{ __html: data.content }} style={contentStyle} />
                     </div>
                     <div>
                         {imageVisiblity && <button className='btn btn-primary nonSelect' onClick={imageVisiblityBtnHandler}>이미지 숨기기</button>}
