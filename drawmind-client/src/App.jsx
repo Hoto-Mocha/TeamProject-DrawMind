@@ -17,6 +17,14 @@ export default function App() {
     const [isRefresh, setIsRefresh] = useState(false);
 
     useEffect(() => {
+        setTimeout(() => {
+            localStorage.setItem("isMainPage", true) 
+        }, 1000);
+
+        return () => {localStorage.setItem("isMainPage", false)}
+    }, [])
+
+    useEffect(() => {
         if (isRefresh) {
             loadPage();
         } else if (!loading && !isLastPage) {
