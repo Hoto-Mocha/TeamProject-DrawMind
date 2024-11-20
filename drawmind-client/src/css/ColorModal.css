@@ -1,0 +1,8 @@
+.colorPickerButton, .sliderButton {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: pointer;
+}

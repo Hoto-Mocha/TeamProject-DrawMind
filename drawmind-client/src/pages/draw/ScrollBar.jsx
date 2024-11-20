@@ -1,4 +1,4 @@
-import './css/ScrollBar.css';
+import '../../css/ScrollBar.css';
 import {useEffect, useRef, useState} from 'react';
 
 function ScrollBar({ config, setConfig, buttonOffsetX, setButtonOffsetX }) {

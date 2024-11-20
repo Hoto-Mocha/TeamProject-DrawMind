@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import Palette from "./Palette.jsx";
-import './css/MyCanvas.css';
+import '../../css/MyCanvas.css';
 
 function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSize}) {
     const canvasRef = useRef(null);
@@ -134,7 +134,7 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
         }
     };
 
-    //
+    // 한 획을 그을 때마다, 혹은 undo 기능을 사용할 때마다 실행됨
     useEffect(() => {
         drawPath();
         brushSetting()
@@ -203,6 +203,7 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
                             }
                         }}
                         onMouseMove={drawPC}
+
                         onTouchStart={(e) => {
                             if (!moveAvailable) {
                                 e.preventDefault();
@@ -226,10 +227,9 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
                             }
                         }}
                     />
-
                 </div>
             </div>
-            <hr />
+            <hr/>
             <div className="toolArea">
                 <Palette
                     config={config}

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import MyCanvas from "../../MyCanvas.jsx";
+import MyCanvas from "../draw/MyCanvas.jsx";
 import "../../css/Write.css"
 import 'ckeditor5/ckeditor5.css';
 import Form from 'react-bootstrap/Form';
