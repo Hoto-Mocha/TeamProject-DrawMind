@@ -46,3 +46,11 @@
 .toolArea {
     height: 100px;
 }
+
+.innerHtml blockquote {
+    margin-top: 14.4px;
+    padding-bottom: 1px;
+    padding-left: 25px;
+    border-left: 5px solid #ccc;
+    font-style: italic;
+}

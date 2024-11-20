@@ -1,24 +1,16 @@
-.app {
-    position: relative;
-}
-
-.screen {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-}
-
-.canvas {
-    position: absolute;
-}
-
 .postList {
+    padding: 10px;
+}
+
+.refreshBtnContainer {
     margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .postListItem {
-    height: 60px;
+    height: 20%;
     display: flex;
     align-items: end;
     justify-content: space-between;
@@ -26,6 +18,10 @@
     background-color: #ddddff;
     border-radius: 5px;
     padding: 7px;
+}
+
+.postListItem div {
+    flex: 1;
 }
 
 .postListItem p {
@@ -36,6 +32,15 @@
 
 .postListItem .infoSection p {
     font-weight: bold;
+}
+
+.infoTitle {
+    flex: 1
+}
+
+.infoContent {
+    display: flex;
+    justify-content: space-between;
 }
 
 .postListItem .infoSection {
@@ -50,6 +55,26 @@
     align-items: end;
 }
 
-button {
-    user-select : none;
+.nonSelect {
+    user-select: none;
+}
+
+.app-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.refreshBtnContainer {
+    width: 100%; /* Ensures the container stretches across the full width */
+    display: flex;
+    justify-content: center; /* Center button horizontally */
+    align-items: center; /* Center button vertically */
+}
+
+.refreshBtnContainer button {
+    width: 100%; /* Makes the button take up full width */
+    height: 50px; /* Adjust the height as needed */
+    font-size: 18px; /* Adjust font size */
+    text-align: center; /* Center text */
 }

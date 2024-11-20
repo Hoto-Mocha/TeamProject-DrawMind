@@ -11,13 +11,18 @@
 }
 
 .contentView-post-title-container {
-    display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.btnContainer {
+    display: flex;
+    justify-content: end;
+}
+
 .contentview-btn {
     margin: 0px 5px;
+    min-width: 60px;
 }
 
 .contentview-body {

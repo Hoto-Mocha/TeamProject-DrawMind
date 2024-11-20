@@ -231,6 +231,9 @@ function Write() {
         table: {
             contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
         },
+        mediaEmbed: {
+            previewsInData:true
+        },
         translations: [translations]
     };
 
@@ -305,7 +308,13 @@ function Write() {
 
 export function completeWriting(navigate, title, content, imgURL, editorSize) {
     let memberSeq = localStorage.getItem('memberSeq');
+
     if (memberSeq) { //로그인이 되어 있을 경우 정상 실행
+      if (title == '' || content == '') {
+        toast('게시글 제목 또는 내용을 모두 채워주세요!');
+        return;
+      }
+
         API.postWrite(memberSeq, title, content, imgURL, editorSize)
             .then((res) => {
                 navigate(`/contentview/${res.data.body.postSeq}`);

@@ -94,21 +94,21 @@ function ContentView() {
                 <div className='contentView-post-header'>
                     <div className='contentView-post-title-container'>
                         <h1 className='contentView-title sidePadding'>{data.title}</h1>
-                        {isWriter() && <div>
-                            <button className='btn btn-danger contentview-btn' onClick={handleShow}>삭제</button>
-                            <button className='btn btn-primary contentview-btn' onClick={() => { editBtnHandler(data) }}>수정</button>
-                        </div>}
                     </div>
                     <div className='contentView-postInfo sidePadding'>
                         <p>{data.writer}</p>
                         <p>{data.date}</p>
                     </div>
+                    {isWriter() && <div className='btnContainer'>
+                        <button className='btn btn-danger contentview-btn' onClick={handleShow}>삭제</button>
+                        <button className='btn btn-primary contentview-btn' onClick={() => { editBtnHandler(data) }}>수정</button>
+                    </div>}
                     <hr />
                 </div>
                 <div className='contentview-body'>
                     <div className='contentView-content-container'>
                         <img className='contentView-image' src={data.imgURL} style={imageStyle}></img>
-                        <div className='contentView-content sidePadding' dangerouslySetInnerHTML={{ __html: data.content }} style={contentStyle} />
+                        <div className='contentView-content sidePadding innerHtml' dangerouslySetInnerHTML={{ __html: data.content }} style={contentStyle} />
                     </div>
                     <div>
                         {imageVisiblity && <button className='btn btn-primary nonSelect' onClick={imageVisiblityBtnHandler}>이미지 숨기기</button>}
