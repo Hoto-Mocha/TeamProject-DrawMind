@@ -3,7 +3,7 @@ import toast, { toastConfig } from 'react-simple-toasts';
 import API from "./API";
 import "./css/App.css";
 import rollingGif from "./images/Rolling.gif"
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 toastConfig({
     theme: 'dark',
@@ -16,32 +16,12 @@ export default function App() {
     const [isLastPage, setIsLastPage] = useState(false);
     const [isRefresh, setIsRefresh] = useState(false);
 
-    const location = useLocation();
-    const navigate = useNavigate();
-
     useEffect(() => {
+        setTimeout(() => {
+            localStorage.setItem("isMainPage", true) 
+        }, 1000);
 
-        // mount 된 시점에 이벤트를 바인딩.
-
-        M.onBack(() => {
-            // backkey 가 눌렸을떄 실행되는 콜백 이벤트
-            // home 인 경우 뒤로가기 눌렀을때 종료 처리
-            if (location.pathname === '/') {
-                if (_exit) M.sys.exit();
-                else {
-                    M.pop.instance('한번 더 누르시면 앱이 종료됩니다.')
-                    _exit = true;
-                    setTimeout(() => {
-                        _exit = false;
-                    }, 1000)
-                }
-
-            } else {
-                // 기본적으로는 뒤로가도록 처리한다.
-                navigate(-1)
-            }
-        })
-
+        return () => {localStorage.setItem("isMainPage", false)}
     }, [])
 
     useEffect(() => {
