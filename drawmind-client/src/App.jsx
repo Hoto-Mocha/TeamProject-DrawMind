@@ -26,7 +26,7 @@ export default function App() {
         M.onBack(() => {
             // backkey 가 눌렸을떄 실행되는 콜백 이벤트
             // home 인 경우 뒤로가기 눌렀을때 종료 처리
-            if (location.pathname === '/home') {
+            if (location.pathname === '/') {
                 if (_exit) M.sys.exit();
                 else {
                     M.pop.instance('한번 더 누르시면 앱이 종료됩니다.')
