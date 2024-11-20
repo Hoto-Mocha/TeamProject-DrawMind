@@ -6,6 +6,7 @@ import {useEffect, useRef, useState} from "react";
 const pattern = [[0, 1, 0], [-1, 0, 0], [0, 0, 1], [0, -1, 0], [1, 0, 0], [0, 0, -1]]
 
 function ColorModal({config, setConfig, pickerBgColor, setPickerBgColor, isClicked, setIsClicked}) {
+
     const colorPickerRef = useRef(null);
     const sliderRef = useRef(null)
 
@@ -137,7 +138,6 @@ function ColorModal({config, setConfig, pickerBgColor, setPickerBgColor, isClick
             return
 
         let diffY = sliderButtonOffset + e.clientY - mouseOffset.offsetY;
-
         if (diffY < 0) diffY = 0
         else if (diffY > 255) diffY = 255
 
@@ -157,7 +157,6 @@ function ColorModal({config, setConfig, pickerBgColor, setPickerBgColor, isClick
                 red: pixel[0],
                 green: pixel[1],
                 blue: pixel[2],
-                hex: `#${sliderBgColor.red < 16 ? '0' : ''}${sliderBgColor.red.toString(16)}${sliderBgColor.green < 16 ? '0' : ''}${sliderBgColor.green.toString(16)}${sliderBgColor.blue < 16 ? '0' : ''}${sliderBgColor.blue.toString(16)}`
             })
         }
     }, [sliderButtonOffset]);
@@ -183,14 +182,20 @@ function ColorModal({config, setConfig, pickerBgColor, setPickerBgColor, isClick
                         style={{
                             left: pickerButtonOffset.offsetX - 12.5,
                             top: pickerButtonOffset.offsetY - 12.5,
-                            backgroundColor: pickerBgColor.hex
+                            backgroundColor: "transparent"
                         }}
                         onMouseDown={(e) => {
                             isPickerDraggingRef.current = true
                             setMouseOffset({offsetX: e.clientX, offsetY: e.clientY})
                         }}
-                        onMouseMove={handlePickerDrag}
-                        onMouseUp={handlePickerDrop}
+                        onTouchStart={(e) => {
+                            isPickerDraggingRef.current = true
+                            const touch = e.touches[0];
+                            const rect = colorPickerRef.current.getBoundingClientRect();
+                            const offsetX = touch.clientX - rect.left;
+                            const offsetY = touch.clientY - rect.top;
+                            setMouseOffset({offsetX, offsetY})
+                        }}
                     ></div>
                     <canvas
                         ref={sliderRef}
@@ -205,14 +210,20 @@ function ColorModal({config, setConfig, pickerBgColor, setPickerBgColor, isClick
                         style={{
                             right: 0,
                             top: sliderButtonOffset - 12.5,
-                            backgroundColor: sliderBgColor.hex
+                            backgroundColor: `rgb(${sliderBgColor.red}, ${sliderBgColor.green}, ${sliderBgColor.blue})`
                         }}
                         onMouseDown={(e) => {
                             isSliderDraggingRef.current = true
                             setMouseOffset({offsetX: e.clientX, offsetY: e.clientY})
                         }}
-                        onMouseMove={handleSliderDrag}
-                        onMouseUp={handleSliderDrop}
+                        onTouchStart={(e) => {
+                            isSliderDraggingRef.current = true
+                            const touch = e.touches[0];
+                            const rect = sliderRef.current.getBoundingClientRect();
+                            const offsetX = touch.clientX - rect.left;
+                            const offsetY = touch.clientY - rect.top;
+                            setMouseOffset({offsetX, offsetY})
+                        }}
                     ></div>
 
                 </div>
