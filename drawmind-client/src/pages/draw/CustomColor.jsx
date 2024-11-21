@@ -23,7 +23,7 @@ function    CustomColor({config, setConfig, isErasing, setErasing}) {
                 <FaCheck className="paletteIcon" style={{
                     position: 'absolute',
                     display: config.strokeStyle === pickerBgColor.hex && !isErasing ? 'block' : 'none',
-                    color: config.strokeStyle === 'yellow' ? 'black' : 'white',
+                    color: config.strokeStyle === '#FFFF00' ? 'black' : 'white',
                 }}/>
             </div>
             <ColorModal
@@ -31,7 +31,6 @@ function    CustomColor({config, setConfig, isErasing, setErasing}) {
                 setIsClicked={setIsClicked}
                 pickerBgColor={pickerBgColor}
                 setPickerBgColor={setPickerBgColor}
-                config={config}
                 setConfig={setConfig}
             ></ColorModal>
         </>
