@@ -1,7 +1,7 @@
 import '../../css/ColorModal.css'
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 
 
 function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setIsClicked}) {
@@ -17,6 +17,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
 
     const sliderColorRef = useRef({red: 255, green: 0, blue: 0})
 
+    // 컬러피커 생성 코드
     function makeColorPicker() {
         if (colorPickerRef.current) {
             colorPickerRef.current.width = 256;
@@ -45,6 +46,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
         }
     }
 
+    // 슬라이더 생성 코드
     function makeSlider() {
         if (sliderRef.current) {
             sliderRef.current.width = 25
@@ -66,6 +68,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
         }
     }
 
+    // 모달 화면 생성 코드
     useEffect(() => {
         if (isClicked) {
             makeColorPicker()
@@ -73,6 +76,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
         }
     }, [isClicked]);
 
+    // 드래그, 터치 이벤트 등록 코드
     useEffect(() => {
         if (isPickerDraggingRef.current) {
             document.addEventListener('mousemove', handlePickerDrag);
@@ -115,6 +119,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
         }
     }, [isSliderDraggingRef.current]);
 
+    // 컬러피커 버튼 드래그 대응 코드
     function handlePickerDrag(e) {
         const canvas = colorPickerRef.current;
         if (!canvas || !isPickerDraggingRef.current) return;
@@ -126,14 +131,16 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
         const offsetX = Math.max(0, Math.min(255, clientX - rect.left));
         const offsetY = Math.max(0, Math.min(255, clientY - rect.top));
 
-        pickerButtonOffsetRef.current = { x: offsetX, y: offsetY };
+        pickerButtonOffsetRef.current = {x: offsetX, y: offsetY};
         setPickerButtonColor()
     }
 
+    // 컬러피커 버튼 드랍 대응 코드
     function handlePickerDrop() {
         isPickerDraggingRef.current = false
     }
 
+    // pickerBgColor 업데이트하는 코드
     function setPickerButtonColor() {
         if (colorPickerRef.current) {
             const context = colorPickerRef.current.getContext('2d')
@@ -149,6 +156,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
         }
     }
 
+    // 슬라이더 드래그 대응 코드
     function handleSliderDrag(e) {
         const canvas = sliderRef.current;
         if (!canvas || !isSliderDraggingRef.current) return;
@@ -171,8 +179,51 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
         makeColorPicker()
     }
 
+    // 슬라이더 드랍 대응 코드
     function handleSliderDrop() {
         isSliderDraggingRef.current = false
+    }
+
+    function typeColor(e, type) {
+        const input = e.target.value
+        if (type === 'hex') {
+            const arr = input.split('#')
+            const hex = arr.length > 1 ? arr[1] : arr[0]
+            if (hex.length < 6) {
+                setPickerBgColor(prev => ({...prev, hex: input}))
+            }
+            else {
+                setPickerBgColor({
+                    red: parseInt(hex.slice(0, 2), 16),
+                    green: parseInt(hex.slice(2, 4), 16),
+                    blue: parseInt(hex.slice(4, 6), 16),
+                    hex: input
+                })
+            }
+        } else {
+            setPickerBgColor(prev => {
+                const arr = prev.hex.split('#')
+                const hex = arr.length > 1 ? arr[1] : arr[0]
+                const rgbHex = parseInt(input).toString(16).padStart(2, "0").slice(0, 2)
+                let newHex
+                switch (type) {
+                    case 'red':
+                        newHex = '#' + rgbHex + hex.slice(2, 6)
+                        break
+                    case 'green':
+                        newHex = '#' + hex.slice(0, 2) + rgbHex + hex.slice(4, 6)
+                        break
+                    case 'blue':
+                        newHex = '#' + hex.slice(0, 4) + rgbHex
+                        break
+                }
+                return {
+                    ...prev,
+                    [type]: input,
+                    hex: newHex
+                }
+            })
+        }
     }
 
     return (
@@ -268,13 +319,22 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
                 {
                     pickerBgColor ?
                         <div>
-                            red : {pickerBgColor.red}
-                            /
-                            green : {pickerBgColor.green}
-                            /
-                            blue : {pickerBgColor.blue}
-                            <br/>
-                            hex: {pickerBgColor.hex}
+                            <input type="text"
+                                   value={pickerBgColor.red}
+                                   onChange={e => typeColor(e, 'red')}
+                            />
+                            <input type="text"
+                                   value={pickerBgColor.green}
+                                   onChange={e => typeColor(e, 'green')}
+                            />
+                            <input type="text"
+                                   value={pickerBgColor.blue}
+                                   onChange={e => typeColor(e, 'blue')}
+                            />
+                            <input type="text"
+                                   value={pickerBgColor.hex}
+                                   onChange={e => typeColor(e, 'hex')}
+                            />
                         </div>
                         :
                         null

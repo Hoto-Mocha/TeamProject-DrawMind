@@ -17,16 +17,16 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
 
     const stepRef = useRef([])
     const [undoSteps, setUndoSteps] = useState([]);
-    const [redoSteps, setRedoSteps] = useState([]);
+    const [redoSteps, setRedoSteps] = useState([])
     const [moveAvailable, setMoveAvailable] = useState(false);
 
     function brushSetting() {
-        const canvasElement = canvasRef.current;
-        contextRef.current = canvasElement.getContext("2d");
-        contextRef.current.lineWidth = config.lineWidth;  // 선의 두께 설정
-        contextRef.current.lineCap = config.lineCap;  // 선 끝 부분 둥글게 설정
-        contextRef.current.strokeStyle = config.strokeStyle;  // 기본 색상 설정
-        contextRef.current.lineJoin = config.lineJoin
+        if (contextRef.current) {
+            contextRef.current.lineWidth = config.lineWidth;  // 선의 두께 설정
+            contextRef.current.lineCap = config.lineCap;  // 선 끝 부분 둥글게 설정
+            contextRef.current.strokeStyle = config.strokeStyle;  // 기본 색상 설정
+            contextRef.current.lineJoin = config.lineJoin
+        }
     }
 
     const resizeCanvas = () => {
@@ -41,30 +41,24 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
             canvasElement.width = postElement.clientWidth;
             canvasElement.height = postElement.clientHeight;
 
-            const context = canvasElement.getContext("2d", {willReadFrequently: true});
-            context.scale(1, 1);
+            contextRef.current = canvasElement.getContext("2d", {willReadFrequently: true});
+            contextRef.current.scale(1, 1);
             if (savedImageRef.current) {
-                context.putImageData(savedImageRef.current, 0, 0);
+                contextRef.current.putImageData(savedImageRef.current, 0, 0);
             }
         }
     };
 
-    const drawPC = (e) => {
+    const draw = (e) => {
         if (!isDrawingRef.current || moveAvailable) return;
-        const {offsetX, offsetY} = e.nativeEvent;
-        draw(offsetX, offsetY);
-    };
+        e.preventDefault()
 
-    const drawMobile = (e) => {
-        if (!isDrawingRef.current || moveAvailable) return;
-        const touch = e.touches[0];
         const rect = canvasRef.current.getBoundingClientRect();
-        const offsetX = touch.clientX - rect.left;
-        const offsetY = touch.clientY - rect.top;
-        draw(offsetX, offsetY);
-    };
+        const {clientX, clientY} = e.touches ? e.touches[0] : e;
+        const offsetX = clientX - rect.left;
+        const offsetY = clientY - rect.top;
 
-    function draw(offsetX, offsetY) {
+
         if (stepRef.current.length === 0) {
             contextRef.current.beginPath();
             contextRef.current.moveTo(offsetX, offsetY);
@@ -92,8 +86,7 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
             contextRef.current.lineTo(offsetX, offsetY);
             contextRef.current.stroke();
         }
-    }
-
+    };
 
     // 창 크기 조절 시 resizeCanvas를 호출함
     useEffect(() => {
@@ -106,39 +99,40 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
 
     // 저장된 기록을 기반으로 그림 다시 그리기
     const drawPath = () => {
-        const context = canvasRef.current.getContext("2d");
-        context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        if (contextRef.current) {
+            contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
-        for (const path of undoSteps) {
-            context.beginPath(); // 경로 시작
-            for (const {offsetX, offsetY, color, width, clear, lineCap, lineJoin, erase} of path) {
-                if (clear === true) {
-                    context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-                } else {
-                    context.strokeStyle = color;
-                    context.lineWidth = width;
-                    context.lineJoin = lineJoin
-                    context.lineCap = lineCap
-                    if (path.indexOf({offsetX, offsetY, color, width, clear, erase}) === 0) {
-                        // 첫 번째 점에서 moveTo로 시작점을 설정
-                        context.moveTo(offsetX, offsetY);
+            for (const path of undoSteps) {
+                contextRef.current.beginPath(); // 경로 시작
+                for (const {offsetX, offsetY, color, width, clear, lineCap, lineJoin, erase} of path) {
+                    if (clear === true) {
+                        contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
                     } else {
-                        if (erase)
-                            context.clearRect(offsetX - width / 2, offsetY - width / 2, width, width);
-                        else
-                            context.lineTo(offsetX, offsetY);
+                        contextRef.current.strokeStyle = color;
+                        contextRef.current.lineWidth = width;
+                        contextRef.current.lineJoin = lineJoin
+                        contextRef.current.lineCap = lineCap
+                        if (path.indexOf({offsetX, offsetY, color, width, clear, erase}) === 0) {
+                            // 첫 번째 점에서 moveTo로 시작점을 설정
+                            contextRef.current.moveTo(offsetX, offsetY);
+                        } else {
+                            if (erase)
+                                contextRef.current.clearRect(offsetX - width / 2, offsetY - width / 2, width, width);
+                            else
+                                contextRef.current.lineTo(offsetX, offsetY);
+                        }
                     }
                 }
+                contextRef.current.stroke(); // 마지막에 stroke로 선을 화면에 표시합니다.
             }
-            context.stroke(); // 마지막에 stroke로 선을 화면에 표시합니다.
+            brushSetting()
         }
     };
 
-    // 한 획을 그을 때마다, 혹은 undo 기능을 사용할 때마다 실행됨
+    // 한 획을 그을 때마다, 혹은 redo 기능을 사용할 때마다 실행됨
     useEffect(() => {
         drawPath();
-        brushSetting()
-    }, [undoSteps]);
+    }, [redoSteps]);
 
     useEffect(() => {
         brushSetting()
@@ -148,19 +142,20 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
         setUndoSteps((prevSteps) => {
             if (prevSteps.length === 0) return prevSteps;
             const lastStep = prevSteps[prevSteps.length - 1];
-            setRedoSteps((prevRedoSteps) => [lastStep, ...prevRedoSteps]);
+            setRedoSteps(prev => [lastStep, ...prev])
             return prevSteps.slice(0, -1);
         });
     };
 
     // redo 기능
     const redo = () => {
-        setRedoSteps((prevRedoSteps) => {
-            if (prevRedoSteps.length === 0) return prevRedoSteps;
-            const lastRedo = prevRedoSteps[0];
-            setUndoSteps((prevSteps) => [...prevSteps, lastRedo]);
-            return prevRedoSteps.slice(1);
-        });
+        setRedoSteps((prevSteps) => {
+            if (prevSteps.length === 0) return prevSteps;
+            const lastStep = prevSteps[0];
+            setUndoSteps(prev => [...prev, lastStep])
+            return prevSteps.slice(1);
+        })
+
     };
 
     // 화면 초기화 기능
@@ -169,19 +164,13 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
         setUndoSteps((prevSteps) => [...prevSteps, [{clear: true}]]);
     };
 
-    const btnToggle = () => {
-        setMoveAvailable(!moveAvailable)
-        const scrollContainer = document.querySelector(".drawEditorArea");
-        if (moveAvailable && scrollContainer) {
-            scrollContainer.style.overflow = "hidden"; // 스크롤 잠금
-        } else if (scrollContainer) {
-            scrollContainer.style.overflow = "auto"; // 스크롤 복구
-        }
-    }
-
     return (
         <div className="editorArea">
-            <div className="drawEditorArea">
+            <div className="drawEditorArea"
+                 style={{
+                     overflow: moveAvailable ? 'auto' : 'hidden',
+                 }}
+            >
                 <div ref={postRef} className='contentBox'>
                     <div className="innerHtml" dangerouslySetInnerHTML={{__html: editorData}}/>
                 </div>
@@ -192,24 +181,25 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
                             if (!moveAvailable) {
                                 isDrawingRef.current = true;
                                 stepRef.current = []
-                                drawPC(e)
+                                draw(e)
                             }
                         }}
-                        onMouseUp={() => {
+                        onMouseMove={draw}
+                        onMouseUp={(e) => {
                             if (!moveAvailable) {
+                                e.preventDefault()
                                 isDrawingRef.current = false
                                 setUndoSteps((prevSteps) => [...prevSteps, stepRef.current]);
-                                setRedoSteps([]);
+                                if (redoSteps.length !== 0)
+                                    setRedoSteps([])
                             }
                         }}
-                        onMouseMove={drawPC}
 
                         onTouchStart={(e) => {
                             if (!moveAvailable) {
-                                e.preventDefault();
                                 isDrawingRef.current = true;
                                 stepRef.current = [];
-                                drawMobile(e)
+                                draw(e)
                             }
                         }}
                         onTouchEnd={(e) => {
@@ -217,15 +207,11 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
                                 e.preventDefault();
                                 isDrawingRef.current = false
                                 setUndoSteps((prevSteps) => [...prevSteps, stepRef.current]);
-                                setRedoSteps([]);
+                                if (redoSteps.length !== 0)
+                                    setRedoSteps([])
                             }
                         }}
-                        onTouchMove={(e) => {
-                            if (!moveAvailable) {
-                                e.preventDefault();
-                                drawMobile(e);
-                            }
-                        }}
+                        onTouchMove={draw}
                     />
                 </div>
             </div>
@@ -237,8 +223,8 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
                     undo={undo}
                     redo={redo}
                     clear={clear}
-                    btnToggle={btnToggle}
                     moveAvailable={moveAvailable}
+                    setMoveAvailable={setMoveAvailable}
                     isErasing={isErasing}
                     setErasing={setErasing}
                     previousBtnHandler={previousBtnHandler}

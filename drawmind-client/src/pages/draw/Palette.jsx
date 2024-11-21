@@ -8,7 +8,6 @@ import ConfirmModal from "../../components/common/ConfirmModal.jsx";
 import BrushSize from "./BrushSize.jsx";
 import {completeWriting} from "../write/Write.jsx"
 import {useNavigate} from "react-router-dom";
-import API from "../../API.jsx";
 import CustomColor from "./CustomColor.jsx";
 
 const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple', 'black'];
@@ -19,8 +18,8 @@ function Palette({
                      undo,
                      redo,
                      clear,
-                     btnToggle,
                      moveAvailable,
+                     setMoveAvailable,
                      isErasing,
                      setErasing,
                      previousBtnHandler,
@@ -33,7 +32,6 @@ function Palette({
     const navigate = useNavigate();
 
     const [show, setShow] = useState(false);
-
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -87,8 +85,8 @@ function Palette({
             </div>
             <div className="btnPalette">
                 <div className="tools">
-                    {!moveAvailable && <RiPencilFill className="icon" onClick={btnToggle} style={{scale: '1.2'}}/>}
-                    {moveAvailable && <IoMdMove className="icon" onClick={btnToggle} style={{scale: '1.2'}}/>}
+                    {!moveAvailable && <RiPencilFill className="icon" onClick={() => setMoveAvailable(prev => !prev)} style={{scale: '1.2'}}/>}
+                    {moveAvailable && <IoMdMove className="icon" onClick={() => setMoveAvailable(prev => !prev)} style={{scale: '1.2'}}/>}
                     <FaUndoAlt className="icon" onClick={undo}/>
                     <FaRedoAlt className="icon" onClick={redo}/>
                 </div>
