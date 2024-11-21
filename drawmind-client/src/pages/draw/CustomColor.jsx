@@ -5,7 +5,7 @@ import ColorModal from "./ColorModal.jsx";
 function    CustomColor({config, setConfig, isErasing, setErasing}) {
 
     const [isClicked, setIsClicked] = useState(false);
-    const [pickerBgColor, setPickerBgColor] = useState({red: 0, green: 0, blue: 0, hex: '#000000'});
+    const [pickerBgColor, setPickerBgColor] = useState({red: 255, green: 255, blue: 255, hex: '#FFFFFF'});
 
     return (
         <>

@@ -10,7 +10,6 @@ import {completeWriting} from "../write/Write.jsx"
 import {useNavigate} from "react-router-dom";
 import API from "../../API.jsx";
 import CustomColor from "./CustomColor.jsx";
-import ColorModal from "./ColorModal.jsx";
 
 const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple', 'black'];
 

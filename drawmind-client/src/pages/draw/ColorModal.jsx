@@ -16,7 +16,7 @@ function ColorModal({config, setConfig, pickerBgColor, setPickerBgColor, isClick
     const [pickerButtonOffset, setPickerButtonOffset] = useState({offsetX: 0, offsetY: 0})
     const [sliderButtonOffset, setSliderButtonOffset] = useState(0)
 
-    const [sliderBgColor, setSliderBgColor] = useState({red: 255, green: 0, blue: 0, hex: '#FF0000'});
+    const [sliderBgColor, setSliderBgColor] = useState({red: 255, green: 0, blue: 0});
 
     const [mouseOffset, setMouseOffset] = useState({offsetX: 0, offsetY: 0});
 
@@ -25,15 +25,23 @@ function ColorModal({config, setConfig, pickerBgColor, setPickerBgColor, isClick
             colorPickerRef.current.width = 256;
             colorPickerRef.current.height = 256;
             const colorPickerContext = colorPickerRef.current.getContext("2d");
-            for (let i = 0; i < 256; i++) {
-                for (let j = 0; j < 256; j++) {
-                    const red = (1 - j / 255) * (255 - i * (255 - sliderBgColor.red) / 255)
-                    const green = (1 - j / 255) * (255 - i * (255 - sliderBgColor.green) / 255)
-                    const blue = (1 - j / 255) * (255 - i * (255 - sliderBgColor.blue) / 255)
-                    colorPickerContext.fillStyle = `rgb(${red}, ${green}, ${blue})`;
-                    colorPickerContext.fillRect(i, j, 1, 1);
-                }
-            }
+            // 상단 그라디언트 (흰색 -> 색상)
+            const topGradient = colorPickerContext.createLinearGradient(0, 0, 256, 0);
+            topGradient.addColorStop(0, "rgb(255, 255, 255)");
+            topGradient.addColorStop(1, `rgb(${sliderBgColor.red}, ${sliderBgColor.green}, ${sliderBgColor.blue})`);
+
+            // 상단 그라디언트를 캔버스에 그리기
+            colorPickerContext.fillStyle = topGradient;
+            colorPickerContext.fillRect(0, 0, 256, 256);
+
+            // 하단 그라디언트 (투명 -> 검은색)
+            const bottomGradient = colorPickerContext.createLinearGradient(0, 0, 0, 256);
+            bottomGradient.addColorStop(0, "rgba(0, 0, 0, 0)");
+            bottomGradient.addColorStop(1, "rgba(0, 0, 0, 1)");
+
+            // 하단 그라디언트를 캔버스에 그리기
+            colorPickerContext.fillStyle = bottomGradient;
+            colorPickerContext.fillRect(0, 0, 256, 256);
         }
     }
 
