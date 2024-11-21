@@ -220,7 +220,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
                 return {
                     ...prev,
                     [type]: input,
-                    hex: newHex
+                    hex: input === '' ? prev.hex : newHex
                 }
             })
         }
