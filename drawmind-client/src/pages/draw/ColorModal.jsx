@@ -71,6 +71,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
         if (isClicked) {
             makeColorPicker()
             makeSlider()
+            setPickerButtonColor()
         }
     }, [isClicked]);
 
@@ -247,8 +248,6 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
 
 // RGB 값을 기준으로 슬라이더 및 컬러피커 좌표 계산
     function calculatePositionsFromRgb(red, green, blue) {
-        console.log(red, green, blue)
-
         // RGB 값 유효성 확인 (0 ~ 255 범위)
         if (
             red < 0 || red > 255 ||
@@ -296,8 +295,6 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
         const pickerX = Math.round(saturation * 256); // 컬러피커 X 좌표
         const pickerY = Math.round((1 - value) * 256); // 컬러피커 Y 좌표
 
-        console.log(sliderY, pickerX, pickerY)
-
         return { sliderY, pickerX, pickerY };
     }
 
@@ -314,7 +311,10 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
                 >
                     <canvas
                         ref={colorPickerRef}
-                        style={{position: 'absolute'}}
+                        style={{
+                            position: 'absolute',
+                            left: 60
+                    }}
                         onMouseDown={(e) => {
                             isPickerDraggingRef.current = true
                             handlePickerDrag(e)
@@ -332,7 +332,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
                     <div
                         className={'colorPickerButton'}
                         style={{
-                            left: pickerButtonOffsetRef.current.x - 12.5,
+                            left: pickerButtonOffsetRef.current.x - 12.5 + 60,
                             top: pickerButtonOffsetRef.current.y - 12.5,
                             backgroundColor: "transparent"
                         }}
@@ -353,7 +353,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
                         ref={sliderRef}
                         style={{
                             position: 'absolute',
-                            right: 0,
+                            right: 60,
                             borderRadius: 20
                         }}
                         onMouseDown={e => {
@@ -372,7 +372,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
                     <div
                         className={'sliderButton'}
                         style={{
-                            right: 0,
+                            right: 60,
                             top: sliderButtonOffsetRef.current - 12.5,
                             backgroundColor: `rgb(${sliderBgColorRef.current.red}, ${sliderBgColorRef.current.green}, ${sliderBgColorRef.current.blue})`
                         }}
@@ -393,23 +393,43 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
                 </div>
                 {
                     pickerBgColor ?
-                        <div>
-                            <input type="text"
-                                   value={pickerBgColor.red}
-                                   onChange={e => typeColor(e, 'red')}
-                            />
-                            <input type="text"
-                                   value={pickerBgColor.green}
-                                   onChange={e => typeColor(e, 'green')}
-                            />
-                            <input type="text"
-                                   value={pickerBgColor.blue}
-                                   onChange={e => typeColor(e, 'blue')}
-                            />
-                            <input type="text"
-                                   value={pickerBgColor.hex}
-                                   onChange={e => typeColor(e, 'hex')}
-                            />
+                        <div style={{marginTop: 20}}>
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'space-evenly'
+                            }}>
+                                <label htmlFor="">RGB</label>
+                                <div>
+                                    <input type="text"
+                                           value={pickerBgColor.red}
+                                           onChange={e => typeColor(e, 'red')}
+                                           className={'rgb'}
+                                    />
+                                    <input type="text"
+                                           value={pickerBgColor.green}
+                                           onChange={e => typeColor(e, 'green')}
+                                           className={'rgb'}
+                                    />
+                                    <input type="text"
+                                           value={pickerBgColor.blue}
+                                           onChange={e => typeColor(e, 'blue')}
+                                           className={'rgb'}
+                                    />
+                                </div>
+                            </div>
+
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'space-evenly'
+                            }}>
+                                <label htmlFor="">HEX</label>
+                                <input type="text"
+                                       value={pickerBgColor.hex}
+                                       onChange={e => typeColor(e, 'hex')}
+                                       className={'hex'}
+                                />
+                            </div>
+
                         </div>
                         :
                         null

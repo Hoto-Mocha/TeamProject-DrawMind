@@ -6,3 +6,13 @@
     border: 2px solid white;
     cursor: pointer;
 }
+
+.rgb {
+    width: 40px;
+    text-align: center;
+}
+
+.hex {
+    width: 120px;
+    text-align: center;
+}
