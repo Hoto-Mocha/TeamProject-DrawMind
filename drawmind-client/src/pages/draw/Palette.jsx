@@ -49,7 +49,8 @@ function Palette({
         const canvas = canvasRef.current
         if (canvas) {
             const imageURL = canvas.toDataURL('image/png')
-            if (isEditing) {
+            console.log(isEditing)
+            if (!isEditing) {
                 completeWriting(navigate, titleData, editorData, imageURL, editorSize)
             } else {
                 API.postUpdate(postSeq, titleData, editorData, imageURL, editorSize)

@@ -30,8 +30,8 @@ export default {
     postWrite(memberSeq, title, content, imageURL, postWidth) { //게시글 작성
         return instance.post('/api/post/write', {memberSeq, title, content, imageURL, postWidth});
     },
-    postUpdate(postSeq, title, content) { //게시글 수정
-        return instance.post('/api/post/update', {postSeq, title, content});
+    postUpdate(postSeq, title, content, imageURL, postWidth) { //게시글 수정
+        return instance.post('/api/post/update', {postSeq, title, content, imageURL, postWidth});
     },
     postDelete(postSeq) { //게시글 삭제
         return instance.post('/api/post/delete', {postSeq});
