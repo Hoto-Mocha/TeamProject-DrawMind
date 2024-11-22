@@ -204,14 +204,26 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
                     updatedColor = { ...prev, hex: input };
                 }
             } else {
+                const arr = prev.hex.split('#')
+                const hex = arr.length > 1 ? arr[1] : arr[0]
+                const rgbHex = parseInt(input).toString(16).padStart(2, "0").slice(0, 2)
+                let newHex = '#'
+                switch (type) {
+                    case 'red':
+                        newHex += rgbHex + hex.slice(2, 6)
+                        break
+                    case 'green':
+                        newHex += hex.slice(0, 2) + rgbHex + hex.slice(4, 6)
+                        break
+                    case 'blue':
+                        newHex += hex.slice(0, 4) + rgbHex
+                        break
+                }
+
                 updatedColor = {
                     ...prev,
                     [type]: input === "" ? input : parseInt(input),
-                    hex: `#${[
-                        type === "red" ? input.padStart(2, "0") : prev.red.toString(16).padStart(2, "0"),
-                        type === "green" ? input.padStart(2, "0") : prev.green.toString(16).padStart(2, "0"),
-                        type === "blue" ? input.padStart(2, "0") : prev.blue.toString(16).padStart(2, "0"),
-                    ].join("")}`
+                    hex: parseInt(input) > 255 ? prev.hex : newHex
                 };
             }
 
@@ -235,6 +247,21 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
 // RGB 값을 기준으로 슬라이더 및 컬러피커 좌표 계산
     function calculatePositionsFromRgb(red, green, blue) {
         console.log(red, green, blue)
+
+        // RGB 값 유효성 확인 (0 ~ 255 범위)
+        if (
+            red < 0 || red > 255 ||
+            green < 0 || green > 255 ||
+            blue < 0 || blue > 255
+        ) {
+            console.warn("Invalid RGB values. Keeping previous positions.");
+            return {
+                sliderY: sliderButtonOffsetRef.current,
+                pickerX: pickerButtonOffsetRef.current.x,
+                pickerY: pickerButtonOffsetRef.current.y
+            }; // 기존 좌표 반환
+        }
+
         // RGB -> HSV 변환
         const r = red / 255;
         const g = green / 255;
