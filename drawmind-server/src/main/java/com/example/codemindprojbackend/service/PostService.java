@@ -40,6 +40,8 @@ public class PostService {
                 .orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND, "Memo not found"));
         post.setTitle(request.getTitle());
         post.setContent(request.getContent());
+        post.setImgURL(request.getImageURL());
+        post.setPostWidth(request.getPostWidth());
         postRepository.save(post);
         return PostResponse.Detail.of(post);
     }

@@ -2,7 +2,8 @@ import {useEffect, useRef, useState} from "react";
 import Palette from "./Palette.jsx";
 import '../../css/MyCanvas.css';
 
-function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSize}) {
+function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSize, imgURL, isEditing, postSeq}) {
+
     const canvasRef = useRef(null);
     const contextRef = useRef(null);
     const savedImageRef = useRef(null);
@@ -37,12 +38,12 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
             if (contextRef.current) {
                 savedImageRef.current = contextRef.current.getImageData(0, 0, canvasElement.width, canvasElement.height);
             }
-
             canvasElement.width = postElement.clientWidth;
             canvasElement.height = postElement.clientHeight;
 
             contextRef.current = canvasElement.getContext("2d", {willReadFrequently: true});
             contextRef.current.scale(1, 1);
+
             if (savedImageRef.current) {
                 contextRef.current.putImageData(savedImageRef.current, 0, 0);
             }
@@ -87,6 +88,20 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
             contextRef.current.stroke();
         }
     };
+
+
+    useEffect(() => {
+        if (imgURL) {
+            const img = new Image();
+            img.src = imgURL;
+
+            img.onload = () => {
+                savedImageRef.current = img;
+                contextRef.current = canvasRef.current.getContext("2d", {willReadFrequently: true});
+                contextRef.current.drawImage(savedImageRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
+            };
+        }
+    }, [imgURL]);
 
     // 창 크기 조절 시 resizeCanvas를 호출함
     useEffect(() => {
@@ -232,6 +247,8 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
                     titleData={titleData}
                     editorData={editorData}
                     editorSize={editorSize}
+                    isEditing={isEditing}
+                    postSeq={postSeq}
                 />
             </div>
         </div>

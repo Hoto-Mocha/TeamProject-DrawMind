@@ -83,7 +83,9 @@ function ContentView() {
         const postData = {
             title: data.title,
             content: data.content,
-            postSeq: postSeq
+            postSeq: postSeq,
+            imgURL: data.imgURL,
+            editorSize: data.editorSize
         }
         navigate('/edit', { state: postData })
     }

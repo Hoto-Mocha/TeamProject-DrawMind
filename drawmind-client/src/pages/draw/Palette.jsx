@@ -9,6 +9,8 @@ import BrushSize from "./BrushSize.jsx";
 import {completeWriting} from "../write/Write.jsx"
 import {useNavigate} from "react-router-dom";
 import CustomColor from "./CustomColor.jsx";
+import API from "../../API.jsx";
+import toast from "react-simple-toasts";
 
 const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple', 'black'];
 
@@ -26,7 +28,9 @@ function Palette({
                      canvasRef,
                      titleData,
                      editorData,
-                     editorSize
+                     editorSize,
+                     isEditing,
+                     postSeq
                  }) {
 
     const navigate = useNavigate();
@@ -45,7 +49,23 @@ function Palette({
         const canvas = canvasRef.current
         if (canvas) {
             const imageURL = canvas.toDataURL('image/png')
-            completeWriting(navigate, titleData, editorData, imageURL, editorSize)
+            if (isEditing) {
+                completeWriting(navigate, titleData, editorData, imageURL, editorSize)
+            } else {
+                API.postUpdate(postSeq, titleData, editorData, imageURL, editorSize)
+                    .then((res) => {
+                        if (res.data.code === 0) {
+                            navigate(`/contentview/${postSeq}`)
+                            toast('글 수정이 완료되었습니다.')
+                        } else {
+                            toast('글 수정에 실패했습니다.')
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        toast('글 수정에 실패했습니다.')
+                    })
+            }
         }
     }
 
@@ -85,8 +105,10 @@ function Palette({
             </div>
             <div className="btnPalette">
                 <div className="tools">
-                    {!moveAvailable && <RiPencilFill className="icon" onClick={() => setMoveAvailable(prev => !prev)} style={{scale: '1.2'}}/>}
-                    {moveAvailable && <IoMdMove className="icon" onClick={() => setMoveAvailable(prev => !prev)} style={{scale: '1.2'}}/>}
+                    {!moveAvailable && <RiPencilFill className="icon" onClick={() => setMoveAvailable(prev => !prev)}
+                                                     style={{scale: '1.2'}}/>}
+                    {moveAvailable && <IoMdMove className="icon" onClick={() => setMoveAvailable(prev => !prev)}
+                                                style={{scale: '1.2'}}/>}
                     <FaUndoAlt className="icon" onClick={undo}/>
                     <FaRedoAlt className="icon" onClick={redo}/>
                 </div>

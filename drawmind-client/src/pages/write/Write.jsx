@@ -292,6 +292,7 @@ function Write() {
                 editorData={editorData}
                 previousBtnHandler={previousBtnHandler}
                 editorSize={editorSize}
+                isEditing={false}
             />}
             <ConfirmModal
                 show={show}
