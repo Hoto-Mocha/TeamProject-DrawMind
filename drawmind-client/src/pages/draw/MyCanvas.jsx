@@ -97,8 +97,32 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
 
             img.onload = () => {
                 savedImageRef.current = img;
-                contextRef.current = canvasRef.current.getContext("2d", {willReadFrequently: true});
-                contextRef.current.drawImage(savedImageRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
+                if (img.width > canvasRef.current.width || img.height > canvasRef.current.height) {
+                    // 이미지가 캔버스보다 큰 경우 → 잘라냄
+                    const imgRatio = img.width / img.height;
+                    const canvasRatio = canvasRef.current.width / canvasRef.current.height;
+
+                    let sx, sy, sWidth, sHeight;
+
+                    if (imgRatio > canvasRatio) {
+                        // 이미지가 더 넓음 → 좌우 잘림
+                        sHeight = img.height;
+                        sWidth = img.height * canvasRatio;
+                        sx = (img.width - sWidth) / 2; // 좌우 잘림
+                        sy = 0; // 위아래는 그대로
+                    } else {
+                        // 이미지가 더 높음 → 위아래 잘림
+                        sWidth = img.width;
+                        sHeight = img.width / canvasRatio;
+                        sx = 0; // 좌우는 그대로
+                        sy = (img.height - sHeight) / 2; // 위아래 잘림
+                    }
+
+                    contextRef.current.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, canvasRef.current.width, canvasRef.current.height);
+                } else {
+                    // 이미지가 캔버스보다 작은 경우 → 그대로 그리기
+                    contextRef.current.drawImage(img, 0, 0, img.width, img.height);
+                }
             };
         }
     }, [imgURL]);
