@@ -238,6 +238,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
 
             setSliderButtonColor(); // 슬라이더 색상도 즉시 업데이트
             makeColorPicker();      // 컬러피커 다시 그리기
+            setConfig(prev => ({...prev, strokeStyle: updatedColor.hex}))
 
             return updatedColor;
         });
