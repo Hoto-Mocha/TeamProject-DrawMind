@@ -52,7 +52,6 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
 
     const draw = (e) => {
         if (!isDrawingRef.current || moveAvailable) return;
-        e.preventDefault()
 
         const rect = canvasRef.current.getBoundingClientRect();
         const {clientX, clientY} = e.touches ? e.touches[0] : e;
@@ -226,7 +225,6 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
                         onMouseMove={draw}
                         onMouseUp={(e) => {
                             if (!moveAvailable) {
-                                e.preventDefault()
                                 isDrawingRef.current = false
                                 setUndoSteps((prevSteps) => [...prevSteps, stepRef.current]);
                                 if (redoSteps.length !== 0)
@@ -236,6 +234,7 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
 
                         onTouchStart={(e) => {
                             if (!moveAvailable) {
+                                e.preventDefault()
                                 isDrawingRef.current = true;
                                 stepRef.current = [];
                                 draw(e)
@@ -250,7 +249,10 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
                                     setRedoSteps([])
                             }
                         }}
-                        onTouchMove={draw}
+                        onTouchMove={e => {
+                            e.preventDefault()
+                            draw(e)
+                        }}
                     />
                 </div>
             </div>
