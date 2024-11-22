@@ -239,12 +239,10 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
 
             setSliderButtonColor(); // 슬라이더 색상도 즉시 업데이트
             makeColorPicker();      // 컬러피커 다시 그리기
-            setConfig(prev => ({...prev, strokeStyle: updatedColor.hex}))
 
             return updatedColor;
         });
     }
-
 
 // RGB 값을 기준으로 슬라이더 및 컬러피커 좌표 계산
     function calculatePositionsFromRgb(red, green, blue) {
@@ -297,6 +295,14 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
 
         return { sliderY, pickerX, pickerY };
     }
+
+    useEffect(() => {
+        setConfig((prev) => ({
+            ...prev,
+            strokeStyle: pickerBgColor.hex, // `pickerBgColor` 값 반영
+        }));
+    }, [pickerBgColor]); // pickerBgColor 변경 감지
+
 
     return (
         <Modal
