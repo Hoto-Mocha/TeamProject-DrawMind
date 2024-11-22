@@ -1,7 +1,7 @@
 import '../../css/ColorModal.css'
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 
 
 function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setIsClicked}) {
@@ -15,7 +15,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
     const pickerButtonOffsetRef = useRef({x: 0, y: 0})
     const sliderButtonOffsetRef = useRef(0)
 
-    const sliderColorRef = useRef({red: 255, green: 0, blue: 0})
+    const sliderBgColorRef = useRef({red: 255, green: 0, blue: 0})
 
     // 컬러피커 생성 코드
     function makeColorPicker() {
@@ -27,7 +27,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
             // 상단 그라디언트 (흰색 -> 색상)
             const topGradient = colorPickerContext.createLinearGradient(0, 0, 256, 0);
             topGradient.addColorStop(0, "rgb(255, 255, 255)");
-            topGradient.addColorStop(1, `rgb(${sliderColorRef.current.red}, ${sliderColorRef.current.green}, ${sliderColorRef.current.blue})`);
+            topGradient.addColorStop(1, `rgb(${sliderBgColorRef.current.red}, ${sliderBgColorRef.current.green}, ${sliderBgColorRef.current.blue})`);
 
             // 상단 그라디언트를 캔버스에 그리기
             colorPickerContext.fillStyle = topGradient;
@@ -41,8 +41,6 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
             // 하단 그라디언트를 캔버스에 그리기
             colorPickerContext.fillStyle = bottomGradient;
             colorPickerContext.fillRect(0, 0, 256, 256);
-
-            setPickerButtonColor()
         }
     }
 
@@ -156,6 +154,19 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
         }
     }
 
+    function setSliderButtonColor() {
+        if (sliderRef.current) {
+            const ctx = sliderRef.current.getContext("2d");
+            const pixel = ctx.getImageData(0, sliderButtonOffsetRef.current, 1, 1).data;
+
+            sliderBgColorRef.current = {
+                red: pixel[0],
+                green: pixel[1],
+                blue: pixel[2],
+            }
+        }
+    }
+
     // 슬라이더 드래그 대응 코드
     function handleSliderDrag(e) {
         const canvas = sliderRef.current;
@@ -163,20 +174,11 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
 
         const rect = canvas.getBoundingClientRect();
         const {clientY} = e.touches ? e.touches[0] : e
-        const offsetY = Math.max(0, Math.min(255, clientY - rect.top));
+        sliderButtonOffsetRef.current = Math.max(0, Math.min(255, clientY - rect.top))
 
-        sliderButtonOffsetRef.current = offsetY
-
-        const ctx = canvas.getContext("2d");
-        const pixel = ctx.getImageData(0, offsetY, 1, 1).data;
-
-        sliderColorRef.current = {
-            red: pixel[0],
-            green: pixel[1],
-            blue: pixel[2],
-        };
-
+        setSliderButtonColor()
         makeColorPicker()
+        setPickerButtonColor()
     }
 
     // 슬라이더 드랍 대응 코드
@@ -185,45 +187,90 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
     }
 
     function typeColor(e, type) {
-        const input = e.target.value
-        if (type === 'hex') {
-            const arr = input.split('#')
-            const hex = arr.length > 1 ? arr[1] : arr[0]
-            if (hex.length < 6) {
-                setPickerBgColor(prev => ({...prev, hex: input}))
-            }
-            else {
-                setPickerBgColor({
-                    red: parseInt(hex.slice(0, 2), 16),
-                    green: parseInt(hex.slice(2, 4), 16),
-                    blue: parseInt(hex.slice(4, 6), 16),
-                    hex: input
-                })
-            }
-        } else {
-            setPickerBgColor(prev => {
-                const arr = prev.hex.split('#')
-                const hex = arr.length > 1 ? arr[1] : arr[0]
-                const rgbHex = parseInt(input).toString(16).padStart(2, "0").slice(0, 2)
-                let newHex
-                switch (type) {
-                    case 'red':
-                        newHex = '#' + rgbHex + hex.slice(2, 6)
-                        break
-                    case 'green':
-                        newHex = '#' + hex.slice(0, 2) + rgbHex + hex.slice(4, 6)
-                        break
-                    case 'blue':
-                        newHex = '#' + hex.slice(0, 4) + rgbHex
-                        break
+        const input = e.target.value;
+
+        setPickerBgColor((prev) => {
+            let updatedColor;
+            if (type === 'hex') {
+                const hex = input.replace("#", "");
+                if (hex.length === 6) {
+                    updatedColor = {
+                        red: parseInt(hex.slice(0, 2), 16),
+                        green: parseInt(hex.slice(2, 4), 16),
+                        blue: parseInt(hex.slice(4, 6), 16),
+                        hex: `#${hex}`
+                    };
+                } else {
+                    updatedColor = { ...prev, hex: input };
                 }
-                return {
+            } else {
+                updatedColor = {
                     ...prev,
-                    [type]: input,
-                    hex: input === '' ? prev.hex : newHex
-                }
-            })
+                    [type]: input === "" ? input : parseInt(input),
+                    hex: `#${[
+                        type === "red" ? input.padStart(2, "0") : prev.red.toString(16).padStart(2, "0"),
+                        type === "green" ? input.padStart(2, "0") : prev.green.toString(16).padStart(2, "0"),
+                        type === "blue" ? input.padStart(2, "0") : prev.blue.toString(16).padStart(2, "0"),
+                    ].join("")}`
+                };
+            }
+
+            // RGB를 기준으로 버튼 좌표를 즉시 계산
+            const { sliderY, pickerX, pickerY } = calculatePositionsFromRgb(
+                updatedColor.red,
+                updatedColor.green,
+                updatedColor.blue
+            );
+            sliderButtonOffsetRef.current = sliderY;
+            pickerButtonOffsetRef.current = { x: pickerX, y: pickerY };
+
+            setSliderButtonColor(); // 슬라이더 색상도 즉시 업데이트
+            makeColorPicker();      // 컬러피커 다시 그리기
+
+            return updatedColor;
+        });
+    }
+
+
+// RGB 값을 기준으로 슬라이더 및 컬러피커 좌표 계산
+    function calculatePositionsFromRgb(red, green, blue) {
+        console.log(red, green, blue)
+        // RGB -> HSV 변환
+        const r = red / 255;
+        const g = green / 255;
+        const b = blue / 255;
+
+        const max = Math.max(r, g, b);
+        const min = Math.min(r, g, b);
+        const delta = max - min;
+
+        let hue = 0;
+        let saturation = 0;
+        const value = max;
+
+        // Hue 계산
+        if (delta !== 0) {
+            if (max === r) hue = ((g - b) / delta) % 6;
+            else if (max === g) hue = (b - r) / delta + 2;
+            else if (max === b) hue = (r - g) / delta + 4;
+
+            hue = Math.round(hue * 60);
+            if (hue < 0) hue += 360;
         }
+
+        // Saturation 계산
+        if (max !== 0) {
+            saturation = delta / max;
+        }
+
+        // 좌표 계산
+        const sliderY = Math.round((hue / 360) * 256); // 슬라이더 높이에 맞게 변환
+        const pickerX = Math.round(saturation * 256); // 컬러피커 X 좌표
+        const pickerY = Math.round((1 - value) * 256); // 컬러피커 Y 좌표
+
+        console.log(sliderY, pickerX, pickerY)
+
+        return { sliderY, pickerX, pickerY };
     }
 
     return (
@@ -299,7 +346,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
                         style={{
                             right: 0,
                             top: sliderButtonOffsetRef.current - 12.5,
-                            backgroundColor: `rgb(${sliderColorRef.current.red}, ${sliderColorRef.current.green}, ${sliderColorRef.current.blue})`
+                            backgroundColor: `rgb(${sliderBgColorRef.current.red}, ${sliderBgColorRef.current.green}, ${sliderBgColorRef.current.blue})`
                         }}
                         onMouseDown={(e) => {
                             isSliderDraggingRef.current = true
