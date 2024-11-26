@@ -223,7 +223,7 @@ function MyCanvas({postRef, titleData, editorData, previousBtnHandler, editorSiz
                             }
                         }}
                         onMouseMove={draw}
-                        onMouseUp={(e) => {
+                        onMouseUp={() => {
                             if (!moveAvailable) {
                                 isDrawingRef.current = false
                                 setUndoSteps((prevSteps) => [...prevSteps, stepRef.current]);
