@@ -297,10 +297,12 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
     }
 
     useEffect(() => {
-        setConfig((prev) => ({
-            ...prev,
-            strokeStyle: pickerBgColor.hex, // `pickerBgColor` 값 반영
-        }));
+        if (isClicked) {
+            setConfig((prev) => ({
+                ...prev,
+                strokeStyle: pickerBgColor.hex, // `pickerBgColor` 값 반영
+            }));
+        }
     }, [pickerBgColor]); // pickerBgColor 변경 감지
 
 
