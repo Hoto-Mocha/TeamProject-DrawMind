@@ -2,7 +2,7 @@ import {FaCheck} from "react-icons/fa";
 import {useState} from "react";
 import ColorModal from "./ColorModal.jsx";
 
-function    CustomColor({config, setConfig, isErasing, setErasing}) {
+function CustomColor({config, setConfig, isErasing, setErasing}) {
 
     const [isClicked, setIsClicked] = useState(false);
     const [pickerBgColor, setPickerBgColor] = useState({red: 255, green: 255, blue: 255, hex: '#FFFFFF'});

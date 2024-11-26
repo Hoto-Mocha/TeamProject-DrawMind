@@ -319,7 +319,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
                         ref={colorPickerRef}
                         style={{
                             position: 'absolute',
-                            left: 60
+                            left: 30
                     }}
                         onMouseDown={(e) => {
                             isPickerDraggingRef.current = true
@@ -338,7 +338,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
                     <div
                         className={'colorPickerButton'}
                         style={{
-                            left: pickerButtonOffsetRef.current.x - 12.5 + 60,
+                            left: pickerButtonOffsetRef.current.x - 12.5 + 30,
                             top: pickerButtonOffsetRef.current.y - 12.5,
                             backgroundColor: "transparent"
                         }}
@@ -359,7 +359,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
                         ref={sliderRef}
                         style={{
                             position: 'absolute',
-                            right: 60,
+                            right: 30,
                             borderRadius: 20
                         }}
                         onMouseDown={e => {
@@ -378,7 +378,7 @@ function ColorModal({setConfig, pickerBgColor, setPickerBgColor, isClicked, setI
                     <div
                         className={'sliderButton'}
                         style={{
-                            right: 60,
+                            right: 30,
                             top: sliderButtonOffsetRef.current - 12.5,
                             backgroundColor: `rgb(${sliderBgColorRef.current.red}, ${sliderBgColorRef.current.green}, ${sliderBgColorRef.current.blue})`
                         }}
