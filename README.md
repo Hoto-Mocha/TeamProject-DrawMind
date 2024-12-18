@@ -5,8 +5,8 @@
 ### 무엇을 구현했나요?
 드로우마인드 프로젝트에서는 팀원 간의 협의를 통해 API와 화면을 설계하고, 요구사항을 정리한 뒤 문서로 만들어 그것을 기반으로 각자 서버와 클라이언트를 개발했습니다.
 
-- [CKEditor 5](https://ckeditor.com/)를 활용한 HTML 텍스트 에디터
-- HTML 텍스트 에디터에서 작성한 글을 미리보기하고 그 위에서 바로 그림 작업이 가능한 그림 에디터
+- [CKEditor 5](https://ckeditor.com/)를 활용한 [HTML 텍스트 에디터 화면](https://github.com/Hoto-Mocha/TeamProject-DrawMind/blob/main/drawmind-client/src/pages/write/Write.jsx)
+- HTML 텍스트 에디터에서 작성한 글을 미리보기하고 그 위에서 바로 그림 작업이 가능한 [그림 에디터 화면](https://github.com/Hoto-Mocha/TeamProject-DrawMind/tree/main/drawmind-client/src/pages/draw)
 - 그림 에디터에서 본 그대로 출력되는 게시글 화면
 - 텍스트와 그림 모두 수정 가능한 게시글 수정 화면
 - 그 외 회원 가입 화면, 로그인 화면, 게시글 목록 조회 화면 등
